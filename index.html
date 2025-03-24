@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISRG Forensic Analysis | ForensicFinancials</title>
+    <style>
+        :root {
+            --primary: #1a365d;
+            --secondary: #2c5282;
+            --accent: #4299e1;
+            --light: #ebf8ff;
+            --dark: #2d3748;
+            --success: #48bb78;
+            --warning: #ed8936;
+            --danger: #e53e3e;
+            --gray: #a0aec0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8fafc;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 2rem;
+            position: relative;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 0.5rem 0;
+        }
+        
+        nav ul li a:hover {
+            color: var(--accent);
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: width 0.3s;
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+            background-color: var(--primary);
+            color: white;
+            margin-bottom: 2rem;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .cta-button:hover {
+            background-color: #3182ce;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary);
+        }
+        
+        .section-title h2 {
+            font-size: 2rem;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 0.5rem;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--accent);
+        }
+        
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1.2rem;
+            font-weight: 600;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+        
+        .card-body {
+            padding: 1.8rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .metrics-container {
+            margin-bottom: 1.5rem;
+        }
+        
+        .metric {
+            margin-bottom: 1.5rem;
+        }
+        
+        .metric-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+            font-size: 1rem;
+        }
+        
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+            color: var(--primary);
+        }
+        
+        .metric-change {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .positive {
+            background-color: rgba(72, 187, 120, 0.2);
+            color: var(--success);
+        }
+        
+        .negative {
+            background-color: rgba(229, 62, 62, 0.2);
+            color: var(--danger);
+        }
+        
+        .neutral {
+            background-color: rgba(160, 174, 192, 0.2);
+            color: var(--gray);
+        }
+        
+        .chart-container {
+            height: 180px;
+            margin: 1rem 0;
+            position: relative;
+            flex-grow: 1;
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .data-table th, .data-table td {
+            padding: 0.7rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .data-table th {
+            background-color: #f7fafc;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+        
+        .data-table tr:hover {
+            background-color: #f8fafc;
+        }
+        
+        /* Rest of the CSS remains unchanged */
+        .insights {
+            background-color: white;
+            padding: 4rem 0;
+            margin-bottom: 2rem;
+        }
+        
+        .insight-item {
+            margin-bottom: 3rem;
+            padding-bottom: 3rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .insight-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .insight-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .insight-item ul {
+            margin-left: 1.5rem;
+        }
+        
+        .insight-item ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .insight-item ul li strong {
+            color: var(--primary);
+        }
+        
+        .risk-reward {
+            display: flex;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .risk-reward-column {
+            flex: 1;
+            padding: 2rem;
+            border-radius: 8px;
+        }
+        
+        .risks {
+            background-color: rgba(229, 62, 62, 0.05);
+            border: 1px solid rgba(229, 62, 62, 0.2);
+        }
+        
+        .opportunities {
+            background-color: rgba(72, 187, 120, 0.05);
+            border: 1px solid rgba(72, 187, 120, 0.2);
+        }
+        
+        .risk-reward-title {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .risk-reward-list {
+            list-style: none;
+        }
+        
+        .risk-reward-list li {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .risk-reward-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        
+        .risks .risk-reward-list li::before {
+            background-color: var(--danger);
+        }
+        
+        .opportunities .risk-reward-list li::before {
+            background-color: var(--success);
+        }
+        
+        .recommendation {
+            background-color: white;
+            padding: 3rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: 4rem;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .recommendation-title {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            text-align: center;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        .recommendation-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background-color: var(--accent);
+        }
+        
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            margin: 2rem 0;
+        }
+        
+        .timeline-item {
+            text-align: center;
+            flex: 1;
+            padding: 0 1rem;
+        }
+        
+        .timeline-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .action-steps {
+            margin-top: 2rem;
+        }
+        
+        .action-steps h4 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .action-steps ul {
+            list-style: none;
+        }
+        
+        .action-steps li {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .action-steps li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-logo span {
+            color: var(--accent);
+        }
+        
+        .footer-text {
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links li {
+            margin: 0 1rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+        
+        .copyright {
+            margin-top: 1.5rem;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1.5rem;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            nav ul li {
+                margin: 0.5rem 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .risk-reward {
+                flex-direction: column;
+            }
+            
+            .risk-reward-column {
+                margin-bottom: 1.5rem;
+            }
+            
+            .timeline {
+                flex-direction: column;
+            }
+            
+            .timeline-item {
+                margin-bottom: 2rem;
+                text-align: left;
+                padding-left: 0;
+            }
+            
+            .footer-links li {
+                margin: 0.5rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">Forensic<span>Financials</span></div>
+            <nav>
+                <ul>
+                    <li><a href="#analysis">Financial Analysis</a></li>
+                    <li><a href="#insights">Key Insights</a></li>
+                    <li><a href="#recommendation">Recommendation</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container">
+            <h1>Intuitive Surgical (ISRG) Forensic Financial Analysis</h1>
+            <p>Executive-level insights into growth trends, inflection points, and strategic opportunities in robotic surgery</p>
+            <a href="#analysis" class="cta-button">Explore Full Analysis</a>
+        </div>
+    </section>
+    
+    <section id="analysis" class="container">
+        <div class="section-title">
+            <h2>Financial Performance Metrics</h2>
+        </div>
+        
+        <div class="card-grid">
+            <div class="card">
+                <div class="card-header">Revenue Dynamics</div>
+                <div class="card-body">
+                    <div class="metrics-container">
+                        <div class="metric">
+                            <div class="metric-title">Revenue CAGR (2019-2024)</div>
+                            <div class="metric-value">13.3%</div>
+                            <div class="metric-change positive">+31% 2021 rebound</div>
+                        </div>
+                    </div>
+                    <div class="chart-container" id="revenueChart"></div>
+                    <table class="data-table">
+                        <tr>
+                            <th>Year</th>
+                            <th>Growth</th>
+                            <th>Context</th>
+                        </tr>
+                        <tr>
+                            <td>2020</td>
+                            <td><span class="metric-change negative">-2.7%</span></td>
+                            <td>Pandemic impact</td>
+                        </tr>
+                        <tr>
+                            <td>2021</td>
+                            <td><span class="metric-change positive">+31%</span></td>
+                            <td>Rebound year</td>
+                        </tr>
+                        <tr>
+                            <td>2024</td>
+                            <td><span class="metric-change positive">+17.2%</span></td>
+                            <td>Da Vinci 5 launch</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">Profitability Metrics</div>
+                <div class="card-body">
+                    <div class="metrics-container">
+                        <div class="metric">
+                            <div class="metric-title">Net Income Volatility</div>
+                            <div class="metric-value">-23.1% to +60.7%</div>
+                            <div class="metric-change neutral">Sensitive to volumes</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-title">Operating Margin</div>
+                            <div class="metric-value">-22.4% (2022)</div>
+                            <div class="metric-change negative">Cost rigidity</div>
+                        </div>
+                    </div>
+                    <div class="chart-container" id="profitabilityChart"></div>
+                    <table class="data-table">
+                        <tr>
+                            <th>Period</th>
+                            <th>Performance</th>
+                            <th>Context</th>
+                        </tr>
+                        <tr>
+                            <td>Q2 2020</td>
+                            <td><span class="metric-change negative">-22.5% QoQ</span></td>
+                            <td>COVID disruptions</td>
+                        </tr>
+                        <tr>
+                            <td>Q3 2020</td>
+                            <td><span class="metric-change positive">+26.5% QoQ</span></td>
+                            <td>Recovery</td>
+                        </tr>
+                        <tr>
+                            <td>Q4 2024</td>
+                            <td><span class="metric-change positive">+18.4% QoQ</span></td>
+                            <td>Da Vinci 5 momentum</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">Cash Flow & Liquidity</div>
+                <div class="card-body">
+                    <div class="metrics-container">
+                        <div class="metric">
+                            <div class="metric-title">Operating Cash Flow</div>
+                            <div class="metric-value">+33.2% (2024)</div>
+                            <div class="metric-change positive">Exceeds Net Income</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-title">Cash Reserves</div>
+                            <div class="metric-value">-26.3% (2024)</div>
+                            <div class="metric-change negative">$4.9B vs $6.7B</div>
+                        </div>
+                    </div>
+                    <div class="chart-container" id="cashFlowChart"></div>
+                    <table class="data-table">
+                        <tr>
+                            <th>Metric</th>
+                            <th>Value</th>
+                            <th>Implication</th>
+                        </tr>
+                        <tr>
+                            <td>Debt-to-Equity</td>
+                            <td>&lt;1%</td>
+                            <td>Minimal leverage</td>
+                        </tr>
+                        <tr>
+                            <td>Inventory Turnover</td>
+                            <td>1.9x</td>
+                            <td>Obsolescence risk</td>
+                        </tr>
+                        <tr>
+                            <td>AR Turnover</td>
+                            <td>7x</td>
+                            <td>Healthy but monitor</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Rest of the HTML remains unchanged -->
+    <section id="insights" class="insights">
+        <div class="container">
+            <div class="section-title">
+                <h2>Strategic Insights & Analysis</h2>
+            </div>
+            
+            <div class="insight-item">
+                <h3 class="insight-title">Growth Catalysts & Market Position</h3>
+                <ul>
+                    <li><strong>Da Vinci 5 System:</strong> 17% CAGR over 5 years with 2024 adoption surge contributing to revenue acceleration. System priced at up to $2.5M with 30% faster procedure times driving adoption.</li>
+                    <li><strong>Procedure Volume Growth:</strong> 13-16.5% CAGR (2019-2021) with robotic surgery penetration &lt;5% globally indicating significant long-term runway for expansion.</li>
+                    <li><strong>Market Leadership:</strong> ~80% share in robotic surgery with 7,779 Da Vinci systems installed globally (+12% YoY) creating significant competitive moat.</li>
+                    <li><strong>International Expansion:</strong> 22% of 2023 revenue from ex-U.S. markets with particular growth potential in underpenetrated Asia-Pacific regions.</li>
+                    <li><strong>Innovation Pipeline:</strong> AI integration, outpatient adoption, and expansion into new surgical applications (e.g., cardiac procedures) provide additional growth vectors.</li>
+                </ul>
+            </div>
+            
+            <div class="insight-item">
+                <h3 class="insight-title">Working Capital & Operational Efficiency</h3>
+                <ul>
+                    <li><strong>Inventory Surge:</strong> +52.1% (2022) vs COGS +15.7%; +36.7% (2023) vs COGS +18.2%. While potentially reflecting strategic stockpiling for Da Vinci 5 launch, this creates obsolescence risk given low inventory turnover of 1.9x.</li>
+                    <li><strong>Accounts Receivable:</strong> AR growth exceeded revenue in 2022-2023 (e.g., +20.2% vs +9.0%) but improved in 2024 (+7.1% vs +17.2%), suggesting tightened credit terms and better working capital management.</li>
+                    <li><strong>Q1 2023 Anomaly:</strong> Cash drop of -76.5% QoQ warrants investigation for potential one-time costs (litigation, acquisitions) that may not be recurring.</li>
+                    <li><strong>2022-2023 Outflows:</strong> Working capital outflows of -68.2% and -25.6% require management clarification on whether these are transitional (pre-launch buildup) or systemic issues.</li>
+                    <li><strong>Cash Utilization:</strong> Despite positive OCF, cash reserves declined 26.3% in 2024 to $4.9B (from $6.7B in 2023), partially due to $600M in share buybacks.</li>
+                </ul>
+            </div>
+            
+            <div class="risk-reward">
+                <div class="risk-reward-column risks">
+                    <h4 class="risk-reward-title">Key Risks Requiring Monitoring</h4>
+                    <ul class="risk-reward-list">
+                        <li><strong>Operational Volatility:</strong> Earnings demonstrate sensitivity to procedure delays from pandemics or recessions, particularly in elective surgery segments.</li>
+                        <li><strong>Inventory & Cash Burn:</strong> $1.2B inventory (2024) requires validation of demand assumptions. Cash reserves declined to $4.9B (2024) vs $6.7B (2023).</li>
+                        <li><strong>Competitive Threats:</strong> Market entry by Medtronic's Hugo and Johnson & Johnson's Ottava systems may erode pricing power over time.</li>
+                        <li><strong>Valuation Premium:</strong> Current P/E of 65x demands flawless execution and leaves little margin for operational missteps.</li>
+                    </ul>
+                </div>
+                
+                <div class="risk-reward-column opportunities">
+                    <h4 class="risk-reward-title">Strategic Opportunities</h4>
+                    <ul class="risk-reward-list">
+                        <li><strong>Procedure Growth Tailwinds:</strong> Aging populations and accelerating adoption of minimally invasive surgical techniques support long-term demand.</li>
+                        <li><strong>Pricing Power:</strong> Recurring 75% revenue from instruments/accessories with 80%+ gross margins creates stable cash flow base.</li>
+                        <li><strong>Da Vinci 5 Adoption:</strong> 30% faster procedure times and enhanced capabilities drive system upgrades and new customer acquisition.</li>
+                        <li><strong>$50B+ TAM:</strong> With global robotic surgery penetration below 5%, significant expansion runway remains across geographies and procedures.</li>
+                        <li><strong>Financial Resilience:</strong> Near-infinite interest coverage from minimal debt (Debt-to-Equity &lt;1%) provides stability during downturns.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="recommendation" class="container">
+        <div class="recommendation">
+            <h3 class="recommendation-title">Investment Recommendation: Cautious Optimism</h3>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-title">Short-Term (1-2 Years)</div>
+                    <p>Monitor inventory turnover and quarterly cash trends closely. High valuation (P/E 65x) demands flawless execution of Da Vinci 5 rollout and working capital management.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-title">Long-Term (3-5+ Years)</div>
+                    <p>Attractive play on robotic surgery penetration megatrend, with scalable margins and $50B+ total addressable market supporting multi-year growth.</p>
+                </div>
+            </div>
+            
+            <div class="action-steps">
+                <h4>Actionable Steps for Investors:</h4>
+                <ul>
+                    <li><strong>Scrutinize Q1 2024 earnings</strong> for detailed Da Vinci 5 sales breakdown and management commentary on inventory levels and demand validation.</li>
+                    <li><strong>Track procedure volume recovery</strong> in post-pandemic elective segments (e.g., bariatrics, urology) as indicator of sustainable growth.</li>
+                    <li><strong>Evaluate competitive threats</strong> through surgeon adoption rates and satisfaction metrics for rival systems (Hugo, Ottava).</li>
+                    <li><strong>Consider phased entry strategy</strong> to capitalize on potential pullbacks tied to short-term working capital concerns while maintaining exposure to long-term adoption trends.</li>
+                    <li><strong>Monitor international execution</strong> particularly in Asia-Pacific markets where penetration remains lowest but growth potential is highest.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    
+    <footer id="contact">
+        <div class="container footer-content">
+            <div class="footer-logo">Forensic<span>Financials by Cho</span></div>
+            <p class="footer-text">Executive-level financial analysis and strategic recommendations for C-Suite decision makers. **EDUCATIONAL PURPOSE ONLY**</p>
+            
+            <ul class="footer-links">
+                <li><a href="mailto:minwc.cs@gmail.com">Email Us</a></li>
+                <li><a href="https://x.com/wayygu" target="_blank">Follow on X</a></li>
+            </ul>
+            
+            <div class="copyright">© 2024 Forensic Financials by Cho. All rights reserved.</div>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Revenue Chart
+            const revenueCtx = document.createElement('canvas');
+            revenueCtx.id = 'revenueCanvas';
+            revenueCtx.width = 280;
+            revenueCtx.height = 180;
+            document.getElementById('revenueChart').appendChild(revenueCtx);
+            
+            const revenueChart = revenueCtx.getContext('2d');
+            drawRevenueChart(revenueChart, revenueCtx.width, revenueCtx.height);
+            
+            // Profitability Chart
+            const profitCtx = document.createElement('canvas');
+            profitCtx.id = 'profitCanvas';
+            profitCtx.width = 280;
+            profitCtx.height = 180;
+            document.getElementById('profitabilityChart').appendChild(profitCtx);
+            
+            drawProfitChart(profitCtx.getContext('2d'), profitCtx.width, profitCtx.height);
+            
+            // Cash Flow Chart
+            const cashCtx = document.createElement('canvas');
+            cashCtx.id = 'cashCanvas';
+            cashCtx.width = 280;
+            cashCtx.height = 180;
+            document.getElementById('cashFlowChart').appendChild(cashCtx);
+            
+            drawCashFlowChart(cashCtx.getContext('2d'), cashCtx.width, cashCtx.height);
+            
+            // Smooth scrolling for navigation
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                        
+                        // Update URL without page reload
+                        history.pushState(null, null, this.getAttribute('href'));
+                    }
+                });
+            });
+        });
+        
+        function drawRevenueChart(ctx, width, height) {
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Draw grid lines
+            ctx.strokeStyle = '#e2e8f0';
+            ctx.lineWidth = 1;
+            
+            // Horizontal grid lines
+            for (let y = 30; y <= height - 20; y += 30) {
+                ctx.beginPath();
+                ctx.moveTo(20, y);
+                ctx.lineTo(width - 20, y);
+                ctx.stroke();
+                
+                // Y-axis labels
+                ctx.fillStyle = '#718096';
+                ctx.font = '9px Arial';
+                ctx.fillText(`${height - y}`, 5, y + 4);
+            }
+            
+            // Data points
+            const dataPoints = [
+                { x: 20, y: 150 },  // 2019
+                { x: 70, y: 160 },  // 2020 dip
+                { x: 120, y: 80 },  // 2021 rebound
+                { x: 170, y: 120 }, // 2022
+                { x: 220, y: 100 }, // 2023
+                { x: 270, y: 70 }   // 2024 growth
+            ];
+            
+            // Draw line
+            ctx.beginPath();
+            ctx.moveTo(dataPoints[0].x, dataPoints[0].y);
+            for (let i = 1; i < dataPoints.length; i++) {
+                ctx.lineTo(dataPoints[i].x, dataPoints[i].y);
+            }
+            ctx.strokeStyle = '#3182ce';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            // Draw data points
+            ctx.fillStyle = '#3182ce';
+            dataPoints.forEach(point => {
+                ctx.beginPath();
+                ctx.arc(point.x, point.y, 3, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            
+            // X-axis labels
+            const years = ['2019', '2020', '2021', '2022', '2023', '2024'];
+            ctx.fillStyle = '#718096';
+            ctx.font = '10px Arial';
+            ctx.textAlign = 'center';
+            dataPoints.forEach((point, i) => {
+                ctx.fillText(years[i], point.x, height - 5);
+            });
+        }
+        
+        function drawProfitChart(ctx, width, height) {
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Draw grid lines
+            ctx.strokeStyle = '#e2e8f0';
+            ctx.lineWidth = 1;
+            
+            // Horizontal grid lines
+            for (let y = 30; y <= height - 20; y += 30) {
+                ctx.beginPath();
+                ctx.moveTo(20, y);
+                ctx.lineTo(width - 20, y);
+                ctx.stroke();
+                
+                // Y-axis labels
+                ctx.fillStyle = '#718096';
+                ctx.font = '9px Arial';
+                ctx.fillText(`${height - y}`, 5, y + 4);
+            }
+            
+            // Data
+            const profitData = [
+                { value: 120, year: '2020', color: '#e53e3e' },
+                { value: 180, year: '2021', color: '#48bb78' },
+                { value: 100, year: '2022', color: '#e53e3e' },
+                { value: 130, year: '2023', color: '#48bb78' },
+                { value: 160, year: '2024', color: '#48bb78' }
+            ];
+            
+            const barWidth = 35;
+            const gap = 15;
+            const startX = 30;
+            
+            // Draw bars
+            profitData.forEach((item, i) => {
+                const x = startX + (i * (barWidth + gap));
+                const barHeight = item.value;
+                
+                ctx.fillStyle = item.color;
+                ctx.fillRect(x, height - barHeight, barWidth, barHeight);
+                
+                // Year labels
+                ctx.fillStyle = '#2d3748';
+                ctx.font = '10px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(item.year, x + barWidth/2, height - 5);
+            });
+        }
+        
+        function drawCashFlowChart(ctx, width, height) {
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Draw grid lines
+            ctx.strokeStyle = '#e2e8f0';
+            ctx.lineWidth = 1;
+            
+            // Horizontal grid lines
+            for (let y = 30; y <= height - 20; y += 30) {
+                ctx.beginPath();
+                ctx.moveTo(20, y);
+                ctx.lineTo(width - 20, y);
+                ctx.stroke();
+                
+                // Y-axis labels
+                ctx.fillStyle = '#718096';
+                ctx.font = '9px Arial';
+                ctx.fillText(`${height - y}`, 5, y + 4);
+            }
+            
+            // Data
+            const cashData = {
+                netIncome: [100, 160, 120, 110, 129],
+                ocf: [90, 148, 105, 100, 133],
+                years: ['2020', '2021', '2022', '2023', '2024']
+            };
+            
+            const pointSpacing = 60;
+            
+            // Draw Net Income line
+            ctx.beginPath();
+            ctx.moveTo(20, height - cashData.netIncome[0]);
+            for (let i = 1; i < cashData.netIncome.length; i++) {
+                ctx.lineTo(20 + (i * pointSpacing), height - cashData.netIncome[i]);
+            }
+            ctx.strokeStyle = '#3182ce';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            // Draw OCF line
+            ctx.beginPath();
+            ctx.moveTo(20, height - cashData.ocf[0]);
+            for (let i = 1; i < cashData.ocf.length; i++) {
+                ctx.lineTo(20 + (i * pointSpacing), height - cashData.ocf[i]);
+            }
+            ctx.strokeStyle = '#48bb78';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            // Draw data points
+            ctx.fillStyle = '#3182ce';
+            cashData.netIncome.forEach((value, i) => {
+                const x = 20 + (i * pointSpacing);
+                ctx.beginPath();
+                ctx.arc(x, height - value, 3, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            
+            ctx.fillStyle = '#48bb78';
+            cashData.ocf.forEach((value, i) => {
+                const x = 20 + (i * pointSpacing);
+                ctx.beginPath();
+                ctx.arc(x, height - value, 3, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            
+            // X-axis labels
+            ctx.fillStyle = '#718096';
+            ctx.font = '10px Arial';
+            ctx.textAlign = 'center';
+            cashData.years.forEach((year, i) => {
+                const x = 20 + (i * pointSpacing);
+                ctx.fillText(year, x, height - 5);
+            });
+            
+            // Legend
+            ctx.fillStyle = '#3182ce';
+            ctx.font = '10px Arial';
+            ctx.fillText('Net Income', width - 80, 20);
+            ctx.fillStyle = '#48bb78';
+            ctx.fillText('OCF', width - 80, 35);
+        }
+    </script>
+</body>
+</html>
