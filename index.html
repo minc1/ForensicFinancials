@@ -6,6 +6,7 @@
     <title>ForensicFinancials | Palo Alto Networks Analysis</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
             --primary: #3a506b;
@@ -381,27 +382,14 @@
             color: var(--dark);
         }
         
-        .chart-placeholder {
+        .chart-wrapper {
             height: 400px;
-            background-color: #f5f7fa;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--muted);
-            font-size: 16px;
-            border-radius: 8px;
-            overflow: hidden;
             position: relative;
         }
         
-        .chart-placeholder:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(0,0,0,0.02) 0%, rgba(0,0,0,0) 100%);
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
         }
         
         /* Table */
@@ -708,7 +696,7 @@
                 padding: 24px;
             }
             
-            .chart-placeholder {
+            .chart-wrapper {
                 height: 300px;
             }
             
@@ -758,8 +746,8 @@
                 <div class="chart-header">
                     <h3>Revenue Growth Trend (Annual & Quarterly)</h3>
                 </div>
-                <div class="chart-placeholder">
-                    [Line chart: Annual revenue growth declining from 29.3% (FY22) to 25.3% (FY23) to 16.5% (FY24) with quarterly fluctuations showing seasonality - Q4 peaks, Q1 troughs]
+                <div class="chart-wrapper">
+                    <canvas id="revenueChart"></canvas>
                 </div>
             </div>
             
@@ -830,8 +818,8 @@
                 <div class="chart-header">
                     <h3>Revenue vs. Accounts Receivable Growth</h3>
                 </div>
-                <div class="chart-placeholder">
-                    [Dual-axis chart: Multiple anomalies highlighted - FY22: +29.3% revenue vs +72.7% AR; FY24: +16.5% revenue vs +17.3% AR]
+                <div class="chart-wrapper">
+                    <canvas id="arChart"></canvas>
                 </div>
             </div>
             
@@ -839,8 +827,8 @@
                 <div class="chart-header">
                     <h3>Operating Cash Flow vs. Net Income</h3>
                 </div>
-                <div class="chart-placeholder">
-                    [Bar/line chart: OCF consistently exceeds net income - FY23: 39.9% OCF vs 2.6x Net Income; FY24: 17.3% OCF vs 4.9% Net Income]
+                <div class="chart-wrapper">
+                    <canvas id="cashFlowChart"></canvas>
                 </div>
             </div>
             
@@ -1018,6 +1006,194 @@
             window.scrollTo({
                 top: 0,
                 behavior: 'smooth'
+            });
+        });
+
+        // Chart.js Implementation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Revenue Growth Chart
+            const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+            const revenueChart = new Chart(revenueCtx, {
+                type: 'line',
+                data: {
+                    labels: ['FY2020', 'FY2021', 'FY2022', 'FY2023', 'FY2024'],
+                    datasets: [{
+                        label: 'Annual Revenue Growth (%)',
+                        data: [17.5, 24.9, 29.3, 25.3, 16.5],
+                        borderColor: '#3a506b',
+                        backgroundColor: 'rgba(58, 80, 107, 0.1)',
+                        borderWidth: 3,
+                        tension: 0.3,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + context.parsed.y + '%';
+                                }
+                            }
+                        },
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                boxWidth: 12,
+                                padding: 20
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            title: {
+                                display: true,
+                                text: 'Growth Rate (%)'
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Revenue vs AR Growth Chart
+            const arCtx = document.getElementById('arChart').getContext('2d');
+            const arChart = new Chart(arCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['FY2020', 'FY2021', 'FY2022', 'FY2023', 'FY2024'],
+                    datasets: [
+                        {
+                            label: 'Revenue Growth (%)',
+                            data: [17.5, 24.9, 29.3, 25.3, 16.5],
+                            backgroundColor: 'rgba(58, 80, 107, 0.7)',
+                            borderColor: '#3a506b',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Accounts Receivable Growth (%)',
+                            data: [78.1, 19.6, 72.7, 33.1, 17.3],
+                            backgroundColor: 'rgba(91, 192, 190, 0.7)',
+                            borderColor: '#5bc0be',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + context.parsed.y + '%';
+                                }
+                            }
+                        },
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                boxWidth: 12,
+                                padding: 20
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            title: {
+                                display: true,
+                                text: 'Growth Rate (%)'
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Cash Flow vs Net Income Chart
+            const cashFlowCtx = document.getElementById('cashFlowChart').getContext('2d');
+            const cashFlowChart = new Chart(cashFlowCtx, {
+                type: 'line',
+                data: {
+                    labels: ['FY2020', 'FY2021', 'FY2022', 'FY2023', 'FY2024'],
+                    datasets: [
+                        {
+                            label: 'Operating Cash Flow Growth (%)',
+                            data: [-1.9, 45.1, 32.0, 39.9, 17.3],
+                            borderColor: '#3a506b',
+                            backgroundColor: 'transparent',
+                            borderWidth: 3,
+                            tension: 0.3,
+                            yAxisID: 'y'
+                        },
+                        {
+                            label: 'Net Income Growth (%)',
+                            data: [-2.3, -86.9, 46.5, 264.7, 4.9],
+                            borderColor: '#5bc0be',
+                            backgroundColor: 'transparent',
+                            borderWidth: 3,
+                            tension: 0.3,
+                            yAxisID: 'y'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + context.parsed.y + '%';
+                                }
+                            }
+                        },
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                boxWidth: 12,
+                                padding: 20
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: 'Growth Rate (%)'
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        }
+                    }
+                }
             });
         });
     </script>
