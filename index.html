@@ -7,47 +7,45 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
     <style>
         :root {
-            --primary: #3a506b; /* Deep Blue (Dark Navy) */
-            --secondary: #5bc0be; /* Teal (Turquoise) */
-            /* --accent: #e07a5f; /* Coral/Orange - REMOVED */
-            --dark: #1c2541; /* Very Dark Blue */
-            --light: #f8f9fa; /* Off White */
-            --text: #495057; /* Dark Gray */
-            --muted: #6c757d; /* Medium Gray */
-            /* --success: #6a994e; /* Muted Green - REMOVED */
-            --warning: #fca311; /* Strong Yellow/Orange (Keep for anomaly highlight) */
-            /* --danger: #d62828; /* Strong Red - REMOVED */
+            --primary: #3a506b;
+            --secondary: #5bc0be;
+            --dark: #1c2541;
+            --light: #f8f9fa;
+            --text: #495057;
+            --muted: #6c757d;
+            --success: #4caf50;
+            --warning: #ffc107;
+            --danger: #f44336;
             --card-bg: #ffffff;
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08); /* Softer shadow */
-            --shadow-md: 0 4px 8px rgba(0,0,0,0.08); /* Softer shadow */
-            --shadow-lg: 0 10px 20px rgba(0,0,0,0.08); /* Softer shadow */
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
             --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
-
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
-
+        
         body {
             background-color: var(--light);
             color: var(--text);
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
         }
-
+        
         .container {
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 24px;
         }
-
+        
         /* Header */
         header {
             background-color: var(--card-bg);
@@ -57,11 +55,11 @@
             box-shadow: var(--shadow-sm);
             transition: var(--transition);
         }
-
+        
         header.scrolled {
             box-shadow: var(--shadow-md);
         }
-
+        
         nav {
             display: flex;
             justify-content: space-between;
@@ -70,27 +68,27 @@
             max-width: 1200px;
             margin: 0 auto;
         }
-
+        
         .logo {
             font-size: 22px;
             font-weight: 700;
             color: var(--dark);
             letter-spacing: -0.5px;
         }
-
+        
         .logo span {
             color: var(--primary);
         }
-
+        
         .nav-links {
             display: flex;
             list-style: none;
         }
-
+        
         .nav-links li {
             margin-left: 32px;
         }
-
+        
         .nav-links a {
             text-decoration: none;
             color: var(--text);
@@ -100,7 +98,7 @@
             position: relative;
             padding: 8px 0;
         }
-
+        
         .nav-links a:after {
             content: '';
             position: absolute;
@@ -111,15 +109,15 @@
             background-color: var(--primary);
             transition: width 0.3s ease;
         }
-
+        
         .nav-links a:hover:after {
             width: 100%;
         }
-
+        
         .nav-links a:hover {
             color: var(--primary);
         }
-
+        
         .mobile-menu {
             display: none;
             font-size: 24px;
@@ -127,11 +125,11 @@
             color: var(--dark);
             transition: transform 0.3s;
         }
-
+        
         .mobile-menu:hover {
             transform: scale(1.1);
         }
-
+        
         /* Hero Section */
         .hero {
             padding: 200px 0 120px;
@@ -140,7 +138,7 @@
             position: relative;
             overflow: hidden;
         }
-
+        
         .hero:before {
             content: '';
             position: absolute;
@@ -148,18 +146,18 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background:
+            background: 
                 linear-gradient(135deg, rgba(245,247,250,0.95) 0%, rgba(245,247,250,0.9) 100%),
-                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="50" height="50" x="0" y="0" fill="%233a506b" fill-opacity="0.02"/></svg>'); /* Lighter pattern */
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="50" height="50" x="0" y="0" fill="%233a506b" fill-opacity="0.03"/></svg>');
             background-size: 100px 100px;
             z-index: 0;
         }
-
+        
         .hero .container {
             position: relative;
             z-index: 1;
         }
-
+        
         .hero h1 {
             font-size: 48px;
             font-weight: 700;
@@ -170,14 +168,14 @@
             margin-left: auto;
             margin-right: auto;
         }
-
+        
         .hero p {
             font-size: 18px;
             color: var(--muted);
             max-width: 640px;
             margin: 0 auto 48px;
         }
-
+        
         .cta-button {
             display: inline-flex;
             align-items: center;
@@ -194,7 +192,7 @@
             position: relative;
             overflow: hidden;
         }
-
+        
         .cta-button:after {
             content: '';
             position: absolute;
@@ -206,36 +204,36 @@
             opacity: 0;
             transition: opacity 0.3s;
         }
-
+        
         .cta-button:hover {
             transform: translateY(-2px);
             box-shadow: var(--shadow-lg);
             background-color: var(--dark);
         }
-
+        
         .cta-button:hover:after {
             opacity: 1;
         }
-
+        
         .cta-button i {
             margin-left: 8px;
             transition: transform 0.3s;
         }
-
+        
         .cta-button:hover i {
             transform: translateX(4px);
         }
-
+        
         /* Sections */
         .section {
             padding: 96px 0;
         }
-
+        
         .section-title {
             text-align: center;
             margin-bottom: 64px;
         }
-
+        
         .section-title h2 {
             font-size: 36px;
             color: var(--dark);
@@ -244,7 +242,7 @@
             position: relative;
             display: inline-block;
         }
-
+        
         .section-title h2:after {
             content: '';
             position: absolute;
@@ -256,42 +254,42 @@
             background-color: var(--primary);
             border-radius: 3px;
         }
-
+        
         .section-title p {
             color: var(--muted);
             max-width: 600px;
             margin: 0 auto;
             font-size: 16px;
         }
-
+        
         /* Cards */
         .cards {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 32px;
         }
-
+        
         .card {
             background-color: var(--card-bg);
             border-radius: 12px;
             overflow: hidden;
             box-shadow: var(--shadow-sm);
             transition: var(--transition);
-            border: 1px solid rgba(0,0,0,0.05); /* Slightly more visible border */
+            border: 1px solid rgba(0,0,0,0.03);
             display: flex;
             flex-direction: column;
         }
-
+        
         .card:hover {
             transform: translateY(-8px);
             box-shadow: var(--shadow-lg);
         }
-
+        
         .card-header {
             padding: 24px;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
+            border-bottom: 1px solid rgba(0,0,0,0.03);
         }
-
+        
         .card-header h3 {
             font-size: 20px;
             margin-bottom: 8px;
@@ -299,30 +297,34 @@
             display: flex;
             align-items: center;
         }
-
+        
         .card-header h3 i {
             margin-right: 12px;
             font-size: 18px;
-            /* Use primary/secondary for icons if needed, or keep semantic colors */
-            /* Example: color: var(--primary); */
         }
-
-        /* Keep semantic colors for icons in cards */
-        .positive { color: #4caf50; }
-        .negative { color: #f44336; }
-        .neutral { color: #ffc107; }
-
-
+        
+        .positive {
+            color: var(--success);
+        }
+        
+        .negative {
+            color: var(--danger);
+        }
+        
+        .neutral {
+            color: var(--warning);
+        }
+        
         .card-body {
             padding: 24px;
             flex-grow: 1;
         }
-
+        
         .card-body ul {
             list-style: none;
             margin-bottom: 24px;
         }
-
+        
         .card-body li {
             margin-bottom: 12px;
             position: relative;
@@ -330,7 +332,7 @@
             font-size: 15px;
             color: var(--text);
         }
-
+        
         .card-body li:before {
             content: "•";
             position: absolute;
@@ -338,20 +340,20 @@
             color: var(--muted);
             font-weight: bold;
         }
-
+        
         .card-body li strong {
             color: var(--dark);
             font-weight: 600;
         }
-
+        
         .card-footer {
             padding: 16px 24px;
             background-color: rgba(0,0,0,0.02);
-            border-top: 1px solid rgba(0,0,0,0.05);
+            border-top: 1px solid rgba(0,0,0,0.03);
             font-size: 14px;
             color: var(--muted);
         }
-
+        
         /* Charts */
         .chart-container {
             background-color: var(--card-bg);
@@ -359,54 +361,61 @@
             padding: 32px;
             box-shadow: var(--shadow-sm);
             margin-bottom: 32px;
-            border: 1px solid rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.03);
             transition: var(--transition);
-            position: relative; /* Needed for chart responsiveness */
-            height: 450px; /* Default height */
         }
-
+        
         .chart-container:hover {
             box-shadow: var(--shadow-md);
         }
-
+        
         .chart-header {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start; /* Align items to the top */
-            margin-bottom: 16px; /* Reduced margin */
-            flex-wrap: wrap; /* Allow wrapping if needed */
+            align-items: center;
+            margin-bottom: 24px;
         }
-
+        
         .chart-header h3 {
             font-size: 18px;
             font-weight: 600;
             color: var(--dark);
-            margin-right: 16px; /* Add space between title and note */
-            margin-bottom: 8px; /* Add bottom margin for wrapping */
         }
-        .chart-header small {
-            font-size: 13px;
-            color: var(--muted);
-            text-align: right;
-            margin-bottom: 8px;
+        
+        .chart-wrapper {
+            height: 400px;
+            position: relative;
         }
-
+        
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+        
+        .anomaly-marker {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: var(--danger);
+            border-radius: 50%;
+            transform: translate(-4px, -4px);
+        }
+        
         /* Table */
         .insight-list {
             background-color: var(--card-bg);
             border-radius: 12px;
             padding: 32px;
             box-shadow: var(--shadow-sm);
-            border: 1px solid rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.03);
             transition: var(--transition);
             width: 100%;
-            overflow-x: auto; /* Allow horizontal scrolling on small screens */
         }
-
+        
         .insight-list:hover {
             box-shadow: var(--shadow-md);
         }
-
+        
         table {
             width: 100%;
             border-collapse: collapse;
@@ -414,45 +423,43 @@
             font-size: 15px;
             border-radius: 8px;
             overflow: hidden;
-            min-width: 600px; /* Ensure table has minimum width */
         }
-
+        
         th, td {
             padding: 16px;
             text-align: center;
             border: 1px solid rgba(0,0,0,0.05);
-            white-space: nowrap; /* Prevent text wrapping in cells */
         }
-
+        
         th {
             background-color: var(--primary);
             color: white;
             font-weight: 600;
         }
-
+        
         tr:nth-child(even) {
             background-color: rgba(0,0,0,0.02);
         }
-
+        
         tr:hover {
             background-color: rgba(0,0,0,0.03);
         }
-
+        
         /* Conclusion */
         .conclusion {
             background-color: var(--dark);
             color: white;
             text-align: center;
         }
-
+        
         .conclusion .section-title h2 {
             color: white;
         }
-
+        
         .conclusion .section-title p {
             color: rgba(255,255,255,0.7);
         }
-
+        
         .verdict-box {
             background-color: var(--card-bg);
             border-radius: 12px;
@@ -462,20 +469,20 @@
             color: var(--text);
             box-shadow: 0 12px 24px rgba(0,0,0,0.08);
         }
-
+        
         .verdict-box h3 {
             font-size: 24px;
             margin-bottom: 24px;
             color: var(--primary);
             font-weight: 600;
         }
-
+        
         .verdict-box p {
             margin-bottom: 24px;
             font-size: 16px;
             line-height: 1.7;
         }
-
+        
         .rating {
             display: inline-block;
             background-color: var(--warning);
@@ -486,7 +493,7 @@
             font-size: 18px;
             margin-bottom: 32px;
         }
-
+        
         /* Back to top button */
         .back-to-top {
             position: fixed;
@@ -510,87 +517,84 @@
             border: none;
             outline: none;
         }
-
+        
         .back-to-top.visible {
             opacity: 1;
             visibility: visible;
         }
-
+        
         .back-to-top:hover {
             background-color: var(--dark);
             transform: translateY(-3px);
         }
-
+        
         /* Footer */
         footer {
             background-color: var(--card-bg);
             padding: 32px 0;
             border-top: 1px solid rgba(0,0,0,0.05);
         }
-
+        
         .footer-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 0;
         }
-
+        
         .footer-logo {
             font-size: 18px;
             font-weight: 600;
             color: var(--dark);
             letter-spacing: -0.5px;
         }
-
+        
         .footer-logo span {
             color: var(--primary);
         }
-
+        
         .footer-links {
             display: flex;
             list-style: none;
         }
-
+        
         .footer-links li {
             margin-left: 24px;
         }
-
+        
         .footer-links a {
             text-decoration: none;
             color: var(--muted);
             font-size: 14px;
             transition: color 0.3s;
         }
-
+        
         .footer-links a:hover {
             color: var(--primary);
         }
-
+        
         .copyright {
             color: var(--muted);
             font-size: 14px;
             margin-top: 0;
         }
-
+        
         /* Responsive */
         @media (max-width: 992px) {
             .hero h1 {
                 font-size: 42px;
             }
-
+            
             .section-title h2 {
                 font-size: 32px;
             }
-            .chart-container {
-                height: 400px; /* Adjust height for medium screens */
-            }
         }
-
+        
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
                 position: fixed;
-                top: 80px; /* Adjust based on header height */
+                top: 80px;
                 left: 0;
                 width: 100%;
                 background-color: var(--card-bg);
@@ -599,81 +603,66 @@
                 padding: 20px 0;
                 box-shadow: var(--shadow-md);
             }
-
+            
             .nav-links.show {
                 display: flex;
             }
-
+            
             .nav-links li {
                 margin: 12px 0;
             }
-
+            
             .mobile-menu {
                 display: block;
             }
-
+            
             .hero {
                 padding: 160px 0 80px;
             }
-
+            
             .hero h1 {
                 font-size: 36px;
             }
-
+            
             .section {
                 padding: 64px 0;
             }
-
+            
             .section-title h2 {
                 font-size: 30px;
             }
-
+            
             .cards {
                 grid-template-columns: 1fr;
             }
-
+            
             .verdict-box {
                 padding: 32px;
             }
-
-            /* Responsive Table */
-            .insight-list table,
-            .insight-list thead,
-            .insight-list tbody,
-            .insight-list th,
-            .insight-list td,
-            .insight-list tr {
+            
+            table, th, td {
                 display: block;
             }
-
-            .insight-list thead tr {
+            
+            th {
                 position: absolute;
                 top: -9999px;
                 left: -9999px;
             }
-
-            .insight-list tr {
+            
+            tr {
                 margin-bottom: 16px;
                 border-bottom: 2px solid rgba(0,0,0,0.1);
-                padding-bottom: 16px;
             }
-             .insight-list tr:last-child {
-                 border-bottom: none;
-                 margin-bottom: 0;
-                 padding-bottom: 0;
-             }
-
-            .insight-list td {
+            
+            td {
                 border: none;
                 position: relative;
                 padding-left: 50%;
                 text-align: left;
-                white-space: normal; /* Allow wrapping */
-                padding-top: 8px;
-                padding-bottom: 8px;
             }
-
-            .insight-list td:before {
+            
+            td:before {
                 position: absolute;
                 left: 16px;
                 width: 45%;
@@ -681,59 +670,45 @@
                 white-space: nowrap;
                 font-weight: 600;
                 content: attr(data-label);
-                text-align: left;
             }
-            /* End Responsive Table */
-
+            
             .footer-content {
                 flex-direction: column;
                 text-align: center;
             }
-
+            
             .footer-links {
                 margin-top: 20px;
                 flex-direction: column;
             }
-
+            
             .footer-links li {
                 margin: 8px 0;
                 margin-left: 0;
             }
-
-            .chart-container {
-                height: 350px; /* Adjust height for small screens */
-            }
-             .chart-header {
-                justify-content: center; /* Center header items on small screens */
-                text-align: center;
-            }
-            .chart-header h3 {
-                margin-right: 0;
-            }
-            .chart-header small {
-                text-align: center;
-                width: 100%;
-            }
         }
-
+        
         @media (max-width: 576px) {
             .hero h1 {
                 font-size: 32px;
             }
-
+            
             .hero p {
                 font-size: 16px;
             }
-
+            
             .section-title h2 {
                 font-size: 28px;
             }
-
+            
             .chart-container {
                 padding: 24px;
-                height: 300px; /* Adjust height for extra small screens */
             }
-
+            
+            .chart-wrapper {
+                height: 300px;
+            }
+            
             .verdict-box {
                 padding: 24px;
             }
@@ -775,15 +750,16 @@
                 <h2>Temporal Pattern Analysis</h2>
                 <p>Key trends, inflection points, and growth patterns in PANW's financial performance (FY2020-FY2024)</p>
             </div>
-
+            
             <div class="chart-container">
                 <div class="chart-header">
-                    <h3>Annual Revenue Growth Trend (%)</h3>
-                    <small>Note: Quarterly data shows seasonality (Q4 peaks, Q1 troughs)</small>
+                    <h3>Revenue Growth Trend (Annual & Quarterly)</h3>
                 </div>
-                <canvas id="revenueGrowthChart"></canvas>
+                <div class="chart-wrapper">
+                    <canvas id="revenueChart"></canvas>
+                </div>
             </div>
-
+            
             <div class="cards">
                 <div class="card">
                     <div class="card-header">
@@ -801,7 +777,7 @@
                         Clear inflection point indicating strategic transition to platform model
                     </div>
                 </div>
-
+                
                 <div class="card">
                     <div class="card-header">
                         <h3><i class="fas fa-chart-pie neutral"></i> Profitability</h3>
@@ -809,7 +785,7 @@
                     <div class="card-body">
                         <ul>
                             <li><strong>Extreme volatility</strong> - Net income swings from -86.9% (FY21) to +46.5% (FY22)</li>
-                            <li><strong>Recent stabilization</strong> - +264.7% (FY23) to +4.9% (FY24)</li>
+                            <li><strong>Recent stabilization</strong> - 2.6% (FY23) to 4.9% (FY24)</li>
                             <li><strong>Operating leverage</strong> - FY24 operating income +76.6%</li>
                             <li><strong>Quarterly volatility</strong> - Q3 FY24 net income -84%, Q4 FY24 +28%</li>
                         </ul>
@@ -818,7 +794,7 @@
                         Profitability turnaround evident since FY22-FY23 inflection point
                     </div>
                 </div>
-
+                
                 <div class="card">
                     <div class="card-header">
                         <h3><i class="fas fa-chart-bar positive"></i> Cash Flow</h3>
@@ -846,23 +822,25 @@
                 <h2>Financial Metrics & Anomalies</h2>
                 <p>Cross-statement validation, ratio-based forensic checks, and anomaly detection</p>
             </div>
-
+            
             <div class="chart-container">
                 <div class="chart-header">
-                    <h3>Revenue vs. Accounts Receivable Growth (%)</h3>
-                     <small>Highlighting potential anomalies (FY20, FY22)</small>
+                    <h3>Revenue vs. Accounts Receivable Growth</h3>
                 </div>
-                 <canvas id="revenueVsArChart"></canvas>
+                <div class="chart-wrapper">
+                    <canvas id="arChart"></canvas>
+                </div>
             </div>
-
+            
             <div class="chart-container">
                 <div class="chart-header">
-                    <h3>Operating Cash Flow vs. Net Income Growth (%)</h3>
-                    <small>Note: FY23 Net Income Growth (+264.7%) spike highlighted</small>
+                    <h3>Operating Cash Flow vs. Net Income</h3>
                 </div>
-                <canvas id="ocfVsNetIncomeChart"></canvas>
+                <div class="chart-wrapper">
+                    <canvas id="cashFlowChart"></canvas>
+                </div>
             </div>
-
+            
             <div class="cards">
                 <div class="card">
                     <div class="card-header">
@@ -870,7 +848,7 @@
                     </div>
                     <div class="card-body">
                         <ul>
-                            <li><strong>AR anomalies</strong> - FY20: +78.1% AR vs +17.5% Rev; FY22: +72.7% AR vs +29.3% Rev</li>
+                            <li><strong>AR anomalies</strong> - FY22: +72.7% AR growth vs +29.3% revenue</li>
                             <li><strong>G&A spikes</strong> - FY24 G&A growth at 52%</li>
                             <li><strong>Inventory anomaly</strong> - FY23 +340M% growth from low base</li>
                             <li><strong>Equity volatility</strong> - FY22 equity plunge (-72.5%)</li>
@@ -878,7 +856,7 @@
                         </ul>
                     </div>
                 </div>
-
+                
                 <div class="card">
                     <div class="card-header">
                         <h3><i class="fas fa-balance-scale"></i> Solvency & Liquidity</h3>
@@ -904,7 +882,7 @@
                 <h2>Investment Considerations</h2>
                 <p>Balanced assessment of PANW's potential and risks during platformization</p>
             </div>
-
+            
             <div class="insight-list">
                 <table>
                     <thead>
@@ -958,11 +936,11 @@
                 <h2>Conclusion</h2>
                 <p>Actionable insights based on comprehensive financial analysis</p>
             </div>
-
+            
             <div class="verdict-box">
                 <h3>Strategic Transition with Forensic Considerations</h3>
                 <div class="rating">Buy / Accumulate</div>
-                <p>PANW presents a compelling investment case undergoing a significant strategic transition. The company's strong market position and improving profitability are offset by growth deceleration from its "platformization" strategy and historical forensic anomalies. The FY20/FY22 AR anomalies (+78.1%/+72.7% AR growth vs +17.5%/+29.3% revenue) and FY24 G&A spike (+52%) require particular attention.</p>
+                <p>PANW presents a compelling investment case undergoing a significant strategic transition. The company's strong market position and improving profitability are offset by growth deceleration from its "platformization" strategy and historical forensic anomalies. The FY22 AR anomaly (+72.7% AR growth vs +29.3% revenue) and FY24 G&A spike (+52%) require particular attention.</p>
                 <p>The company's financial strength (net cash position, D/E ratio of 8.4%) and consistent revenue growth (5-year CAGR of 22.6%) provide a solid foundation, but the strategic shift creates near-term uncertainty. The $15B NGS ARR target by 2030 demonstrates ambitious long-term vision.</p>
                 <p><strong>Key Monitoring Points:</strong> Platformization execution, billings growth as leading indicator, AR trends relative to revenue, deferred revenue changes, operating margin progression, and SBC impact on profitability. The strong FCF generation (37-38% guided margins) provides financial flexibility during this transition.</p>
             </div>
@@ -993,347 +971,301 @@
     </footer>
 
     <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('show');
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                
+                // Close mobile menu if open
+                document.querySelector('.nav-links').classList.remove('show');
+            });
+        });
+        
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // Back to top button
+        const backToTopButton = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Chart.js Implementation
         document.addEventListener('DOMContentLoaded', function() {
-            // --- Chart Data ---
-            const fiscalYears = ['FY20', 'FY21', 'FY22', 'FY23', 'FY24'];
-            const revenueGrowth = [17.5, 24.9, 29.3, 25.3, 16.5];
-            const arGrowth = [78.1, 19.6, 72.7, 33.1, 17.3];
-            const ocfGrowth = [-1.9, 45.1, 32.0, 39.9, 17.3];
-            const netIncomeGrowthActual = [-2.3, -86.9, 46.5, 264.7, 4.9];
-
-            // --- Chart Colors from CSS Variables ---
-            const styles = getComputedStyle(document.documentElement);
-            const primaryColor = styles.getPropertyValue('--primary').trim(); // Dark Navy
-            const secondaryColor = styles.getPropertyValue('--secondary').trim(); // Turquoise
-            const warningColor = styles.getPropertyValue('--warning').trim(); // Keep for anomaly highlight
-            const textColor = styles.getPropertyValue('--text').trim();
-            const mutedColor = styles.getPropertyValue('--muted').trim();
-            const gridColor = 'rgba(0, 0, 0, 0.05)'; // Lighter grid lines
-
-            // --- Chart Default Options ---
-            Chart.defaults.font.family = "'Inter', sans-serif";
-            Chart.defaults.font.size = 12;
-            Chart.defaults.color = mutedColor;
-            Chart.defaults.borderColor = gridColor;
-
-            const commonChartOptions = {
-                responsive: true,
-                maintainAspectRatio: false,
-                interaction: {
-                    mode: 'index',
-                    intersect: false,
-                },
-                plugins: {
-                    legend: {
-                        display: true,
-                        position: 'top',
-                        align: 'end',
-                        labels: {
-                            usePointStyle: true,
-                            boxWidth: 10,
-                            padding: 15,
-                            font: {
-                                size: 11
-                            },
-                            color: textColor
+            // Revenue Growth Chart
+            const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+            const revenueChart = new Chart(revenueCtx, {
+                type: 'line',
+                data: {
+                    labels: ['FY2020', 'FY2021', 'FY2022', 'FY2023', 'FY2024'],
+                    datasets: [{
+                        label: 'Annual Revenue Growth (%)',
+                        data: [17.5, 24.9, 29.3, 25.3, 16.5],
+                        borderColor: '#3a506b',
+                        backgroundColor: 'rgba(58, 80, 107, 0.1)',
+                        borderWidth: 3,
+                        tension: 0.3,
+                        fill: true,
+                        pointBackgroundColor: function(context) {
+                            const index = context.dataIndex;
+                            // Highlight FY2022 as peak growth
+                            return index === 2 ? '#f44336' : '#3a506b';
+                        },
+                        pointRadius: function(context) {
+                            const index = context.dataIndex;
+                            return index === 2 ? 6 : 4;
                         }
-                    },
-                    tooltip: {
-                        backgroundColor: 'rgba(0, 0, 0, 0.85)',
-                        titleFont: { weight: '600', size: 13 },
-                        bodyFont: { size: 12 },
-                        padding: 10,
-                        cornerRadius: 4,
-                        usePointStyle: true,
-                        callbacks: {
-                            label: function(context) {
-                                let label = context.dataset.label || '';
-                                if (label) {
-                                    label += ': ';
-                                }
-                                let value = context.parsed.y;
-                                if (value !== null) {
-                                     label += value.toFixed(1) + '%';
-                                }
-                                return label;
-                            }
-                        }
-                    }
+                    }]
                 },
-                scales: {
-                    x: {
-                        grid: {
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
                             display: false
                         },
-                        ticks: {
-                            color: textColor,
-                            font: { size: 11 }
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + context.parsed.y + '%';
+                                }
+                            }
+                        },
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                boxWidth: 12,
+                                padding: 20
+                            }
                         }
                     },
-                    y: {
-                        beginAtZero: false,
-                        grid: {
-                            color: gridColor,
-                            drawBorder: false
-                        },
-                        ticks: {
-                            color: textColor,
-                            font: { size: 11 },
-                            callback: function(value) {
-                                return value + '%';
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            title: {
+                                display: true,
+                                text: 'Growth Rate (%)'
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
                             }
                         }
                     }
                 }
-            };
-
-            // --- 1. Revenue Growth Chart ---
-            const revenueCtx = document.getElementById('revenueGrowthChart')?.getContext('2d');
-            if (revenueCtx) {
-                new Chart(revenueCtx, {
-                    type: 'line',
-                    data: {
-                        labels: fiscalYears,
-                        datasets: [{
-                            label: 'Annual Revenue Growth',
-                            data: revenueGrowth,
-                            borderColor: primaryColor, // Dark Navy
-                            backgroundColor: primaryColor + '1A',
-                            tension: 0.3,
-                            fill: true,
-                            pointBackgroundColor: primaryColor, // Dark Navy
-                            pointBorderColor: '#fff',
-                            pointHoverBackgroundColor: '#fff',
-                            pointHoverBorderColor: primaryColor, // Dark Navy
-                            pointRadius: 4,
-                            pointHoverRadius: 6,
-                            borderWidth: 2
-                        }]
-                    },
-                    options: {
-                        ...commonChartOptions,
-                        plugins: {
-                            ...commonChartOptions.plugins,
-                            legend: { display: false },
-                            title: { display: false }
-                        }
-                    }
-                });
-            }
-
-            // --- 2. Revenue vs. A/R Growth Chart (Line Chart) ---
-            const revArCtx = document.getElementById('revenueVsArChart')?.getContext('2d');
-            if (revArCtx) {
-                new Chart(revArCtx, {
-                    type: 'line',
-                    data: {
-                        labels: fiscalYears,
-                        datasets: [
-                            {
-                                label: 'Revenue Growth',
-                                data: revenueGrowth,
-                                borderColor: primaryColor, // Dark Navy
-                                backgroundColor: primaryColor + '1A',
-                                tension: 0.3,
-                                fill: false,
-                                pointBackgroundColor: primaryColor, // Dark Navy
-                                pointBorderColor: '#fff',
-                                pointHoverBackgroundColor: '#fff',
-                                pointHoverBorderColor: primaryColor, // Dark Navy
-                                pointRadius: 4,
-                                pointHoverRadius: 6,
-                                borderWidth: 2,
-                                yAxisID: 'y'
-                            },
-                            {
-                                label: 'A/R Growth',
-                                data: arGrowth,
-                                borderColor: secondaryColor, // Turquoise
-                                backgroundColor: secondaryColor + '1A',
-                                tension: 0.3,
-                                fill: false,
-                                pointBackgroundColor: (context) => (context.dataIndex === 0 || context.dataIndex === 2) ? warningColor : secondaryColor, // Highlight anomalies with warning color, else Turquoise
-                                pointBorderColor: '#fff',
-                                pointHoverBackgroundColor: '#fff',
-                                pointHoverBorderColor: (context) => (context.dataIndex === 0 || context.dataIndex === 2) ? warningColor : secondaryColor, // Turquoise
-                                pointRadius: (context) => (context.dataIndex === 0 || context.dataIndex === 2) ? 6 : 4,
-                                pointHoverRadius: (context) => (context.dataIndex === 0 || context.dataIndex === 2) ? 8 : 6,
-                                borderDash: [4, 4],
-                                borderWidth: 2,
-                                yAxisID: 'y'
-                            }
-                        ]
-                    },
-                    options: {
-                        ...commonChartOptions,
-                         plugins: {
-                            ...commonChartOptions.plugins,
-                            title: { display: false },
-                            tooltip: {
-                                ...commonChartOptions.plugins.tooltip,
-                                callbacks: {
-                                     ...commonChartOptions.plugins.tooltip.callbacks,
-                                     footer: function(tooltipItems) {
-                                        const index = tooltipItems[0]?.dataIndex;
-                                        if (index === 0 || index === 2) {
-                                            if (tooltipItems.some(item => item.dataset.label === 'A/R Growth')) {
-                                                 return 'Anomaly: A/R growth significantly exceeds Revenue growth.';
-                                            }
-                                        }
-                                        return '';
-                                    }
-                                }
-                            }
-                        },
-                        scales: {
-                            ...commonChartOptions.scales,
-                            y: {
-                                ...commonChartOptions.scales.y,
-                                position: 'left',
-                            }
-                        }
-                    }
-                });
-            }
-
-            // --- 3. OCF vs. Net Income Growth Chart (Line Chart) ---
-            const ocfNiCtx = document.getElementById('ocfVsNetIncomeChart')?.getContext('2d');
-            if (ocfNiCtx) {
-                new Chart(ocfNiCtx, {
-                    type: 'line',
-                    data: {
-                        labels: fiscalYears,
-                        datasets: [
-                            {
-                                label: 'OCF Growth', // Keep label consistent
-                                data: ocfGrowth,
-                                borderColor: primaryColor, // Dark Navy
-                                backgroundColor: primaryColor + '1A',
-                                borderWidth: 2,
-                                tension: 0.3,
-                                fill: false,
-                                pointBackgroundColor: primaryColor, // Dark Navy
-                                pointBorderColor: '#fff',
-                                pointHoverBackgroundColor: '#fff',
-                                pointHoverBorderColor: primaryColor, // Dark Navy
-                                pointRadius: 4,
-                                pointHoverRadius: 6,
-                                yAxisID: 'y'
-                            },
-                            {
-                                label: 'Net Income Growth', // Keep label consistent
-                                data: netIncomeGrowthActual,
-                                borderColor: secondaryColor, // Turquoise
-                                backgroundColor: secondaryColor + '1A',
-                                borderWidth: 2,
-                                tension: 0.3,
-                                fill: false,
-                                pointBackgroundColor: (context) => (context.dataIndex === 3) ? warningColor : secondaryColor, // Highlight FY23 anomaly with warning, else Turquoise
-                                pointBorderColor: '#fff',
-                                pointHoverBackgroundColor: '#fff',
-                                pointHoverBorderColor: (context) => (context.dataIndex === 3) ? warningColor : secondaryColor, // Turquoise
-                                pointRadius: (context) => (context.dataIndex === 3) ? 6 : 4,
-                                pointHoverRadius: (context) => (context.dataIndex === 3) ? 8 : 6,
-                                yAxisID: 'y'
-                            }
-                        ]
-                    },
-                    options: {
-                        ...commonChartOptions,
-                        plugins: {
-                            ...commonChartOptions.plugins,
-                            title: { display: false },
-                            tooltip: {
-                                ...commonChartOptions.plugins.tooltip,
-                                callbacks: {
-                                    ...commonChartOptions.plugins.tooltip.callbacks,
-                                    footer: function(tooltipItems) {
-                                        const index = tooltipItems[0]?.dataIndex;
-                                        if (index === 3 && tooltipItems.some(item => item.dataset.label === 'Net Income Growth')) {
-                                            return 'Anomaly: Significant Net Income growth spike in FY23.';
-                                        }
-                                        return '';
-                                    }
-                                }
-                            }
-                        },
-                        scales: {
-                            ...commonChartOptions.scales,
-                            y: {
-                                ...commonChartOptions.scales.y,
-                                type: 'linear',
-                                display: true,
-                                position: 'left',
-                            }
-                        }
-                    }
-                });
-            }
-
-
-            // --- Mobile menu toggle ---
-            const mobileMenu = document.querySelector('.mobile-menu');
-            const navLinks = document.querySelector('.nav-links');
-            if (mobileMenu && navLinks) {
-                mobileMenu.addEventListener('click', function() {
-                    navLinks.classList.toggle('show');
-                });
-            }
-
-            // --- Smooth scrolling for anchor links ---
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const targetElement = document.querySelector(this.getAttribute('href'));
-                    if (targetElement) {
-                        // Calculate offset for fixed header
-                        const headerOffset = document.getElementById('header')?.offsetHeight || 80;
-                        const elementPosition = targetElement.getBoundingClientRect().top;
-                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset - 20; // Extra 20px padding
-
-                        window.scrollTo({
-                            top: offsetPosition,
-                            behavior: 'smooth'
-                        });
-                    }
-                    // Close mobile menu if open
-                    if (navLinks && navLinks.classList.contains('show')) {
-                        navLinks.classList.remove('show');
-                    }
-                });
             });
 
-            // --- Header scroll effect ---
-            const header = document.getElementById('header');
-            if (header) {
-                window.addEventListener('scroll', function() {
-                    if (window.scrollY > 50) {
-                        header.classList.add('scrolled');
-                    } else {
-                        header.classList.remove('scrolled');
+            // Revenue vs AR Growth Chart
+            const arCtx = document.getElementById('arChart').getContext('2d');
+            const arChart = new Chart(arCtx, {
+                type: 'line',
+                data: {
+                    labels: ['FY2020', 'FY2021', 'FY2022', 'FY2023', 'FY2024'],
+                    datasets: [
+                        {
+                            label: 'Revenue Growth (%)',
+                            data: [17.5, 24.9, 29.3, 25.3, 16.5],
+                            borderColor: '#3a506b',
+                            backgroundColor: 'transparent',
+                            borderWidth: 3,
+                            tension: 0.3,
+                            pointBackgroundColor: '#3a506b',
+                            pointRadius: 4
+                        },
+                        {
+                            label: 'Accounts Receivable Growth (%)',
+                            data: [78.1, 19.6, 72.7, 33.1, 17.3],
+                            borderColor: '#5bc0be',
+                            backgroundColor: 'transparent',
+                            borderWidth: 3,
+                            tension: 0.3,
+                            pointBackgroundColor: function(context) {
+                                const index = context.dataIndex;
+                                // Highlight anomalies in FY2020 and FY2022
+                                return (index === 0 || index === 2) ? '#f44336' : '#5bc0be';
+                            },
+                            pointRadius: function(context) {
+                                const index = context.dataIndex;
+                                return (index === 0 || index === 2) ? 6 : 4;
+                            }
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + context.parsed.y + '%';
+                                }
+                            }
+                        },
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                boxWidth: 12,
+                                padding: 20
+                            }
+                        },
+                        annotation: {
+                            annotations: {
+                                anomaly1: {
+                                    type: 'line',
+                                    mode: 'vertical',
+                                    scaleID: 'x',
+                                    value: 0,
+                                    borderColor: 'rgba(244, 67, 54, 0.3)',
+                                    borderWidth: 1,
+                                    label: {
+                                        content: 'Anomaly',
+                                        enabled: true,
+                                        position: 'top'
+                                    }
+                                },
+                                anomaly2: {
+                                    type: 'line',
+                                    mode: 'vertical',
+                                    scaleID: 'x',
+                                    value: 2,
+                                    borderColor: 'rgba(244, 67, 54, 0.3)',
+                                    borderWidth: 1,
+                                    label: {
+                                        content: 'Anomaly',
+                                        enabled: true,
+                                        position: 'top'
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            title: {
+                                display: true,
+                                text: 'Growth Rate (%)'
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        }
                     }
-                });
-            }
+                }
+            });
 
-            // --- Back to top button ---
-            const backToTopButton = document.getElementById('backToTop');
-            if (backToTopButton) {
-                window.addEventListener('scroll', function() {
-                    if (window.pageYOffset > 300) {
-                        backToTopButton.classList.add('visible');
-                    } else {
-                        backToTopButton.classList.remove('visible');
+            // Cash Flow vs Net Income Chart
+            const cashFlowCtx = document.getElementById('cashFlowChart').getContext('2d');
+            const cashFlowChart = new Chart(cashFlowCtx, {
+                type: 'line',
+                data: {
+                    labels: ['FY2020', 'FY2021', 'FY2022', 'FY2023', 'FY2024'],
+                    datasets: [
+                        {
+                            label: 'Operating Cash Flow Growth (%)',
+                            data: [-1.9, 45.1, 32.0, 39.9, 17.3],
+                            borderColor: '#3a506b',
+                            backgroundColor: 'transparent',
+                            borderWidth: 3,
+                            tension: 0.3,
+                            pointBackgroundColor: '#3a506b',
+                            pointRadius: 4
+                        },
+                        {
+                            label: 'Net Income Growth (%)',
+                            data: [-2.3, -86.9, 46.5, 264.7, 4.9],
+                            borderColor: '#5bc0be',
+                            backgroundColor: 'transparent',
+                            borderWidth: 3,
+                            tension: 0.3,
+                            pointBackgroundColor: function(context) {
+                                const index = context.dataIndex;
+                                // Highlight extreme values
+                                return (index === 1 || index === 3) ? '#f44336' : '#5bc0be';
+                            },
+                            pointRadius: function(context) {
+                                const index = context.dataIndex;
+                                return (index === 1 || index === 3) ? 6 : 4;
+                            }
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + context.parsed.y + '%';
+                                }
+                            }
+                        },
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                boxWidth: 12,
+                                padding: 20
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: 'Growth Rate (%)'
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        }
                     }
-                });
-
-                backToTopButton.addEventListener('click', function() {
-                    window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                    });
-                });
-            }
-        }); // End DOMContentLoaded
+                }
+            });
+        });
     </script>
 </body>
 </html>
