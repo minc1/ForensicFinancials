@@ -18,35 +18,35 @@
             --muted: #6c757d;
             --success: #4caf50;
             --warning: #ffc107;
-            --danger: #f44336;
+            --danger: #f44336; /* Red for divergence */
             --card-bg: #ffffff;
             --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
             --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
             --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
             --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
-        
+
         body {
             background-color: var(--light);
             color: var(--text);
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
         }
-        
+
         .container {
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 16px;
         }
-        
+
         /* Header - Mobile First */
         header {
             background-color: var(--card-bg);
@@ -57,11 +57,11 @@
             transition: var(--transition);
             padding: 12px 0;
         }
-        
+
         header.scrolled {
             box-shadow: var(--shadow-md);
         }
-        
+
         nav {
             display: flex;
             justify-content: space-between;
@@ -70,7 +70,7 @@
             margin: 0 auto;
             padding: 0 16px;
         }
-        
+
         .logo {
             font-size: 18px;
             font-weight: 700;
@@ -78,16 +78,16 @@
             letter-spacing: -0.5px;
             white-space: nowrap;
         }
-        
+
         .logo span {
             color: var(--primary);
         }
-        
+
         .nav-links {
             display: none;
             list-style: none;
             position: fixed;
-            top: 60px;
+            top: 60px; /* Adjust based on header height */
             left: 0;
             width: 100%;
             background-color: var(--card-bg);
@@ -97,15 +97,15 @@
             box-shadow: var(--shadow-md);
             z-index: 99;
         }
-        
+
         .nav-links.show {
             display: flex;
         }
-        
+
         .nav-links li {
             margin: 12px 0;
         }
-        
+
         .nav-links a {
             text-decoration: none;
             color: var(--text);
@@ -115,7 +115,7 @@
             position: relative;
             padding: 8px 0;
         }
-        
+
         .nav-links a:after {
             content: '';
             position: absolute;
@@ -126,15 +126,15 @@
             background-color: var(--primary);
             transition: width 0.3s ease;
         }
-        
+
         .nav-links a:hover:after {
             width: 100%;
         }
-        
+
         .nav-links a:hover {
             color: var(--primary);
         }
-        
+
         .mobile-menu {
             display: block;
             font-size: 22px;
@@ -144,11 +144,11 @@
             background: none;
             border: none;
         }
-        
+
         .mobile-menu:hover {
             transform: scale(1.1);
         }
-        
+
         /* Hero Section */
         .hero {
             padding: 140px 0 60px;
@@ -157,7 +157,7 @@
             position: relative;
             overflow: hidden;
         }
-        
+
         .hero:before {
             content: '';
             position: absolute;
@@ -165,18 +165,18 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
+            background:
                 linear-gradient(135deg, rgba(245,247,250,0.95) 0%, rgba(245,247,250,0.9) 100%),
                 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="50" height="50" x="0" y="0" fill="%233a506b" fill-opacity="0.03"/></svg>');
             background-size: 80px 80px;
             z-index: 0;
         }
-        
+
         .hero .container {
             position: relative;
             z-index: 1;
         }
-        
+
         .hero h1 {
             font-size: 28px;
             font-weight: 700;
@@ -185,7 +185,7 @@
             line-height: 1.3;
             padding: 0 8px;
         }
-        
+
         .hero p {
             font-size: 15px;
             color: var(--muted);
@@ -193,7 +193,7 @@
             padding: 0 12px;
             max-width: 500px;
         }
-        
+
         .cta-button {
             display: inline-flex;
             align-items: center;
@@ -210,7 +210,7 @@
             position: relative;
             overflow: hidden;
         }
-        
+
         .cta-button:after {
             content: '';
             position: absolute;
@@ -222,36 +222,36 @@
             opacity: 0;
             transition: opacity 0.3s;
         }
-        
+
         .cta-button:hover {
             transform: translateY(-2px);
             box-shadow: var(--shadow-lg);
             background-color: var(--dark);
         }
-        
+
         .cta-button:hover:after {
             opacity: 1;
         }
-        
+
         .cta-button i {
             margin-left: 8px;
             transition: transform 0.3s;
         }
-        
+
         .cta-button:hover i {
             transform: translateX(4px);
         }
-        
+
         /* Sections */
         .section {
             padding: 60px 0;
         }
-        
+
         .section-title {
             text-align: center;
             margin-bottom: 40px;
         }
-        
+
         .section-title h2 {
             font-size: 26px;
             color: var(--dark);
@@ -260,7 +260,7 @@
             position: relative;
             display: inline-block;
         }
-        
+
         .section-title h2:after {
             content: '';
             position: absolute;
@@ -272,7 +272,7 @@
             background-color: var(--primary);
             border-radius: 3px;
         }
-        
+
         .section-title p {
             color: var(--muted);
             max-width: 500px;
@@ -280,14 +280,14 @@
             font-size: 15px;
             padding: 0 16px;
         }
-        
+
         /* Cards */
         .cards {
             display: grid;
             grid-template-columns: 1fr;
             gap: 20px;
         }
-        
+
         .card {
             background-color: var(--card-bg);
             border-radius: 10px;
@@ -298,17 +298,17 @@
             display: flex;
             flex-direction: column;
         }
-        
+
         .card:hover {
             transform: translateY(-6px);
             box-shadow: var(--shadow-lg);
         }
-        
+
         .card-header {
             padding: 18px;
             border-bottom: 1px solid rgba(0,0,0,0.03);
         }
-        
+
         .card-header h3 {
             font-size: 17px;
             margin-bottom: 6px;
@@ -316,34 +316,26 @@
             display: flex;
             align-items: center;
         }
-        
+
         .card-header h3 i {
             margin-right: 10px;
             font-size: 15px;
         }
-        
-        .positive {
-            color: var(--success);
-        }
-        
-        .negative {
-            color: var(--danger);
-        }
-        
-        .neutral {
-            color: var(--warning);
-        }
-        
+
+        .positive { color: var(--success); }
+        .negative { color: var(--danger); }
+        .neutral { color: var(--warning); }
+
         .card-body {
             padding: 18px;
             flex-grow: 1;
         }
-        
+
         .card-body ul {
             list-style: none;
             margin-bottom: 16px;
         }
-        
+
         .card-body li {
             margin-bottom: 10px;
             position: relative;
@@ -351,7 +343,7 @@
             font-size: 14px;
             color: var(--text);
         }
-        
+
         .card-body li:before {
             content: "•";
             position: absolute;
@@ -359,12 +351,12 @@
             color: var(--muted);
             font-weight: bold;
         }
-        
+
         .card-body li strong {
             color: var(--dark);
             font-weight: 600;
         }
-        
+
         .card-footer {
             padding: 12px 18px;
             background-color: rgba(0,0,0,0.02);
@@ -372,7 +364,7 @@
             font-size: 13px;
             color: var(--muted);
         }
-        
+
         /* Charts */
         .chart-container {
             background-color: var(--card-bg);
@@ -384,34 +376,34 @@
             transition: var(--transition);
             position: relative;
         }
-        
+
         .chart-container:hover {
             box-shadow: var(--shadow-md);
         }
-        
+
         .chart-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 16px;
         }
-        
+
         .chart-header h3 {
             font-size: 16px;
             font-weight: 600;
             color: var(--dark);
         }
-        
+
         .chart-wrapper {
             height: 280px;
             position: relative;
         }
-        
+
         canvas {
             width: 100% !important;
             height: 100% !important;
         }
-        
+
         /* Table */
         .insight-list {
             background-color: var(--card-bg);
@@ -424,11 +416,11 @@
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
         }
-        
+
         .insight-list:hover {
             box-shadow: var(--shadow-md);
         }
-        
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -438,42 +430,43 @@
             overflow: hidden;
             min-width: 600px;
         }
-        
+
         th, td {
             padding: 12px;
             text-align: center;
             border: 1px solid rgba(0,0,0,0.05);
         }
-        
+
         th {
             background-color: var(--primary);
             color: white;
             font-weight: 600;
         }
-        
+
         tr:nth-child(even) {
             background-color: rgba(0,0,0,0.02);
         }
-        
+
         tr:hover {
             background-color: rgba(0,0,0,0.03);
         }
-        
-        /* Conclusion */
+
+        /* Conclusion Section Styling */
         .conclusion {
             background-color: var(--dark);
             color: white;
             text-align: center;
         }
-        
+
         .conclusion .section-title h2 {
             color: white;
         }
-        
+
         .conclusion .section-title p {
             color: rgba(255,255,255,0.7);
         }
-        
+
+        /* Verdict Box (Modal-like Appearance) */
         .verdict-box {
             background-color: var(--card-bg);
             border-radius: 10px;
@@ -482,32 +475,79 @@
             margin: 0 auto;
             color: var(--text);
             box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+            text-align: left; /* Align text left within the box */
+            border-top: 5px solid var(--primary); /* Add a top border for emphasis */
         }
-        
+
         .verdict-box h3 {
-            font-size: 20px;
-            margin-bottom: 18px;
-            color: var(--primary);
-            font-weight: 600;
+            font-size: 22px; /* Slightly larger title */
+            margin-bottom: 12px;
+            color: var(--dark); /* Darker title */
+            font-weight: 700; /* Bolder title */
+            line-height: 1.3;
         }
-        
-        .verdict-box p {
-            margin-bottom: 18px;
-            font-size: 15px;
-            line-height: 1.6;
-        }
-        
+
         .rating {
             display: inline-block;
             background-color: var(--warning);
             color: var(--dark);
-            padding: 10px 20px;
+            padding: 6px 16px; /* Slightly smaller padding */
             border-radius: 6px;
             font-weight: 600;
-            font-size: 16px;
+            font-size: 15px; /* Slightly smaller font */
             margin-bottom: 20px;
+            border: 1px solid rgba(0,0,0,0.1);
         }
-        
+
+        .verdict-box p {
+            margin-bottom: 16px; /* Consistent paragraph spacing */
+            font-size: 15px;
+            line-height: 1.7; /* Slightly increased line height for readability */
+        }
+
+        .verdict-box strong { /* Make inline strong text stand out more */
+             color: var(--dark);
+             font-weight: 600;
+        }
+
+        .verdict-box .monitoring-points { /* Style the monitoring points section */
+             margin-top: 24px;
+             padding-top: 16px;
+             border-top: 1px solid rgba(0,0,0,0.08); /* Separator line */
+        }
+
+        .verdict-box .monitoring-points h4 { /* Style for the monitoring points title */
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .verdict-box ul {
+            list-style: none; /* Remove default bullets */
+            padding-left: 0; /* Remove default padding */
+            margin-bottom: 16px;
+        }
+
+        .verdict-box li {
+            margin-bottom: 10px; /* Spacing between list items */
+            position: relative;
+            padding-left: 24px; /* Space for custom icon */
+            font-size: 14px;
+            color: var(--text);
+        }
+
+        .verdict-box li::before { /* Custom bullet point using Font Awesome */
+            content: "\f0da"; /* Font Awesome chevron-right icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 6px;
+            top: 2px; /* Adjust vertical alignment */
+            color: var(--primary);
+            font-size: 13px; /* Adjust icon size */
+        }
+
         /* Back to top button */
         .back-to-top {
             position: fixed;
@@ -531,31 +571,31 @@
             border: none;
             outline: none;
         }
-        
+
         .back-to-top.visible {
             opacity: 1;
             visibility: visible;
         }
-        
+
         .back-to-top:hover {
             background-color: var(--dark);
             transform: translateY(-3px);
         }
-        
+
         /* Footer - Mobile Optimized */
         footer {
             background-color: var(--card-bg);
             padding: 24px 0;
             border-top: 1px solid rgba(0,0,0,0.05);
         }
-        
+
         .footer-content {
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
         }
-        
+
         .footer-logo {
             font-size: 16px;
             font-weight: 600;
@@ -563,11 +603,11 @@
             letter-spacing: -0.5px;
             margin-bottom: 16px;
         }
-        
+
         .footer-logo span {
             color: var(--primary);
         }
-        
+
         .footer-links {
             display: flex;
             flex-wrap: wrap;
@@ -576,39 +616,39 @@
             margin: 0 0 16px 0;
             padding: 0;
         }
-        
+
         .footer-links li {
             margin: 8px 12px;
         }
-        
+
         .footer-links a {
             text-decoration: none;
             color: var(--muted);
             font-size: 14px;
             transition: color 0.3s;
         }
-        
+
         .footer-links a:hover {
             color: var(--primary);
         }
-        
+
         .copyright {
             color: var(--muted);
             font-size: 13px;
             margin-top: 8px;
         }
-        
+
         /* Desktop Styles */
         @media (min-width: 768px) {
             /* Header */
             header {
                 padding: 16px 0;
             }
-            
+
             .logo {
                 font-size: 20px;
             }
-            
+
             .nav-links {
                 display: flex;
                 position: static;
@@ -618,47 +658,47 @@
                 padding: 0;
                 width: auto;
             }
-            
+
             .nav-links li {
                 margin: 0 0 0 24px;
             }
-            
+
             .nav-links a {
                 font-size: 15px;
             }
-            
+
             .mobile-menu {
                 display: none;
             }
-            
+
             /* Hero */
             .hero {
                 padding: 180px 0 80px;
             }
-            
+
             .hero h1 {
                 font-size: 36px;
             }
-            
+
             .hero p {
                 font-size: 16px;
             }
-            
+
             /* Sections */
             .section {
                 padding: 80px 0;
             }
-            
+
             .section-title h2 {
                 font-size: 32px;
             }
-            
+
             /* Cards */
             .cards {
                 grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
                 gap: 24px;
             }
-            
+
             /* Footer */
             .footer-content {
                 flex-direction: row;
@@ -666,49 +706,61 @@
                 align-items: center;
                 text-align: left;
             }
-            
+
             .footer-logo {
                 margin-bottom: 0;
             }
-            
+
             .footer-links {
                 margin-bottom: 0;
             }
-            
+
             .footer-links li {
                 margin: 0 0 0 20px;
             }
-            
+
             /* Verdict Box */
             .verdict-box {
                 padding: 40px;
-                max-width: 600px;
+                max-width: 650px; /* Adjusted max-width */
             }
+             .verdict-box h3 {
+                font-size: 24px;
+             }
+             .verdict-box p {
+                font-size: 16px;
+             }
+             .verdict-box li {
+                font-size: 15px;
+             }
+             .verdict-box .monitoring-points h4 {
+                font-size: 18px;
+             }
         }
-        
+
         @media (min-width: 992px) {
             /* Hero */
             .hero {
                 padding: 200px 0 100px;
             }
-            
+
             .hero h1 {
                 font-size: 42px;
             }
-            
+
             /* Section Titles */
             .section-title h2 {
                 font-size: 36px;
             }
-            
+
             /* Chart Wrapper */
             .chart-wrapper {
                 height: 350px;
             }
-            
+
             /* Verdict Box */
             .verdict-box {
-                max-width: 650px;
+                max-width: 700px; /* Further adjusted max-width */
             }
         }
     </style>
@@ -748,7 +800,7 @@
                 <h2>Temporal Pattern Analysis</h2>
                 <p>Examining JD's transition from hyper-growth to mature e-commerce player (FY2020-FY2024)</p>
             </div>
-            
+
             <div class="chart-container">
                 <div class="chart-header">
                     <h3>Revenue Growth Trend (Annual)</h3>
@@ -757,7 +809,7 @@
                     <canvas id="revenueChart"></canvas>
                 </div>
             </div>
-            
+
             <div class="cards">
                 <div class="card">
                     <div class="card-header">
@@ -775,7 +827,7 @@
                         Transition to mature growth phase with macro and competitive pressures
                     </div>
                 </div>
-                
+
                 <div class="card">
                     <div class="card-header">
                         <h3><i class="fas fa-chart-pie positive"></i> Profitability</h3>
@@ -792,7 +844,7 @@
                         Successful profitability turnaround despite revenue slowdown
                     </div>
                 </div>
-                
+
                 <div class="card">
                     <div class="card-header">
                         <h3><i class="fas fa-chart-bar negative"></i> Cash Flow</h3>
@@ -820,7 +872,7 @@
                 <h2>Financial Metrics & Anomalies</h2>
                 <p>Investigating cross-statement divergences, forensic flags, and solvency indicators</p>
             </div>
-            
+
             <div class="chart-container">
                 <div class="chart-header">
                     <h3>Revenue vs. Accounts Receivable Growth (Annual)</h3>
@@ -829,7 +881,7 @@
                     <canvas id="arChart"></canvas>
                 </div>
             </div>
-            
+
             <div class="chart-container">
                 <div class="chart-header">
                     <h3>Operating Cash Flow vs. Net Income Growth (Annual)</h3>
@@ -838,7 +890,7 @@
                     <canvas id="cashFlowChart"></canvas>
                 </div>
             </div>
-            
+
             <div class="cards">
                 <div class="card">
                     <div class="card-header">
@@ -857,7 +909,7 @@
                         Multiple anomalies require scrutiny of working capital management
                     </div>
                 </div>
-                
+
                 <div class="card">
                     <div class="card-header">
                         <h3><i class="fas fa-balance-scale neutral"></i> Solvency & Liquidity</h3>
@@ -886,7 +938,7 @@
                 <h2>Investment Considerations</h2>
                 <p>Balancing JD's profitability turnaround against growth challenges and cash flow concerns</p>
             </div>
-            
+
             <div class="insight-list">
                 <table>
                     <thead>
@@ -942,16 +994,33 @@
     <section class="section conclusion" id="conclusion">
         <div class="container">
             <div class="section-title">
-                <h2>Conclusion</h2>
+                <h2>Conclusion & Verdict</h2> <!-- Updated Title -->
                 <p>Synthesized view of JD.com's financial standing and investment profile</p>
             </div>
-            
+
+            <!-- Refined Verdict Box -->
             <div class="verdict-box">
-                <h3>Profitable but Transitioning E-Commerce Leader with Cash Flow Concerns</h3>
+                <h3>JD.com: Profitability Recovers Amidst Growth Slowdown & Cash Flow Questions</h3>
                 <div class="rating">Selective / Medium Risk</div>
-                <p>JD.com presents a mixed financial picture as it transitions from hyper-growth to a more mature e-commerce player. The company has successfully executed a profitability turnaround, with Operating Income growing +48.8% in 2024 following +32.0% in 2023, demonstrating effective cost control and efficiency measures. However, revenue growth has decelerated significantly from +27.6% in 2021 to +6.8% in 2024, reflecting China's macroeconomic challenges and intense competition.</p>
-                <p>The most pressing concern is the 2024 divergence between strong Net Income growth (+71.1%) and negative Operating Cash Flow growth (-1.0%), driven by significant increases in Accounts Receivable (+35.6%) and Inventory (+31.2%) that outpaced revenue growth. These working capital movements require close scrutiny and explanation from management.</p>
-                <p><strong>Key Monitoring Points:</strong> Resolution of the working capital issues impacting cash flow, sustainability of shareholder returns (buybacks and dividends) given the cash flow pressures, competitive positioning against PDD and Alibaba, and China's macroeconomic recovery. While JD's strong cash position and profitability recovery are positive, investors should be cautious until the cash flow divergence is resolved. The stock may appeal to investors seeking exposure to China's e-commerce sector with a focus on profitability over growth, but requires careful monitoring of the identified risks.</p>
+
+                <p>JD.com is navigating a significant transition from a hyper-growth e-commerce powerhouse to a more mature market participant. While the company has impressively <strong>boosted profitability</strong> through effective cost controls (Operating Income +48.8% in FY24), this comes against a backdrop of sharply decelerated revenue growth (+6.8% in FY24 vs. +27.6% in FY21), reflecting China's challenging macro environment and fierce competition.</p>
+
+                <p>The most critical area demanding investor scrutiny is the <strong>stark divergence between earnings and cash flow in FY2024</strong>. A +71.1% surge in Net Income contrasted sharply with a -1.0% decline in Operating Cash Flow. This disconnect is primarily driven by significant increases in <strong>Accounts Receivable (+35.6%)</strong> and <strong>Inventory (+31.2%)</strong>, both growing much faster than revenue. Such anomalies raise potential red flags regarding earnings quality and working capital management efficiency, requiring close monitoring.</p>
+
+                <p>Despite these concerns, JD maintains a <strong>robust cash position</strong>, offering a degree of financial flexibility. However, the sustainability of its aggressive shareholder return program (including a new $5B buyback) in light of current cash flow trends is questionable. The investment case hinges on management's ability to resolve working capital issues and sustain profitability improvements while navigating intense market competition. A <strong>selective approach</strong> is warranted, favoring investors comfortable with monitoring these specific operational risks.</p>
+
+                <!-- Key Monitoring Points Section -->
+                <div class="monitoring-points">
+                    <h4>Key Monitoring Points</h4>
+                    <ul>
+                        <li><strong>Working Capital Normalization:</strong> Evidence of A/R collection improvement and inventory turnover stabilization relative to sales.</li>
+                        <li><strong>Cash Flow Alignment:</strong> Convergence of Operating Cash Flow growth with Net Income trends in upcoming quarters.</li>
+                        <li><strong>Shareholder Return Funding:</strong> Clarity on how buybacks/dividends are funded (CFO vs. debt vs. cash reserves).</li>
+                        <li><strong>Competitive Dynamics:</strong> Market share trends vs. PDD and Alibaba, particularly in key categories.</li>
+                        <li><strong>Macro Impact:</strong> Sensitivity to changes in Chinese consumer spending and potential stimulus measures.</li>
+                        <li><strong>Logistics Profitability:</strong> Progress in monetizing JD Logistics as an independent service provider.</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </section>
@@ -974,36 +1043,61 @@
                 </ul>
             </div>
             <div class="copyright">
-                <p>© 2024 ForensicFinancials. All rights reserved.</p> 
+                <p>© 2024 ForensicFinancials. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
     <script>
-        // Mobile menu toggle 
-        document.querySelector('.mobile-menu').addEventListener('click', function() {
-            document.querySelector('.nav-links').classList.toggle('show');
+        // Mobile menu toggle
+        const mobileMenuButton = document.querySelector('.mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+        mobileMenuButton.addEventListener('click', function() {
+            navLinks.classList.toggle('show');
+            // Adjust icon based on menu state
+            const icon = mobileMenuButton.querySelector('i');
+            if (navLinks.classList.contains('show')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
         });
-        
+
         // Close mobile menu when clicking on a link
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', function() {
-                document.querySelector('.nav-links').classList.remove('show');
+                if (navLinks.classList.contains('show')) {
+                    navLinks.classList.remove('show');
+                    // Reset icon
+                    const icon = mobileMenuButton.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
             });
         });
-        
-        // Smooth scrolling for anchor links 
+
+        // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                const targetElement = document.querySelector(this.getAttribute('href'));
+                if (targetElement) {
+                    // Calculate offset for fixed header
+                    const headerOffset = document.getElementById('header').offsetHeight + 20; // Add some padding
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
             });
         });
-        
-        // Header scroll effect 
+
+        // Header scroll effect
         window.addEventListener('scroll', function() {
             const header = document.getElementById('header');
             if (window.scrollY > 50) {
@@ -1012,10 +1106,10 @@
                 header.classList.remove('scrolled');
             }
         });
-        
-        // Back to top button 
+
+        // Back to top button
         const backToTopButton = document.getElementById('backToTop');
-        
+
         window.addEventListener('scroll', function() {
             if (window.pageYOffset > 300) {
                 backToTopButton.classList.add('visible');
@@ -1023,7 +1117,7 @@
                 backToTopButton.classList.remove('visible');
             }
         });
-        
+
         backToTopButton.addEventListener('click', function() {
             window.scrollTo({
                 top: 0,
@@ -1033,7 +1127,7 @@
 
         // Chart.js Implementation with Mobile Optimizations
         document.addEventListener('DOMContentLoaded', function() {
-            // Common chart options with mobile adjustments
+            // Common chart options with mobile adjustments and TINY legends
             const commonChartOptions = {
                 responsive: true,
                 maintainAspectRatio: false,
@@ -1042,21 +1136,29 @@
                         position: 'top',
                         align: 'end',
                         labels: {
-                            boxWidth: 10,
-                            padding: 10,
+                            // --- TINY Legend Configuration ---
+                            boxWidth: 6,        // Smaller box/point width
+                            boxHeight: 6,       // Explicitly set height (might be overridden by usePointStyle)
+                            padding: 5,         // Reduced padding between items
                             font: {
-                                size: window.innerWidth <= 768 ? 10 : 11
+                                size: 10        // Fixed small font size
                             },
-                            usePointStyle: true,
+                            usePointStyle: true, // Use point style (circle, etc.) instead of box
+                            pointStyle: 'circle' // Explicitly set point style
+                            // --- End TINY Legend Configuration ---
                         }
                     },
                     tooltip: {
                         callbacks: {
                             label: function(context) {
+                                // Hide tooltip for the dummy 'Divergence' dataset
+                                if (context.dataset.label === 'Divergence') {
+                                    return null;
+                                }
                                 let label = context.dataset.label || '';
                                 if (label) { label += ': '; }
                                 if (context.parsed.y !== null) {
-                                    label += context.parsed.y.toFixed(1) + '%'; 
+                                    label += context.parsed.y.toFixed(1) + '%';
                                 }
                                 return label;
                             }
@@ -1079,14 +1181,14 @@
                     },
                     y: {
                         beginAtZero: false,
-                        title: { 
-                            display: true, 
+                        title: {
+                            display: true,
                             text: 'Growth Rate (%)',
                             font: {
                                 size: window.innerWidth <= 768 ? 11 : 12
                             }
                         },
-                        ticks: { 
+                        ticks: {
                             callback: function(value) { return value + '%'; },
                             font: {
                                 size: window.innerWidth <= 768 ? 10 : 11
@@ -1097,7 +1199,7 @@
                         }
                     }
                 },
-                interaction: { 
+                interaction: {
                     mode: 'index',
                     intersect: false,
                 },
@@ -1119,18 +1221,18 @@
                     labels: ['FY2020', 'FY2021', 'FY2022', 'FY2023', 'FY2024'],
                     datasets: [{
                         label: 'Annual Revenue Growth (%)',
-                        data: [29.3, 27.6, 9.9, 3.7, 6.8], 
-                        borderColor: '#3a506b', 
-                        backgroundColor: 'rgba(58, 80, 107, 0.1)', 
+                        data: [29.3, 27.6, 9.9, 3.7, 6.8],
+                        borderColor: '#3a506b',
+                        backgroundColor: 'rgba(58, 80, 107, 0.1)',
                         borderWidth: 2,
                         tension: 0.3,
                         fill: true,
-                        pointBackgroundColor: '#3a506b', 
-                        pointRadius: 4,
+                        pointBackgroundColor: '#3a506b',
+                        pointRadius: 4, // Keep points reasonably visible
                         pointHoverRadius: 6
                     }]
                 },
-                options: commonChartOptions 
+                options: commonChartOptions
             });
 
             // Revenue vs AR Growth Chart
@@ -1138,29 +1240,29 @@
             const arChart = new Chart(arCtx, {
                 type: 'line',
                 data: {
-                    labels: ['FY2020', 'FY2021', 'FY2022', 'FY2023', 'FY2024'], 
+                    labels: ['FY2020', 'FY2021', 'FY2022', 'FY2023', 'FY2024'],
                     datasets: [
                         {
                             label: 'Revenue Growth (%)',
-                            data: [29.3, 27.6, 9.9, 3.7, 6.8], 
-                            borderColor: '#3a506b', 
+                            data: [29.3, 27.6, 9.9, 3.7, 6.8],
+                            borderColor: '#3a506b',
                             backgroundColor: 'transparent',
                             borderWidth: 2,
                             tension: 0.3,
-                            pointBackgroundColor: '#3a506b', 
+                            pointBackgroundColor: '#3a506b',
                             pointRadius: 4,
                             pointHoverRadius: 6
                         },
                         {
-                            label: 'Accounts Receivable Growth (%)',
-                            data: [15.0, 18.2, 53.6, -16.1, 35.6], 
-                            borderColor: '#5bc0be', 
+                            label: 'A/R Growth (%)', // Simplified label
+                            data: [15.0, 18.2, 53.6, -16.1, 35.6],
+                            borderColor: '#5bc0be',
                             backgroundColor: 'transparent',
                             borderWidth: 2,
                             tension: 0.3,
                             pointBackgroundColor: function(context) {
                                 const index = context.dataIndex;
-                                return (index === 2 || index === 4) ? '#f44336' : '#5bc0be'; 
+                                return (index === 2 || index === 4) ? '#f44336' : '#5bc0be'; // Use danger color for divergence points
                             },
                             pointRadius: function(context) {
                                 const index = context.dataIndex;
@@ -1170,22 +1272,33 @@
                                 const index = context.dataIndex;
                                 return (index === 2 || index === 4) ? 7 : 6;
                             }
+                        },
+                        // --- Add Dummy Dataset for Divergence Legend ---
+                        {
+                            label: 'Divergence',
+                            borderColor: 'transparent', // No line
+                            backgroundColor: '#f44336', // Red color for legend item
+                            pointStyle: 'circle', // Match other legend items
+                            borderWidth: 0,
+                            pointRadius: 0, // No points on chart
+                            data: [] // No data
                         }
+                        // --- End Dummy Dataset ---
                     ]
                 },
                 options: {
                     ...commonChartOptions,
                     plugins: {
-                        ...commonChartOptions.plugins,
-                        annotation: {
+                        ...commonChartOptions.plugins, // Inherit base plugins (including legend)
+                        annotation: { // Keep annotations if needed
                             annotations: {
                                 label1: {
                                     type: 'label',
-                                    xValue: 2, 
-                                    yValue: 53.6, 
+                                    xValue: 2,
+                                    yValue: 53.6,
                                     content: ['A/R Spike', '(FY22)'],
-                                    color: '#6c757d', 
-                                    font: { 
+                                    color: '#6c757d',
+                                    font: {
                                         size: window.innerWidth <= 768 ? 9 : 10,
                                         weight: 'bold'
                                     },
@@ -1197,11 +1310,11 @@
                                 },
                                 label2: {
                                     type: 'label',
-                                    xValue: 4, 
-                                    yValue: 35.6, 
+                                    xValue: 4,
+                                    yValue: 35.6,
                                     content: ['A/R Spike', '(FY24)'],
-                                    color: '#6c757d', 
-                                    font: { 
+                                    color: '#6c757d',
+                                    font: {
                                         size: window.innerWidth <= 768 ? 9 : 10,
                                         weight: 'bold'
                                     },
@@ -1225,26 +1338,26 @@
                     labels: ['FY2020', 'FY2021', 'FY2022', 'FY2023', 'FY2024'],
                     datasets: [
                         {
-                            label: 'Operating Cash Flow Growth (%)',
-                            data: [71.7, -0.6, 36.7, 2.9, -1.0], 
-                            borderColor: '#3a506b', 
+                            label: 'Op Cash Flow Growth (%)', // Shortened label for tiny legend
+                            data: [71.7, -0.6, 36.7, 2.9, -1.0],
+                            borderColor: '#3a506b',
                             backgroundColor: 'transparent',
                             borderWidth: 2,
                             tension: 0.3,
-                            pointBackgroundColor: '#3a506b', 
+                            pointBackgroundColor: '#3a506b',
                             pointRadius: 4,
                             pointHoverRadius: 6
                         },
                         {
-                            label: 'Net Income Growth (%)',
-                            data: [305.4, -107.2, 3.9, 1.3, 71.1], 
-                            borderColor: '#5bc0be', 
+                            label: 'Net Income Growth (%)', // Simplified label
+                            data: [305.4, -107.2, 3.9, 1.3, 71.1],
+                            borderColor: '#5bc0be',
                             backgroundColor: 'transparent',
                             borderWidth: 2,
                             tension: 0.3,
                             pointBackgroundColor: function(context) {
                                 const index = context.dataIndex;
-                                return (index === 4) ? '#f44336' : '#5bc0be'; 
+                                return (index === 4) ? '#f44336' : '#5bc0be'; // Use danger color for divergence point
                             },
                             pointRadius: function(context) {
                                 const index = context.dataIndex;
@@ -1254,22 +1367,33 @@
                                 const index = context.dataIndex;
                                 return (index === 4) ? 7 : 6;
                             }
+                        },
+                        // --- Add Dummy Dataset for Divergence Legend ---
+                        {
+                            label: 'Divergence',
+                            borderColor: 'transparent', // No line
+                            backgroundColor: '#f44336', // Red color for legend item
+                            pointStyle: 'circle', // Match other legend items
+                            borderWidth: 0,
+                            pointRadius: 0, // No points on chart
+                            data: [] // No data
                         }
+                        // --- End Dummy Dataset ---
                     ]
                 },
                 options: {
                     ...commonChartOptions,
                     plugins: {
-                        ...commonChartOptions.plugins,
-                        annotation: {
+                        ...commonChartOptions.plugins, // Inherit base plugins (including legend)
+                        annotation: { // Keep annotations if needed
                             annotations: {
                                 label1: {
                                     type: 'label',
-                                    xValue: 4, 
-                                    yValue: -1.0, 
+                                    xValue: 4,
+                                    yValue: -1.0,
                                     content: ['CFO Decline', '(FY24)'],
-                                    color: '#6c757d', 
-                                    font: { 
+                                    color: '#6c757d',
+                                    font: {
                                         size: window.innerWidth <= 768 ? 9 : 10,
                                         weight: 'bold'
                                     },
@@ -1287,20 +1411,26 @@
 
             // Handle window resize for chart responsiveness
             function handleResize() {
-                revenueChart.resize();
-                arChart.resize();
-                cashFlowChart.resize();
-                
-                // Update font sizes on resize
-                revenueChart.options.plugins.legend.labels.font.size = window.innerWidth <= 768 ? 10 : 11;
-                arChart.options.plugins.legend.labels.font.size = window.innerWidth <= 768 ? 10 : 11;
-                cashFlowChart.options.plugins.legend.labels.font.size = window.innerWidth <= 768 ? 10 : 11;
-                
-                revenueChart.update();
-                arChart.update();
-                cashFlowChart.update();
+                // Update dynamic options based on window size if needed (e.g., tooltip/tick font sizes)
+                const isMobile = window.innerWidth <= 768;
+
+                [revenueChart, arChart, cashFlowChart].forEach(chart => {
+                    chart.options.plugins.tooltip.bodyFont.size = isMobile ? 11 : 12;
+                    chart.options.scales.x.ticks.font.size = isMobile ? 10 : 12;
+                    chart.options.scales.y.title.font.size = isMobile ? 11 : 12;
+                    chart.options.scales.y.ticks.font.size = isMobile ? 10 : 11;
+                    chart.options.layout.padding = {
+                        top: isMobile ? 30 : 20,
+                        right: isMobile ? 10 : 20,
+                        bottom: isMobile ? 10 : 20,
+                        left: isMobile ? 10 : 20
+                    };
+                    // No need to update legend font size as it's fixed now
+                    chart.resize();
+                    chart.update('none'); // Use 'none' to prevent animation on resize
+                });
             }
-            
+
             window.addEventListener('resize', handleResize);
         });
     </script>
