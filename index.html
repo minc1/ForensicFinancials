@@ -47,7 +47,7 @@
             padding: 0 16px;
         }
         
-        /* Header */
+        /* Header - Mobile First */
         header {
             background-color: var(--card-bg);
             position: fixed;
@@ -55,6 +55,7 @@
             z-index: 100;
             box-shadow: var(--shadow-sm);
             transition: var(--transition);
+            padding: 12px 0;
         }
         
         header.scrolled {
@@ -65,16 +66,17 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 16px 0;
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 16px;
         }
         
         .logo {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 700;
             color: var(--dark);
             letter-spacing: -0.5px;
+            white-space: nowrap;
         }
         
         .logo span {
@@ -82,22 +84,36 @@
         }
         
         .nav-links {
-            display: flex;
+            display: none;
             list-style: none;
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 100%;
+            background-color: var(--card-bg);
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+            box-shadow: var(--shadow-md);
+            z-index: 99;
+        }
+        
+        .nav-links.show {
+            display: flex;
         }
         
         .nav-links li {
-            margin-left: 20px;
+            margin: 12px 0;
         }
         
         .nav-links a {
             text-decoration: none;
             color: var(--text);
             font-weight: 500;
-            font-size: 14px;
+            font-size: 16px;
             transition: color 0.3s;
             position: relative;
-            padding: 6px 0;
+            padding: 8px 0;
         }
         
         .nav-links a:after {
@@ -120,11 +136,13 @@
         }
         
         .mobile-menu {
-            display: none;
+            display: block;
             font-size: 22px;
             cursor: pointer;
             color: var(--dark);
             transition: transform 0.3s;
+            background: none;
+            border: none;
         }
         
         .mobile-menu:hover {
@@ -133,7 +151,7 @@
         
         /* Hero Section */
         .hero {
-            padding: 160px 0 80px;
+            padding: 140px 0 60px;
             text-align: center;
             background-color: #f5f7fa;
             position: relative;
@@ -160,22 +178,20 @@
         }
         
         .hero h1 {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 700;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             color: var(--dark);
             line-height: 1.3;
-            max-width: 100%;
-            margin-left: auto;
-            margin-right: auto;
+            padding: 0 8px;
         }
         
         .hero p {
-            font-size: 16px;
+            font-size: 15px;
             color: var(--muted);
-            max-width: 100%;
-            margin: 0 auto 32px;
-            padding: 0 8px;
+            margin: 0 auto 24px;
+            padding: 0 12px;
+            max-width: 500px;
         }
         
         .cta-button {
@@ -184,7 +200,7 @@
             justify-content: center;
             background-color: var(--primary);
             color: white;
-            padding: 14px 28px;
+            padding: 12px 24px;
             border-radius: 6px;
             text-decoration: none;
             font-weight: 600;
@@ -228,16 +244,16 @@
         
         /* Sections */
         .section {
-            padding: 64px 0;
+            padding: 60px 0;
         }
         
         .section-title {
             text-align: center;
-            margin-bottom: 48px;
+            margin-bottom: 40px;
         }
         
         .section-title h2 {
-            font-size: 28px;
+            font-size: 26px;
             color: var(--dark);
             margin-bottom: 12px;
             font-weight: 700;
@@ -259,7 +275,7 @@
         
         .section-title p {
             color: var(--muted);
-            max-width: 100%;
+            max-width: 500px;
             margin: 0 auto;
             font-size: 15px;
             padding: 0 16px;
@@ -269,7 +285,7 @@
         .cards {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 24px;
+            gap: 20px;
         }
         
         .card {
@@ -289,12 +305,12 @@
         }
         
         .card-header {
-            padding: 20px;
+            padding: 18px;
             border-bottom: 1px solid rgba(0,0,0,0.03);
         }
         
         .card-header h3 {
-            font-size: 18px;
+            font-size: 17px;
             margin-bottom: 6px;
             font-weight: 600;
             display: flex;
@@ -303,7 +319,7 @@
         
         .card-header h3 i {
             margin-right: 10px;
-            font-size: 16px;
+            font-size: 15px;
         }
         
         .positive {
@@ -319,13 +335,13 @@
         }
         
         .card-body {
-            padding: 20px;
+            padding: 18px;
             flex-grow: 1;
         }
         
         .card-body ul {
             list-style: none;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
         
         .card-body li {
@@ -350,7 +366,7 @@
         }
         
         .card-footer {
-            padding: 14px 20px;
+            padding: 12px 18px;
             background-color: rgba(0,0,0,0.02);
             border-top: 1px solid rgba(0,0,0,0.03);
             font-size: 13px;
@@ -361,11 +377,12 @@
         .chart-container {
             background-color: var(--card-bg);
             border-radius: 10px;
-            padding: 20px;
+            padding: 18px;
             box-shadow: var(--shadow-sm);
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             border: 1px solid rgba(0,0,0,0.03);
             transition: var(--transition);
+            position: relative;
         }
         
         .chart-container:hover {
@@ -386,7 +403,7 @@
         }
         
         .chart-wrapper {
-            height: 300px;
+            height: 280px;
             position: relative;
         }
         
@@ -399,12 +416,13 @@
         .insight-list {
             background-color: var(--card-bg);
             border-radius: 10px;
-            padding: 20px;
+            padding: 18px;
             box-shadow: var(--shadow-sm);
             border: 1px solid rgba(0,0,0,0.03);
             transition: var(--transition);
             width: 100%;
             overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
         
         .insight-list:hover {
@@ -459,22 +477,22 @@
         .verdict-box {
             background-color: var(--card-bg);
             border-radius: 10px;
-            padding: 32px 24px;
-            max-width: 600px;
+            padding: 30px;
+            max-width: 700px;
             margin: 0 auto;
             color: var(--text);
             box-shadow: 0 8px 16px rgba(0,0,0,0.08);
         }
         
         .verdict-box h3 {
-            font-size: 22px;
-            margin-bottom: 20px;
+            font-size: 20px;
+            margin-bottom: 18px;
             color: var(--primary);
             font-weight: 600;
         }
         
         .verdict-box p {
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             font-size: 15px;
             line-height: 1.6;
         }
@@ -483,11 +501,11 @@
             display: inline-block;
             background-color: var(--warning);
             color: var(--dark);
-            padding: 10px 24px;
+            padding: 10px 20px;
             border-radius: 6px;
             font-weight: 600;
             font-size: 16px;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
         
         /* Back to top button */
@@ -524,7 +542,7 @@
             transform: translateY(-3px);
         }
         
-        /* Footer */
+        /* Footer - Mobile Optimized */
         footer {
             background-color: var(--card-bg);
             padding: 24px 0;
@@ -534,9 +552,8 @@
         .footer-content {
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            margin-bottom: 0;
+            text-align: center;
         }
         
         .footer-logo {
@@ -553,10 +570,11 @@
         
         .footer-links {
             display: flex;
-            list-style: none;
             flex-wrap: wrap;
             justify-content: center;
-            padding-left: 0;
+            list-style: none;
+            margin: 0 0 16px 0;
+            padding: 0;
         }
         
         .footer-links li {
@@ -566,7 +584,7 @@
         .footer-links a {
             text-decoration: none;
             color: var(--muted);
-            font-size: 13px;
+            font-size: 14px;
             transition: color 0.3s;
         }
         
@@ -577,24 +595,56 @@
         .copyright {
             color: var(--muted);
             font-size: 13px;
-            margin-top: 16px;
-            text-align: center;
+            margin-top: 8px;
         }
         
-        /* Responsive Adjustments */
+        /* Desktop Styles */
         @media (min-width: 768px) {
-            .container {
-                padding: 0 24px;
+            /* Header */
+            header {
+                padding: 16px 0;
             }
             
+            .logo {
+                font-size: 20px;
+            }
+            
+            .nav-links {
+                display: flex;
+                position: static;
+                flex-direction: row;
+                background: transparent;
+                box-shadow: none;
+                padding: 0;
+                width: auto;
+            }
+            
+            .nav-links li {
+                margin: 0 0 0 24px;
+            }
+            
+            .nav-links a {
+                font-size: 15px;
+            }
+            
+            .mobile-menu {
+                display: none;
+            }
+            
+            /* Hero */
             .hero {
-                padding: 180px 0 100px;
+                padding: 180px 0 80px;
             }
             
             .hero h1 {
-                font-size: 38px;
+                font-size: 36px;
             }
             
+            .hero p {
+                font-size: 16px;
+            }
+            
+            /* Sections */
             .section {
                 padding: 80px 0;
             }
@@ -603,55 +653,62 @@
                 font-size: 32px;
             }
             
+            /* Cards */
             .cards {
                 grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-                gap: 28px;
+                gap: 24px;
             }
             
-            .chart-wrapper {
-                height: 350px;
-            }
-            
-            .back-to-top {
-                width: 48px;
-                height: 48px;
-                font-size: 20px;
-            }
-        }
-        
-        @media (min-width: 992px) {
-            .hero {
-                padding: 200px 0 120px;
-            }
-            
-            .hero h1 {
-                font-size: 42px;
-            }
-            
-            .section-title h2 {
-                font-size: 36px;
-            }
-            
-            .chart-wrapper {
-                height: 400px;
-            }
-            
-            .nav-links li {
-                margin-left: 28px;
-            }
-            
+            /* Footer */
             .footer-content {
                 flex-direction: row;
                 justify-content: space-between;
                 align-items: center;
+                text-align: left;
             }
             
             .footer-logo {
                 margin-bottom: 0;
             }
             
+            .footer-links {
+                margin-bottom: 0;
+            }
+            
             .footer-links li {
                 margin: 0 0 0 20px;
+            }
+            
+            /* Verdict Box */
+            .verdict-box {
+                padding: 40px;
+                max-width: 600px;
+            }
+        }
+        
+        @media (min-width: 992px) {
+            /* Hero */
+            .hero {
+                padding: 200px 0 100px;
+            }
+            
+            .hero h1 {
+                font-size: 42px;
+            }
+            
+            /* Section Titles */
+            .section-title h2 {
+                font-size: 36px;
+            }
+            
+            /* Chart Wrapper */
+            .chart-wrapper {
+                height: 350px;
+            }
+            
+            /* Verdict Box */
+            .verdict-box {
+                max-width: 650px;
             }
         }
     </style>
@@ -668,9 +725,9 @@
                     <li><a href="#opportunities">Investment Considerations</a></li>
                     <li><a href="#conclusion">Conclusion</a></li>
                 </ul>
-                <div class="mobile-menu">
+                <button class="mobile-menu">
                     <i class="fas fa-bars"></i>
-                </div>
+                </button>
             </nav>
         </div>
     </header>
@@ -892,7 +949,7 @@
             <div class="verdict-box">
                 <h3>Profitable but Transitioning E-Commerce Leader with Cash Flow Concerns</h3>
                 <div class="rating">Selective / Medium Risk</div>
-                <p>JD.com presents a mixed financial picture as it transitions from hyper-growth to a more mature e-commerce player. The company has successfully executed a profitability turnaround, with Operating Income growing +48.8% in 2024 following +32.0% in 2023, demonstrating effective cost control and efficiency measures. However, revenue growth has decelerated significantly from +27.6% in 2011 to +6.8% in 2024, reflecting China's macroeconomic challenges and intense competition.</p>
+                <p>JD.com presents a mixed financial picture as it transitions from hyper-growth to a more mature e-commerce player. The company has successfully executed a profitability turnaround, with Operating Income growing +48.8% in 2024 following +32.0% in 2023, demonstrating effective cost control and efficiency measures. However, revenue growth has decelerated significantly from +27.6% in 2021 to +6.8% in 2024, reflecting China's macroeconomic challenges and intense competition.</p>
                 <p>The most pressing concern is the 2024 divergence between strong Net Income growth (+71.1%) and negative Operating Cash Flow growth (-1.0%), driven by significant increases in Accounts Receivable (+35.6%) and Inventory (+31.2%) that outpaced revenue growth. These working capital movements require close scrutiny and explanation from management.</p>
                 <p><strong>Key Monitoring Points:</strong> Resolution of the working capital issues impacting cash flow, sustainability of shareholder returns (buybacks and dividends) given the cash flow pressures, competitive positioning against PDD and Alibaba, and China's macroeconomic recovery. While JD's strong cash position and profitability recovery are positive, investors should be cautious until the cash flow divergence is resolved. The stock may appeal to investors seeking exposure to China's e-commerce sector with a focus on profitability over growth, but requires careful monitoring of the identified risks.</p>
             </div>
@@ -928,6 +985,13 @@
             document.querySelector('.nav-links').classList.toggle('show');
         });
         
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function() {
+                document.querySelector('.nav-links').classList.remove('show');
+            });
+        });
+        
         // Smooth scrolling for anchor links 
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -936,11 +1000,6 @@
                 document.querySelector(this.getAttribute('href')).scrollIntoView({
                     behavior: 'smooth'
                 });
-                
-                // Close mobile menu if open
-                if (window.innerWidth <= 768) {
-                    document.querySelector('.nav-links').classList.remove('show');
-                }
             });
         });
         
@@ -979,19 +1038,6 @@
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
-                    title: { display: false },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                let label = context.dataset.label || '';
-                                if (label) { label += ': '; }
-                                if (context.parsed.y !== null) {
-                                    label += context.parsed.y.toFixed(1) + '%'; 
-                                }
-                                return label;
-                            }
-                        }
-                    },
                     legend: {
                         position: 'top',
                         align: 'end',
@@ -1002,7 +1048,21 @@
                                 size: window.innerWidth <= 768 ? 10 : 11
                             },
                             usePointStyle: true,
-                            pointStyle: 'circle'
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) { label += ': '; }
+                                if (context.parsed.y !== null) {
+                                    label += context.parsed.y.toFixed(1) + '%'; 
+                                }
+                                return label;
+                            }
+                        },
+                        bodyFont: {
+                            size: window.innerWidth <= 768 ? 11 : 12
                         }
                     }
                 },
@@ -1226,11 +1286,22 @@
             });
 
             // Handle window resize for chart responsiveness
-            window.addEventListener('resize', function() {
+            function handleResize() {
                 revenueChart.resize();
                 arChart.resize();
                 cashFlowChart.resize();
-            });
+                
+                // Update font sizes on resize
+                revenueChart.options.plugins.legend.labels.font.size = window.innerWidth <= 768 ? 10 : 11;
+                arChart.options.plugins.legend.labels.font.size = window.innerWidth <= 768 ? 10 : 11;
+                cashFlowChart.options.plugins.legend.labels.font.size = window.innerWidth <= 768 ? 10 : 11;
+                
+                revenueChart.update();
+                arChart.update();
+                cashFlowChart.update();
+            }
+            
+            window.addEventListener('resize', handleResize);
         });
     </script>
 </body>
