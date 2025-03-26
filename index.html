@@ -497,6 +497,32 @@
             line-height: 1.6;
         }
         
+        .verdict-box ul {
+            margin-left: 20px;
+            margin-bottom: 16px;
+        }
+        
+        .verdict-box li {
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 20px;
+            font-size: 14px;
+            color: var(--text);
+        }
+        
+        .verdict-box li:before {
+            content: "•";
+            position: absolute;
+            left: 6px;
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        .verdict-box li strong {
+            color: var(--dark);
+            font-weight: 600;
+        }
+        
         .rating {
             display: inline-block;
             background-color: var(--warning);
@@ -596,6 +622,13 @@
             color: var(--muted);
             font-size: 13px;
             margin-top: 8px;
+        }
+        
+        /* Chart Legend Styling */
+        .chartjs-legend .legend-marker {
+            width: 8px !important;
+            height: 8px !important;
+            margin-right: 5px !important;
         }
         
         /* Desktop Styles */
@@ -949,9 +982,21 @@
             <div class="verdict-box">
                 <h3>Profitable but Transitioning E-Commerce Leader with Cash Flow Concerns</h3>
                 <div class="rating">Selective / Medium Risk</div>
-                <p>JD.com presents a mixed financial picture as it transitions from hyper-growth to a more mature e-commerce player. The company has successfully executed a profitability turnaround, with Operating Income growing +48.8% in 2024 following +32.0% in 2023, demonstrating effective cost control and efficiency measures. However, revenue growth has decelerated significantly from +27.6% in 2021 to +6.8% in 2024, reflecting China's macroeconomic challenges and intense competition.</p>
-                <p>The most pressing concern is the 2024 divergence between strong Net Income growth (+71.1%) and negative Operating Cash Flow growth (-1.0%), driven by significant increases in Accounts Receivable (+35.6%) and Inventory (+31.2%) that outpaced revenue growth. These working capital movements require close scrutiny and explanation from management.</p>
-                <p><strong>Key Monitoring Points:</strong> Resolution of the working capital issues impacting cash flow, sustainability of shareholder returns (buybacks and dividends) given the cash flow pressures, competitive positioning against PDD and Alibaba, and China's macroeconomic recovery. While JD's strong cash position and profitability recovery are positive, investors should be cautious until the cash flow divergence is resolved. The stock may appeal to investors seeking exposure to China's e-commerce sector with a focus on profitability over growth, but requires careful monitoring of the identified risks.</p>
+                <p>JD.com presents a mixed financial picture as it transitions from hyper-growth to a more mature e-commerce player. The company has successfully executed a profitability turnaround, with Operating Income growing +48.8% in 2024 following +32.0% in 2023, demonstrating effective cost control and efficiency measures. However, revenue growth has decelerated significantly from +27.6% in 2021 to +6.8% in 2024, reflecting China's macroeconomic challenges and intense competition from players like PDD and Alibaba.</p>
+                
+                <p>The most concerning development is the 2024 divergence between reported earnings and cash generation. While Net Income surged +71.1%, Operating Cash Flow actually declined -1.0%. This discrepancy stems primarily from working capital pressures, with Accounts Receivable growing +35.6% and Inventory increasing +31.2% - both substantially outpacing revenue growth. Such divergences often warrant forensic scrutiny, as they may indicate either temporary operational factors or more concerning earnings quality issues.</p>
+                
+                <p><strong>Key Monitoring Points:</strong></p>
+                <ul>
+                    <li><strong>Working Capital Resolution</strong> - Whether the A/R and inventory build represents temporary factors or systemic issues in collections and inventory management</li>
+                    <li><strong>Cash Return Sustainability</strong> - Capacity to maintain $5B buyback program and dividends given cash flow pressures</li>
+                    <li><strong>Competitive Positioning</strong> - Ability to defend market share against PDD's low-price model and Alibaba's ecosystem</li>
+                    <li><strong>Macro Sensitivity</strong> - Exposure to Chinese consumer sentiment and potential government stimulus</li>
+                    <li><strong>Logistics Monetization</strong> - Progress in converting JD Logistics into a profit center</li>
+                    <li><strong>Leverage Management</strong> - Balance between shareholder returns and maintaining financial flexibility</li>
+                </ul>
+                
+                <p>JD's strong cash position ($25B+) and profitability recovery provide a margin of safety, but investors should monitor the cash flow divergence closely. The stock may appeal to investors seeking exposure to China's e-commerce sector with a focus on profitability over growth, but requires careful monitoring of the identified risks. A selective approach is warranted until management demonstrates resolution of the working capital issues.</p>
             </div>
         </div>
     </section>
@@ -1042,7 +1087,7 @@
                         position: 'top',
                         align: 'end',
                         labels: {
-                            boxWidth: 10,
+                            boxWidth: 8,
                             padding: 10,
                             font: {
                                 size: window.innerWidth <= 768 ? 10 : 11
@@ -1152,7 +1197,7 @@
                             pointHoverRadius: 6
                         },
                         {
-                            label: 'Accounts Receivable Growth (%)',
+                            label: 'Accounts Receivable Growth (%) | Divergence',
                             data: [15.0, 18.2, 53.6, -16.1, 35.6], 
                             borderColor: '#5bc0be', 
                             backgroundColor: 'transparent',
@@ -1160,7 +1205,7 @@
                             tension: 0.3,
                             pointBackgroundColor: function(context) {
                                 const index = context.dataIndex;
-                                return (index === 2 || index === 4) ? '#f44336' : '#5bc0be'; 
+                                return (index === 2 || index === 4) ? '#f44336' : '#5bc0be';
                             },
                             pointRadius: function(context) {
                                 const index = context.dataIndex;
@@ -1236,7 +1281,7 @@
                             pointHoverRadius: 6
                         },
                         {
-                            label: 'Net Income Growth (%)',
+                            label: 'Net Income Growth (%) | Divergence',
                             data: [305.4, -107.2, 3.9, 1.3, 71.1], 
                             borderColor: '#5bc0be', 
                             backgroundColor: 'transparent',
@@ -1244,7 +1289,7 @@
                             tension: 0.3,
                             pointBackgroundColor: function(context) {
                                 const index = context.dataIndex;
-                                return (index === 4) ? '#f44336' : '#5bc0be'; 
+                                return (index === 4) ? '#f44336' : '#5bc0be';
                             },
                             pointRadius: function(context) {
                                 const index = context.dataIndex;
