@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ForensicFinance | Palo Alto Networks Analysis</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #3a506b;
+            --secondary: #5bc0be;
+            --dark: #1c2541;
+            --light: #f8f9fa;
+            --text: #495057;
+            --muted: #6c757d;
+            --success: #4caf50;
+            --warning: #ffc107;
+            --danger: #f44336;
+            --card-bg: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--card-bg);
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 0;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--dark);
+            letter-spacing: -0.5px;
+        }
+        
+        .logo span {
+            color: var(--primary);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 32px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .mobile-menu {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--dark);
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 200px 0 120px;
+            text-align: center;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--dark);
+            line-height: 1.2;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            color: var(--muted);
+            max-width: 640px;
+            margin: 0 auto 48px;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            background-color: var(--dark);
+        }
+        
+        /* Sections */
+        .section {
+            padding: 96px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+        
+        .section-title h2 {
+            font-size: 36px;
+            color: var(--dark);
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+        
+        .section-title p {
+            color: var(--muted);
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 16px;
+        }
+        
+        /* Cards */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+        }
+        
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+        
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+        }
+        
+        .card-header {
+            padding: 24px;
+            border-bottom: 1px solid rgba(0,0,0,0.03);
+        }
+        
+        .card-header h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+        
+        .card-header h3 i {
+            margin-right: 12px;
+            font-size: 18px;
+        }
+        
+        .positive {
+            color: var(--success);
+        }
+        
+        .negative {
+            color: var(--danger);
+        }
+        
+        .neutral {
+            color: var(--warning);
+        }
+        
+        .card-body {
+            padding: 24px;
+        }
+        
+        .card-body ul {
+            list-style: none;
+            margin-bottom: 24px;
+        }
+        
+        .card-body li {
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 24px;
+            font-size: 15px;
+            color: var(--text);
+        }
+        
+        .card-body li:before {
+            content: "•";
+            position: absolute;
+            left: 8px;
+            color: var(--muted);
+        }
+        
+        .card-body li strong {
+            color: var(--dark);
+            font-weight: 500;
+        }
+        
+        /* Charts */
+        .chart-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 32px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            margin-bottom: 32px;
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+        
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        
+        .chart-header h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .chart-placeholder {
+            height: 400px;
+            background-color: #f5f7fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--muted);
+            font-size: 16px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        /* Tabs */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 48px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            padding-bottom: 8px;
+        }
+        
+        .tab-button {
+            padding: 12px 24px;
+            background: none;
+            border: none;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--muted);
+            position: relative;
+        }
+        
+        .tab-button:after {
+            content: "";
+            position: absolute;
+            bottom: -9px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+        
+        .tab-button.active {
+            color: var(--primary);
+        }
+        
+        .tab-button.active:after {
+            transform: scaleX(1);
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Lists */
+        .insight-list {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 32px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+        
+        .insight-list li {
+            margin-bottom: 16px;
+            padding-left: 32px;
+            position: relative;
+            font-size: 15px;
+            color: var(--text);
+        }
+        
+        .opportunities li:before {
+            content: "\f058";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: var(--success);
+            position: absolute;
+            left: 0;
+            font-size: 18px;
+        }
+        
+        .risks li:before {
+            content: "\f06a";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: var(--danger);
+            position: absolute;
+            left: 0;
+            font-size: 18px;
+        }
+        
+        /* Conclusion */
+        .conclusion {
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+        }
+        
+        .conclusion .section-title h2 {
+            color: white;
+        }
+        
+        .conclusion .section-title p {
+            color: rgba(255,255,255,0.7);
+        }
+        
+        .verdict-box {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 48px;
+            max-width: 800px;
+            margin: 0 auto;
+            color: var(--text);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+        }
+        
+        .verdict-box h3 {
+            font-size: 24px;
+            margin-bottom: 24px;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .verdict-box p {
+            margin-bottom: 24px;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+        
+        .rating {
+            display: inline-block;
+            background-color: var(--warning);
+            color: var(--dark);
+            padding: 12px 28px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 18px;
+            margin-bottom: 32px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+            
+            .hero {
+                padding: 160px 0 80px;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .section {
+                padding: 64px 0;
+            }
+            
+            .section-title h2 {
+                font-size: 30px;
+            }
+            
+            .cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Forensic<span>Finance</span></div>
+                <ul class="nav-links">
+                    <li><a href="#trends">Trend Analysis</a></li>
+                    <li><a href="#financials">Financial Metrics</a></li>
+                    <li><a href="#opportunities">Opportunities</a></li>
+                    <li><a href="#conclusion">Conclusion</a></li>
+                </ul>
+                <div class="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Palo Alto Networks<br>Forensic Financial Analysis</h1>
+            <p>Comprehensive forensic evaluation of PANW's financial health, strategic shifts, and investment potential during its platformization transition</p>
+            <a href="#trends" class="cta-button">Explore Analysis</a>
+        </div>
+    </section>
+
+    <!-- Trend Analysis -->
+    <section class="section" id="trends">
+        <div class="container">
+            <div class="section-title">
+                <h2>Temporal Pattern Analysis</h2>
+                <p>Key trends, inflection points, and growth patterns in PANW's financial performance (FY2020-FY2024)</p>
+            </div>
+            
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3>Revenue Growth Trend (Annual & Quarterly)</h3>
+                </div>
+                <div class="chart-placeholder">
+                    [Line chart: Annual revenue growth declining from 29.3% (FY22) to 25.3% (FY23) to 16.5% (FY24) with quarterly fluctuations showing seasonality - Q4 peaks, Q1 troughs]
+                </div>
+            </div>
+            
+            <div class="cards">
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-chart-line positive"></i> Revenue Growth</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li><strong>5-year CAGR ~22.6%</strong> - Robust historical performance</li>
+                            <li><strong>Decelerating trend</strong> - From 29.3% (FY22) to 16.5% (FY24)</li>
+                            <li><strong>Quarterly seasonality</strong> - Q4 peaks, Q1 troughs (-2.3% in Q1 FY25)</li>
+                            <li><strong>Platformization impact</strong> - Strategic shift affecting near-term growth</li>
+                        </ul>
+                        <p>Clear inflection point indicating strategic transition to platform model</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-chart-pie neutral"></i> Profitability</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li><strong>Extreme volatility</strong> - Net income swings from -86.9% (FY21) to +46.5% (FY22)</li>
+                            <li><strong>Recent stabilization</strong> - 2.6% (FY23) to 4.9% (FY24)</li>
+                            <li><strong>Operating leverage</strong> - FY24 operating income +76.6%</li>
+                            <li><strong>Quarterly volatility</strong> - Q3 FY24 net income -84%, Q4 FY24 +28%</li>
+                        </ul>
+                        <p>Profitability turnaround evident since FY22-FY23 inflection point</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-chart-bar positive"></i> Cash Flow</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li><strong>Consistently strong</strong> - OCF growth (40% in FY23, 17.3% in FY24)</li>
+                            <li><strong>FCF margins robust</strong> - Guided 37-38% for FY25</li>
+                            <li><strong>Deferred revenue impact</strong> - Significant working capital contributions</li>
+                            <li><strong>SBC influence</strong> - Stock-based compensation boosts cash flow</li>
+                        </ul>
+                        <p>Cash generation remains a key strength despite recent fluctuations</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Financial Metrics -->
+    <section class="section" id="financials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Financial Metrics & Anomalies</h2>
+                <p>Cross-statement validation, ratio-based forensic checks, and anomaly detection</p>
+            </div>
+            
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3>Revenue vs. Accounts Receivable Growth</h3>
+                </div>
+                <div class="chart-placeholder">
+                    [Dual-axis chart: Multiple anomalies highlighted - FY22: +29.3% revenue vs +72.7% AR; FY24: +16.5% revenue vs +17.3% AR]
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3>Operating Cash Flow vs. Net Income</h3>
+                </div>
+                <div class="chart-placeholder">
+                    [Bar/line chart: OCF consistently exceeds net income - FY23: 39.9% OCF vs 2.6x Net Income; FY24: 17.3% OCF vs 4.9% Net Income]
+                </div>
+            </div>
+            
+            <div class="cards">
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-search-dollar"></i> Forensic Checks</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li><strong>AR anomalies</strong> - FY22: +72.7% AR growth vs +29.3% revenue</li>
+                            <li><strong>G&A spikes</strong> - FY24 G&A growth at 52%</li>
+                            <li><strong>Inventory anomaly</strong> - FY23 +340M% growth from low base</li>
+                            <li><strong>Equity volatility</strong> - FY22 equity plunge (-72.5%)</li>
+                            <li><strong>WC reliance</strong> - CFO heavily dependent on working capital changes</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-balance-scale"></i> Solvency & Liquidity</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li><strong>Low debt/equity</strong> - 8.4% ratio (FY24), down from higher levels</li>
+                            <li><strong>Debt reduction</strong> - FY23 -42.6%, FY24 -37.9%</li>
+                            <li><strong>Net cash position</strong> - Strong balance sheet strength</li>
+                            <li><strong>Interest coverage</strong> - Improved with operating income growth</li>
+                            <li><strong>Customer concentration</strong> - Two distributors >37% of AR (Q3 FY24)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Investment Considerations -->
+    <section class="section" id="opportunities">
+        <div class="container">
+            <div class="section-title">
+                <h2>Investment Considerations</h2>
+                <p>Balanced assessment of PANW's potential and risks during platformization</p>
+            </div>
+            
+            <div class="insight-list">
+                <table style="width:100%; border-collapse: collapse; margin-top: 20px;">
+                    <thead>
+                        <tr style="background-color: var(--primary); color: white;">
+                            <th style="padding: 12px; text-align: left; border: 1px solid rgba(0,0,0,0.1);">Factor</th>
+                            <th style="padding: 12px; text-align: left; border: 1px solid rgba(0,0,0,0.1);">Opportunities</th>
+                            <th style="padding: 12px; text-align: left; border: 1px solid rgba(0,0,0,0.1);">Risks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 12px; border: 1px solid rgba(0,0,0,0.1);"><strong>Market Position</strong></td>
+                            <td style="padding: 12px; border: 1px solid rgba(0,0,0,0.1);">Strong position in growing cybersecurity sector with platformization strategy</td>
+                            <td style="padding: 12px; border: 1px solid rgba(0,0,0,0.1);">Premium valuation leaves little room for execution errors</td>
+                        </tr>
+                        <tr style="background-color: rgba(0,0,0,0.02);">
+                            <td style="padding: 12px; border: 1px solid rgba(0,0,0,0.1);"><strong>Revenue</strong></td>
+                            <td style="padding: 12px; border: 1px solid rgba(0,0,0,0.1);">$15B NGS ARR target by 2030 provides long-term vision</td>
+                            <td style="padding: 12px; border: 1px solid rgba(0,0,0,0.1);">Clear deceleration from 29.3% (FY22) to 16.5% (FY24)</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 12px; border: 1px solid rgba(0,0,0,0.1);"><strong>Profitability</strong></td>
+                            <td style="padding: 12px; border: 1px solid rgba(0,0,0,0.1);">Operating leverage evident with FY24 operating income +76.6%</td>
+                            <td style="padding: 12px; border: 1px solid rgba(0,0,0,0.1);">Extreme quarterly volatility in net income</td>
+                        </tr>
+                        <tr style="background-color: rgba(0,0,0,0.02);">
+                            <td style="padding: 12px; border: 1px solid rgba(0,0,0,0.1);"><strong>Cash Flow</strong></td>
+                            <td style="padding: 12px; border: 1px solid rgba(0,0,0,0.1);">Strong FCF generation (guided 37-38% margins for FY25)</td>
+                            <td style="padding: 12px; border: 1px solid rgba(0,0,0,0.1);">Reliance on SBC and deferred revenue for cash flows</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 12px; border: 1px solid rgba(0,0,0,0.1);"><strong>Financial Health</strong></td>
+                            <td style="padding: 12px; border: 1px solid rgba(0,0,0,0.1);">Net cash position with low D/E ratio (8.4%)</td>
+                            <td style="padding: 12px; border: 1px solid rgba(0,0,0,0.1);">Historical AR anomalies require monitoring</td>
+                        </tr>
+                        <tr style="background-color: rgba(0,0,0,0.02);">
+                            <td style="padding: 12px; border: 1px solid rgba(0,0,0,0.1);"><strong>Strategy</strong></td>
+                            <td style="padding: 12px; border: 1px solid rgba(0,0,0,0.1);">Platformization could drive long-term stickiness and ARR</td>
+                            <td style="padding: 12px; border: 1px solid rgba(0,0,0,0.1);">Near-term growth headwinds from transition</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Conclusion -->
+    <section class="section conclusion" id="conclusion">
+        <div class="container">
+            <div class="section-title">
+                <h2>Conclusion</h2>
+                <p>Actionable insights based on comprehensive financial analysis</p>
+            </div>
+            
+            <div class="verdict-box">
+                <h3>Strategic Transition with Forensic Considerations</h3>
+                <div class="rating">Buy / Accumulate</div>
+                <p>PANW presents a compelling investment case undergoing a significant strategic transition. The company's strong market position and improving profitability are offset by growth deceleration from its "platformization" strategy and historical forensic anomalies. The FY22 AR anomaly (+72.7% AR growth vs +29.3% revenue) and FY24 G&A spike (+52%) require particular attention.</p>
+                <p>The company's financial strength (net cash position, D/E ratio of 8.4%) and consistent revenue growth (5-year CAGR of 22.6%) provide a solid foundation, but the strategic shift creates near-term uncertainty. The $15B NGS ARR target by 2030 demonstrates ambitious long-term vision.</p>
+                <p><strong>Key Monitoring Points:</strong> Platformization execution, billings growth as leading indicator, AR trends relative to revenue, deferred revenue changes, operating margin progression, and SBC impact on profitability. The strong FCF generation (37-38% guided margins) provides financial flexibility during this transition.</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('show');
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
