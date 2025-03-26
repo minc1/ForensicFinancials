@@ -395,15 +395,6 @@
             height: 100% !important;
         }
         
-        .anomaly-marker {
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            background-color: var(--danger);
-            border-radius: 50%;
-            transform: translate(-3px, -3px);
-        }
-        
         /* Table */
         .insight-list {
             background-color: var(--card-bg);
@@ -468,8 +459,8 @@
         .verdict-box {
             background-color: var(--card-bg);
             border-radius: 10px;
-            padding: 32px;
-            max-width: 100%;
+            padding: 32px 24px;
+            max-width: 600px;
             margin: 0 auto;
             color: var(--text);
             box-shadow: 0 8px 16px rgba(0,0,0,0.08);
@@ -588,34 +579,6 @@
             font-size: 13px;
             margin-top: 16px;
             text-align: center;
-        }
-        
-        /* Custom Legend for Anomalies */
-        .custom-legend {
-            display: flex;
-            align-items: center;
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 11px;
-            z-index: 100;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-        
-        .legend-item {
-            display: flex;
-            align-items: center;
-            margin-left: 8px;
-        }
-        
-        .legend-color {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            margin-right: 4px;
         }
         
         /* Responsive Adjustments */
@@ -806,12 +769,6 @@
                     <h3>Revenue vs. Accounts Receivable Growth (Annual)</h3>
                 </div>
                 <div class="chart-wrapper">
-                    <div class="custom-legend">
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #f44336;"></div>
-                            <span>Divergence</span>
-                        </div>
-                    </div>
                     <canvas id="arChart"></canvas>
                 </div>
             </div>
@@ -821,12 +778,6 @@
                     <h3>Operating Cash Flow vs. Net Income Growth (Annual)</h3>
                 </div>
                 <div class="chart-wrapper">
-                    <div class="custom-legend">
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #f44336;"></div>
-                            <span>Divergence</span>
-                        </div>
-                    </div>
                     <canvas id="cashFlowChart"></canvas>
                 </div>
             </div>
@@ -1042,7 +993,17 @@
                         }
                     },
                     legend: {
-                        display: false, // We'll use our custom legend
+                        position: 'top',
+                        align: 'end',
+                        labels: {
+                            boxWidth: 10,
+                            padding: 10,
+                            font: {
+                                size: window.innerWidth <= 768 ? 10 : 11
+                            },
+                            usePointStyle: true,
+                            pointStyle: 'circle'
+                        }
                     }
                 },
                 scales: {
