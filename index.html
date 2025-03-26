@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ForensicFinancials | Palo Alto Networks Analysis</title>
+    <title>ForensicFinancials | JD.com (JD) Analysis</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/2.2.1/chartjs-plugin-annotation.min.js" integrity="sha512-eCD/MhL+Uvj+B89Am2/hMv0Q6dWJjkMv/7G2xMSuvTjYkXOP8zsF5Ec0TrX0V8alM5u0M59fzxBNLCSQ60L3qQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
         :root {
             --primary: #3a506b;
@@ -594,7 +595,7 @@
             .nav-links {
                 display: none;
                 position: fixed;
-                top: 80px;
+                top: 80px; 
                 left: 0;
                 width: 100%;
                 background-color: var(--card-bg);
@@ -610,6 +611,7 @@
             
             .nav-links li {
                 margin: 12px 0;
+                margin-left: 0; 
             }
             
             .mobile-menu {
@@ -640,36 +642,53 @@
                 padding: 32px;
             }
             
-            table, th, td {
-                display: block;
+            /* Responsive Table Styles */
+            table {
+                 display: block;
+                 width: 100%; 
             }
-            
-            th {
-                position: absolute;
-                top: -9999px;
-                left: -9999px;
+            thead {
+                 display: none; 
             }
-            
+            tbody {
+                 display: block;
+                 width: 100%;
+            }
+
             tr {
-                margin-bottom: 16px;
-                border-bottom: 2px solid rgba(0,0,0,0.1);
+                 display: block;
+                 margin-bottom: 16px;
+                 border-bottom: 2px solid rgba(0,0,0,0.1);
+                 padding-bottom: 16px; 
+                 width: 100%;
             }
-            
-            td {
-                border: none;
-                position: relative;
-                padding-left: 50%;
-                text-align: left;
+
+             td {
+                 display: block; 
+                 border: none;
+                 position: relative;
+                 padding-left: 50%; 
+                 text-align: left; 
+                 padding-top: 8px; 
+                 padding-bottom: 8px; 
+                 width: 100%; 
+                 border-bottom: 1px solid rgba(0,0,0,0.05); 
             }
-            
-            td:before {
-                position: absolute;
-                left: 16px;
-                width: 45%;
-                padding-right: 10px;
-                white-space: nowrap;
-                font-weight: 600;
-                content: attr(data-label);
+
+             td:last-child {
+                 border-bottom: 0; 
+             }
+
+             td:before {
+                 position: absolute;
+                 left: 16px;
+                 width: 45%; 
+                 padding-right: 10px;
+                 white-space: nowrap;
+                 font-weight: 600;
+                 content: attr(data-label); 
+                 text-align: left; 
+                 color: var(--dark); 
             }
             
             .footer-content {
@@ -677,15 +696,23 @@
                 text-align: center;
             }
             
+             .footer-logo { 
+                margin-bottom: 20px;
+             }
+
             .footer-links {
-                margin-top: 20px;
+                margin-top: 0; 
                 flex-direction: column;
+                padding-left: 0; 
             }
             
             .footer-links li {
                 margin: 8px 0;
                 margin-left: 0;
             }
+             .copyright { 
+                 margin-top: 20px;
+             }
         }
         
         @media (max-width: 576px) {
@@ -712,6 +739,13 @@
             .verdict-box {
                 padding: 24px;
             }
+             
+             td {
+                 padding-left: 40%; 
+             }
+             td:before {
+                 width: 35%; 
+             }
         }
     </style>
 </head>
@@ -724,7 +758,7 @@
                 <ul class="nav-links">
                     <li><a href="#trends">Trend Analysis</a></li>
                     <li><a href="#financials">Financial Metrics</a></li>
-                    <li><a href="#opportunities">Opportunities</a></li>
+                    <li><a href="#opportunities">Investment Considerations</a></li>
                     <li><a href="#conclusion">Conclusion</a></li>
                 </ul>
                 <div class="mobile-menu">
@@ -737,8 +771,8 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <h1>Palo Alto Networks<br>Forensic Financial Analysis</h1>
-            <p>Comprehensive forensic evaluation of PANW's financial health, strategic shifts, and investment potential during its platformization transition</p>
+            <h1>JD.com (JD)<br>Forensic Financial Analysis</h1>
+            <p>Comprehensive examination of JD's financial performance, growth trajectory, and risk factors for China's e-commerce leader transitioning to maturity.</p>
             <a href="#trends" class="cta-button">Explore Analysis <i class="fas fa-arrow-down"></i></a>
         </div>
     </section>
@@ -748,12 +782,12 @@
         <div class="container">
             <div class="section-title">
                 <h2>Temporal Pattern Analysis</h2>
-                <p>Key trends, inflection points, and growth patterns in PANW's financial performance (FY2020-FY2024)</p>
+                <p>Examining JD's transition from hyper-growth to mature e-commerce player (FY2020-FY2024)</p>
             </div>
             
             <div class="chart-container">
                 <div class="chart-header">
-                    <h3>Revenue Growth Trend (Annual & Quarterly)</h3>
+                    <h3>Revenue Growth Trend (Annual)</h3>
                 </div>
                 <div class="chart-wrapper">
                     <canvas id="revenueChart"></canvas>
@@ -763,52 +797,52 @@
             <div class="cards">
                 <div class="card">
                     <div class="card-header">
-                        <h3><i class="fas fa-chart-line positive"></i> Revenue Growth</h3>
+                        <h3><i class="fas fa-chart-line neutral"></i> Revenue Growth</h3>
                     </div>
                     <div class="card-body">
                         <ul>
-                            <li><strong>5-year CAGR ~22.6%</strong> - Robust historical performance</li>
-                            <li><strong>Decelerating trend</strong> - From 29.3% (FY22) to 16.5% (FY24)</li>
-                            <li><strong>Quarterly seasonality</strong> - Q4 peaks, Q1 troughs (-2.3% in Q1 FY25)</li>
-                            <li><strong>Platformization impact</strong> - Strategic shift affecting near-term growth</li>
+                            <li><strong>Growth Deceleration</strong> - From hyper-growth (+29.3% FY20, +27.6% FY21) to mature phase (+6.8% FY24)</li>
+                            <li><strong>Macro Headwinds</strong> - China slowdown, muted consumer sentiment post-COVID, and intense competition (PDD, Alibaba)</li>
+                            <li><strong>Seasonality</strong> - Revenue typically peaks in Q4 (holiday/Singles Day) and dips in Q1 (Chinese New Year)</li>
+                            <li><strong>Recent Recovery</strong> - Slight rebound to +6.8% in 2024 after +3.7% in 2023</li>
                         </ul>
                     </div>
                     <div class="card-footer">
-                        Clear inflection point indicating strategic transition to platform model
+                        Transition to mature growth phase with macro and competitive pressures
                     </div>
                 </div>
                 
                 <div class="card">
                     <div class="card-header">
-                        <h3><i class="fas fa-chart-pie neutral"></i> Profitability</h3>
+                        <h3><i class="fas fa-chart-pie positive"></i> Profitability</h3>
                     </div>
                     <div class="card-body">
                         <ul>
-                            <li><strong>Extreme volatility</strong> - Net income swings from -86.9% (FY21) to +46.5% (FY22)</li>
-                            <li><strong>Recent stabilization</strong> - 2.6% (FY23) to 4.9% (FY24)</li>
-                            <li><strong>Operating leverage</strong> - FY24 operating income +76.6%</li>
-                            <li><strong>Quarterly volatility</strong> - Q3 FY24 net income -84%, Q4 FY24 +28%</li>
+                            <li><strong>Strong Recovery</strong> - Operating Income growth: +31.9% (FY23), +48.8% (FY24)</li>
+                            <li><strong>Volatile Net Income</strong> - From -107% (FY21) to +71.1% (FY24) due to non-cash items</li>
+                            <li><strong>2021 Trough</strong> - Driven by fair value changes/impairments in equity investments</li>
+                            <li><strong>Cost Optimization</strong> - Improved core profitability through efficiency measures</li>
                         </ul>
                     </div>
                     <div class="card-footer">
-                        Profitability turnaround evident since FY22-FY23 inflection point
+                        Successful profitability turnaround despite revenue slowdown
                     </div>
                 </div>
                 
                 <div class="card">
                     <div class="card-header">
-                        <h3><i class="fas fa-chart-bar positive"></i> Cash Flow</h3>
+                        <h3><i class="fas fa-chart-bar negative"></i> Cash Flow</h3>
                     </div>
                     <div class="card-body">
                         <ul>
-                            <li><strong>Consistently strong</strong> - OCF growth (40% in FY23, 17.3% in FY24)</li>
-                            <li><strong>FCF margins robust</strong> - Guided 37-38% for FY25</li>
-                            <li><strong>Deferred revenue impact</strong> - Significant working capital contributions</li>
-                            <li><strong>SBC influence</strong> - Stock-based compensation boosts cash flow</li>
+                            <li><strong>2024 Red Flag</strong> - Net Income +71.1% but Operating Cash Flow -1.0%</li>
+                            <li><strong>Working Capital Issues</strong> - A/R (+35.6%) and Inventory (+31.2%) growth outpacing revenue</li>
+                            <li><strong>Historical Strength</strong> - CFO growth +36.7% (FY22) when Net Income only +3.9%</li>
+                            <li><strong>Shareholder Returns</strong> - Significant buybacks ($3B completed, new $5B program) and dividends</li>
                         </ul>
                     </div>
                     <div class="card-footer">
-                        Cash generation remains a key strength despite recent fluctuations
+                        Strong historical cash generation but concerning 2024 divergence
                     </div>
                 </div>
             </div>
@@ -820,12 +854,12 @@
         <div class="container">
             <div class="section-title">
                 <h2>Financial Metrics & Anomalies</h2>
-                <p>Cross-statement validation, ratio-based forensic checks, and anomaly detection</p>
+                <p>Investigating cross-statement divergences, forensic flags, and solvency indicators</p>
             </div>
             
             <div class="chart-container">
                 <div class="chart-header">
-                    <h3>Revenue vs. Accounts Receivable Growth</h3>
+                    <h3>Revenue vs. Accounts Receivable Growth (Annual)</h3>
                 </div>
                 <div class="chart-wrapper">
                     <canvas id="arChart"></canvas>
@@ -834,7 +868,7 @@
             
             <div class="chart-container">
                 <div class="chart-header">
-                    <h3>Operating Cash Flow vs. Net Income</h3>
+                    <h3>Operating Cash Flow vs. Net Income Growth (Annual)</h3>
                 </div>
                 <div class="chart-wrapper">
                     <canvas id="cashFlowChart"></canvas>
@@ -844,31 +878,37 @@
             <div class="cards">
                 <div class="card">
                     <div class="card-header">
-                        <h3><i class="fas fa-search-dollar"></i> Forensic Checks</h3>
+                        <h3><i class="fas fa-search negative"></i> Forensic Checks</h3>
                     </div>
                     <div class="card-body">
                         <ul>
-                            <li><strong>AR anomalies</strong> - FY22: +72.7% AR growth vs +29.3% revenue</li>
-                            <li><strong>G&A spikes</strong> - FY24 G&A growth at 52%</li>
-                            <li><strong>Inventory anomaly</strong> - FY23 +340M% growth from low base</li>
-                            <li><strong>Equity volatility</strong> - FY22 equity plunge (-72.5%)</li>
-                            <li><strong>WC reliance</strong> - CFO heavily dependent on working capital changes</li>
+                            <li><strong>A/R Divergence</strong> - Major mismatches vs Revenue (2022: +9.9% Rev, +53.6% A/R; 2024: +6.8% Rev, +35.6% A/R)</li>
+                            <li><strong>Inventory Spike</strong> - 2024 Inventory growth (+31.2%) outpaced COGS (+13.0%) and Revenue (+6.8%)</li>
+                            <li><strong>Cash Flow Anomaly</strong> - 2024 Net Income +71.1% vs Operating Cash Flow -1.0%</li>
+                            <li><strong>Debt Increases</strong> - Significant growth in 2020 (+68%), 2022 (+90.5%), and 2024 (+31.2%)</li>
+                            <li><strong>Retained Earnings</strong> - -1% growth in 2024 despite +71.1% Net Income, suggesting substantial shareholder returns</li>
                         </ul>
+                    </div>
+                     <div class="card-footer">
+                        Multiple anomalies require scrutiny of working capital management
                     </div>
                 </div>
                 
                 <div class="card">
                     <div class="card-header">
-                        <h3><i class="fas fa-balance-scale"></i> Solvency & Liquidity</h3>
+                        <h3><i class="fas fa-balance-scale neutral"></i> Solvency & Liquidity</h3>
                     </div>
                     <div class="card-body">
                         <ul>
-                            <li><strong>Low debt/equity</strong> - 8.4% ratio (FY24), down from higher levels</li>
-                            <li><strong>Debt reduction</strong> - FY23 -42.6%, FY24 -37.9%</li>
-                            <li><strong>Net cash position</strong> - Strong balance sheet strength</li>
-                            <li><strong>Interest coverage</strong> - Improved with operating income growth</li>
-                            <li><strong>Customer concentration</strong> - Two distributors >37% of AR (Q3 FY24)</li>
+                            <li><strong>Strong Cash Position</strong> - Holds significant cash reserves relative to debt</li>
+                            <li><strong>Periodic Leverage</strong> - Large debt increases in 2020, 2022, and 2024 for funding growth and buybacks</li>
+                            <li><strong>Interest Coverage</strong> - Improved in 2024 with Operating Income +48.8% and flat Interest Expense</li>
+                            <li><strong>Funding Mix</strong> - Relies on operating cash flow and periodic debt increases</li>
+                            <li><strong>Shareholder Returns</strong> - Substantial buybacks ($3B completed, new $5B program) and growing dividends</li>
                         </ul>
+                    </div>
+                     <div class="card-footer">
+                        Strong liquidity but increasing leverage from shareholder returns
                     </div>
                 </div>
             </div>
@@ -880,7 +920,7 @@
         <div class="container">
             <div class="section-title">
                 <h2>Investment Considerations</h2>
-                <p>Balanced assessment of PANW's potential and risks during platformization</p>
+                <p>Balancing JD's profitability turnaround against growth challenges and cash flow concerns</p>
             </div>
             
             <div class="insight-list">
@@ -895,33 +935,38 @@
                     <tbody>
                         <tr>
                             <td data-label="Factor"><strong>Market Position</strong></td>
-                            <td data-label="Opportunities">Strong position in growing cybersecurity sector with platformization strategy</td>
-                            <td data-label="Risks">Premium valuation leaves little room for execution errors</td>
+                            <td data-label="Opportunities">Leader in Chinese e-commerce with strong logistics and authentic goods reputation</td>
+                            <td data-label="Risks">Intense competition from PDD (low-price focus) and Alibaba</td>
                         </tr>
                         <tr>
                             <td data-label="Factor"><strong>Revenue</strong></td>
-                            <td data-label="Opportunities">$15B NGS ARR target by 2030 provides long-term vision</td>
-                            <td data-label="Risks">Clear deceleration from 29.3% (FY22) to 16.5% (FY24)</td>
+                            <td data-label="Opportunities">Potential stabilization after transition to mature growth phase</td>
+                            <td data-label="Risks">Macro headwinds in China, consumer sentiment, regulatory environment</td>
                         </tr>
                         <tr>
                             <td data-label="Factor"><strong>Profitability</strong></td>
-                            <td data-label="Opportunities">Operating leverage evident with FY24 operating income +76.6%</td>
-                            <td data-label="Risks">Extreme quarterly volatility in net income</td>
+                            <td data-label="Opportunities">Strong Operating Income growth (+48.8% FY24) from cost controls</td>
+                            <td data-label="Risks">Volatile Net Income due to non-operating items, high operating leverage</td>
                         </tr>
                         <tr>
                             <td data-label="Factor"><strong>Cash Flow</strong></td>
-                            <td data-label="Opportunities">Strong FCF generation (guided 37-38% margins for FY25)</td>
-                            <td data-label="Risks">Reliance on SBC and deferred revenue for cash flows</td>
+                            <td data-label="Opportunities">Historically strong cash generation from operations</td>
+                            <td data-label="Risks">2024 divergence (NI vs CFO), working capital spikes (A/R, Inventory)</td>
                         </tr>
                         <tr>
                             <td data-label="Factor"><strong>Financial Health</strong></td>
-                            <td data-label="Opportunities">Net cash position with low D/E ratio (8.4%)</td>
-                            <td data-label="Risks">Historical AR anomalies require monitoring</td>
+                            <td data-label="Opportunities">Substantial cash reserves provide flexibility</td>
+                            <td data-label="Risks">Periodic large debt increases, increasing leverage for buybacks</td>
                         </tr>
                         <tr>
-                            <td data-label="Factor"><strong>Strategy</strong></td>
-                            <td data-label="Opportunities">Platformization could drive long-term stickiness and ARR</td>
-                            <td data-label="Risks">Near-term growth headwinds from transition</td>
+                            <td data-label="Factor"><strong>Shareholder Returns</strong></td>
+                            <td data-label="Opportunities">Substantial buybacks ($3B completed, new $5B program) and growing dividends</td>
+                            <td data-label="Risks">Returns exceeding net income, potentially straining balance sheet</td>
+                        </tr>
+                         <tr>
+                            <td data-label="Factor"><strong>New Initiatives</strong></td>
+                            <td data-label="Opportunities">JD Logistics as service, international expansion, potential government stimulus</td>
+                            <td data-label="Risks">Execution risk in new areas, capital intensity of logistics network</td>
                         </tr>
                     </tbody>
                 </table>
@@ -934,15 +979,15 @@
         <div class="container">
             <div class="section-title">
                 <h2>Conclusion</h2>
-                <p>Actionable insights based on comprehensive financial analysis</p>
+                <p>Synthesized view of JD.com's financial standing and investment profile</p>
             </div>
             
             <div class="verdict-box">
-                <h3>Strategic Transition with Forensic Considerations</h3>
-                <div class="rating">Buy / Accumulate</div>
-                <p>PANW presents a compelling investment case undergoing a significant strategic transition. The company's strong market position and improving profitability are offset by growth deceleration from its "platformization" strategy and historical forensic anomalies. The FY22 AR anomaly (+72.7% AR growth vs +29.3% revenue) and FY24 G&A spike (+52%) require particular attention.</p>
-                <p>The company's financial strength (net cash position, D/E ratio of 8.4%) and consistent revenue growth (5-year CAGR of 22.6%) provide a solid foundation, but the strategic shift creates near-term uncertainty. The $15B NGS ARR target by 2030 demonstrates ambitious long-term vision.</p>
-                <p><strong>Key Monitoring Points:</strong> Platformization execution, billings growth as leading indicator, AR trends relative to revenue, deferred revenue changes, operating margin progression, and SBC impact on profitability. The strong FCF generation (37-38% guided margins) provides financial flexibility during this transition.</p>
+                <h3>Profitable but Transitioning E-Commerce Leader with Cash Flow Concerns</h3>
+                <div class="rating">Selective / Medium Risk</div>
+                <p>JD.com presents a mixed financial picture as it transitions from hyper-growth to a more mature e-commerce player. The company has successfully executed a profitability turnaround, with Operating Income growing +48.8% in 2024 following +32.0% in 2023, demonstrating effective cost control and efficiency measures. However, revenue growth has decelerated significantly from +27.6% in 2021 to +6.8% in 2024, reflecting China's macroeconomic challenges and intense competition.</p>
+                <p>The most pressing concern is the 2024 divergence between strong Net Income growth (+71.1%) and negative Operating Cash Flow growth (-1.0%), driven by significant increases in Accounts Receivable (+35.6%) and Inventory (+31.2%) that outpaced revenue growth. These working capital movements require close scrutiny and explanation from management.</p>
+                <p><strong>Key Monitoring Points:</strong> Resolution of the working capital issues impacting cash flow, sustainability of shareholder returns (buybacks and dividends) given the cash flow pressures, competitive positioning against PDD and Alibaba, and China's macroeconomic recovery. While JD's strong cash position and profitability recovery are positive, investors should be cautious until the cash flow divergence is resolved. The stock may appeal to investors seeking exposure to China's e-commerce sector with a focus on profitability over growth, but requires careful monitoring of the identified risks.</p>
             </div>
         </div>
     </section>
@@ -960,23 +1005,23 @@
                 <ul class="footer-links">
                     <li><a href="#trends">Trend Analysis</a></li>
                     <li><a href="#financials">Financial Metrics</a></li>
-                    <li><a href="#opportunities">Opportunities</a></li>
+                    <li><a href="#opportunities">Investment Considerations</a></li>
                     <li><a href="#conclusion">Conclusion</a></li>
                 </ul>
             </div>
             <div class="copyright">
-                <p>© 2025 ForensicFinancials. All rights reserved.</p>
+                <p>© 2024 ForensicFinancials. All rights reserved.</p> 
             </div>
         </div>
     </footer>
 
     <script>
-        // Mobile menu toggle
+        // Mobile menu toggle 
         document.querySelector('.mobile-menu').addEventListener('click', function() {
             document.querySelector('.nav-links').classList.toggle('show');
         });
         
-        // Smooth scrolling for anchor links
+        // Smooth scrolling for anchor links 
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -985,12 +1030,11 @@
                     behavior: 'smooth'
                 });
                 
-                // Close mobile menu if open
                 document.querySelector('.nav-links').classList.remove('show');
             });
         });
         
-        // Header scroll effect
+        // Header scroll effect 
         window.addEventListener('scroll', function() {
             const header = document.getElementById('header');
             if (window.scrollY > 50) {
@@ -1000,7 +1044,7 @@
             }
         });
         
-        // Back to top button
+        // Back to top button 
         const backToTopButton = document.getElementById('backToTop');
         
         window.addEventListener('scroll', function() {
@@ -1020,6 +1064,49 @@
 
         // Chart.js Implementation
         document.addEventListener('DOMContentLoaded', function() {
+            // Common chart options
+             const commonChartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) { label += ': '; }
+                                if (context.parsed.y !== null) {
+                                    label += context.parsed.y.toFixed(1) + '%'; 
+                                }
+                                return label;
+                            }
+                        }
+                    },
+                    legend: {
+                        position: 'top', 
+                        align: 'end', 
+                        labels: { 
+                            boxWidth: 10, 
+                            padding: 15, 
+                            font: {
+                                size: 11 
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false, 
+                        title: { display: true, text: 'Growth Rate (%)' },
+                        ticks: { callback: function(value) { return value + '%'; } }
+                    }
+                },
+                 interaction: { 
+                     mode: 'index',
+                     intersect: false,
+                 },
+            };
+
             // Revenue Growth Chart
             const revenueCtx = document.getElementById('revenueChart').getContext('2d');
             const revenueChart = new Chart(revenueCtx, {
@@ -1028,60 +1115,17 @@
                     labels: ['FY2020', 'FY2021', 'FY2022', 'FY2023', 'FY2024'],
                     datasets: [{
                         label: 'Annual Revenue Growth (%)',
-                        data: [17.5, 24.9, 29.3, 25.3, 16.5],
-                        borderColor: '#3a506b',
-                        backgroundColor: 'rgba(58, 80, 107, 0.1)',
+                        data: [29.3, 27.6, 9.9, 3.7, 6.8], 
+                        borderColor: '#3a506b', 
+                        backgroundColor: 'rgba(58, 80, 107, 0.1)', 
                         borderWidth: 3,
                         tension: 0.3,
                         fill: true,
-                        pointBackgroundColor: function(context) {
-                            const index = context.dataIndex;
-                            // Highlight FY2022 as peak growth
-                            return index === 2 ? '#f44336' : '#3a506b';
-                        },
-                        pointRadius: function(context) {
-                            const index = context.dataIndex;
-                            return index === 2 ? 6 : 4;
-                        }
+                        pointBackgroundColor: '#3a506b', 
+                        pointRadius: 4 
                     }]
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        title: {
-                            display: false
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return context.dataset.label + ': ' + context.parsed.y + '%';
-                                }
-                            }
-                        },
-                        legend: {
-                            position: 'top',
-                            labels: {
-                                boxWidth: 12,
-                                padding: 20
-                            }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: false,
-                            title: {
-                                display: true,
-                                text: 'Growth Rate (%)'
-                            },
-                            ticks: {
-                                callback: function(value) {
-                                    return value + '%';
-                                }
-                            }
-                        }
-                    }
-                }
+                options: commonChartOptions 
             });
 
             // Revenue vs AR Growth Chart
@@ -1089,104 +1133,66 @@
             const arChart = new Chart(arCtx, {
                 type: 'line',
                 data: {
-                    labels: ['FY2020', 'FY2021', 'FY2022', 'FY2023', 'FY2024'],
+                    labels: ['FY2020', 'FY2021', 'FY2022', 'FY2023', 'FY2024'], 
                     datasets: [
                         {
                             label: 'Revenue Growth (%)',
-                            data: [17.5, 24.9, 29.3, 25.3, 16.5],
-                            borderColor: '#3a506b',
+                            data: [29.3, 27.6, 9.9, 3.7, 6.8], 
+                            borderColor: '#3a506b', 
                             backgroundColor: 'transparent',
                             borderWidth: 3,
                             tension: 0.3,
-                            pointBackgroundColor: '#3a506b',
+                            pointBackgroundColor: '#3a506b', 
                             pointRadius: 4
                         },
                         {
                             label: 'Accounts Receivable Growth (%)',
-                            data: [78.1, 19.6, 72.7, 33.1, 17.3],
-                            borderColor: '#5bc0be',
+                            data: [15.0, 18.2, 53.6, -16.1, 35.6], 
+                            borderColor: '#5bc0be', 
                             backgroundColor: 'transparent',
                             borderWidth: 3,
                             tension: 0.3,
                             pointBackgroundColor: function(context) {
                                 const index = context.dataIndex;
-                                // Highlight anomalies in FY2020 and FY2022
-                                return (index === 0 || index === 2) ? '#f44336' : '#5bc0be';
+                                return (index === 2 || index === 4) ? '#f44336' : '#5bc0be'; 
                             },
                             pointRadius: function(context) {
                                 const index = context.dataIndex;
-                                return (index === 0 || index === 2) ? 6 : 4;
+                                return (index === 2 || index === 4) ? 6 : 4;
                             }
                         }
                     ]
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        title: {
-                            display: false
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return context.dataset.label + ': ' + context.parsed.y + '%';
-                                }
-                            }
-                        },
-                        legend: {
-                            position: 'top',
-                            labels: {
-                                boxWidth: 12,
-                                padding: 20
-                            }
-                        },
+                 options: {
+                     ...commonChartOptions, 
+                     plugins: { 
+                        ...commonChartOptions.plugins, 
                         annotation: {
                             annotations: {
-                                anomaly1: {
-                                    type: 'line',
-                                    mode: 'vertical',
-                                    scaleID: 'x',
-                                    value: 0,
-                                    borderColor: 'rgba(244, 67, 54, 0.3)',
-                                    borderWidth: 1,
-                                    label: {
-                                        content: 'Anomaly',
-                                        enabled: true,
-                                        position: 'top'
-                                    }
+                                label1: {
+                                    type: 'label',
+                                    xValue: 2, 
+                                    yValue: 53.6, 
+                                    content: ['A/R Spike', '(FY22)'],
+                                    color: '#6c757d', 
+                                    font: { size: 10 },
+                                    position: 'start',
+                                    yAdjust: -15 
                                 },
-                                anomaly2: {
-                                    type: 'line',
-                                    mode: 'vertical',
-                                    scaleID: 'x',
-                                    value: 2,
-                                    borderColor: 'rgba(244, 67, 54, 0.3)',
-                                    borderWidth: 1,
-                                    label: {
-                                        content: 'Anomaly',
-                                        enabled: true,
-                                        position: 'top'
-                                    }
+                                label2: {
+                                    type: 'label',
+                                    xValue: 4, 
+                                    yValue: 35.6, 
+                                    content: ['A/R Spike', '(FY24)'],
+                                    color: '#6c757d', 
+                                    font: { size: 10 },
+                                    position: 'start',
+                                    yAdjust: -15 
                                 }
                             }
                         }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: false,
-                            title: {
-                                display: true,
-                                text: 'Growth Rate (%)'
-                            },
-                            ticks: {
-                                callback: function(value) {
-                                    return value + '%';
-                                }
-                            }
-                        }
-                    }
-                }
+                     } 
+                 }
             });
 
             // Cash Flow vs Net Income Chart
@@ -1198,72 +1204,52 @@
                     datasets: [
                         {
                             label: 'Operating Cash Flow Growth (%)',
-                            data: [-1.9, 45.1, 32.0, 39.9, 17.3],
-                            borderColor: '#3a506b',
+                            data: [71.7, -0.6, 36.7, 2.9, -1.0], 
+                            borderColor: '#3a506b', 
                             backgroundColor: 'transparent',
                             borderWidth: 3,
                             tension: 0.3,
-                            pointBackgroundColor: '#3a506b',
-                            pointRadius: 4
+                            pointBackgroundColor: '#3a506b', 
+                            pointRadius: 4 
                         },
                         {
                             label: 'Net Income Growth (%)',
-                            data: [-2.3, -86.9, 46.5, 264.7, 4.9],
-                            borderColor: '#5bc0be',
+                            data: [305.4, -107.2, 3.9, 1.3, 71.1], 
+                            borderColor: '#5bc0be', 
                             backgroundColor: 'transparent',
                             borderWidth: 3,
                             tension: 0.3,
                             pointBackgroundColor: function(context) {
                                 const index = context.dataIndex;
-                                // Highlight extreme values
-                                return (index === 1 || index === 3) ? '#f44336' : '#5bc0be';
+                                return (index === 4) ? '#f44336' : '#5bc0be'; 
                             },
                             pointRadius: function(context) {
                                 const index = context.dataIndex;
-                                return (index === 1 || index === 3) ? 6 : 4;
+                                return (index === 4) ? 6 : 4;
                             }
                         }
                     ]
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        title: {
-                            display: false
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return context.dataset.label + ': ' + context.parsed.y + '%';
-                                }
-                            }
-                        },
-                        legend: {
-                            position: 'top',
-                            labels: {
-                                boxWidth: 12,
-                                padding: 20
-                            }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            type: 'linear',
-                            display: true,
-                            position: 'left',
-                            title: {
-                                display: true,
-                                text: 'Growth Rate (%)'
-                            },
-                            ticks: {
-                                callback: function(value) {
-                                    return value + '%';
+                 options: {
+                     ...commonChartOptions, 
+                     plugins: { 
+                        ...commonChartOptions.plugins, 
+                        annotation: {
+                            annotations: {
+                                label1: {
+                                    type: 'label',
+                                    xValue: 4, 
+                                    yValue: -1.0, 
+                                    content: ['CFO Decline', '(FY24)'],
+                                    color: '#6c757d', 
+                                    font: { size: 10 },
+                                    position: 'start',
+                                    yAdjust: 15 
                                 }
                             }
                         }
-                    }
-                }
+                     } 
+                 }
             });
         });
     </script>
