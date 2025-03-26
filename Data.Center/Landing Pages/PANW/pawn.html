@@ -531,6 +531,57 @@
             transform: translateY(-3px);
         }
         
+        /* Footer */
+        footer {
+            background-color: var(--card-bg);
+            padding: 32px 0;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0;
+        }
+        
+        .footer-logo {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dark);
+            letter-spacing: -0.5px;
+        }
+        
+        .footer-logo span {
+            color: var(--primary);
+        }
+        
+        .footer-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-left: 24px;
+        }
+        
+        .footer-links a {
+            text-decoration: none;
+            color: var(--muted);
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .copyright {
+            color: var(--muted);
+            font-size: 14px;
+            margin-top: 0;
+        }
+        
         /* Responsive */
         @media (max-width: 992px) {
             .hero h1 {
@@ -622,6 +673,21 @@
                 white-space: nowrap;
                 font-weight: 600;
                 content: attr(data-label);
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .footer-links {
+                margin-top: 20px;
+                flex-direction: column;
+            }
+            
+            .footer-links li {
+                margin: 8px 0;
+                margin-left: 0;
             }
         }
         
@@ -888,6 +954,24 @@
     <button class="back-to-top" id="backToTop">
         <i class="fas fa-arrow-up"></i>
     </button>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">Forensic<span>Financials</span> by Cho</div>
+                <ul class="footer-links">
+                    <li><a href="#trends">Trend Analysis</a></li>
+                    <li><a href="#financials">Financial Metrics</a></li>
+                    <li><a href="#opportunities">Opportunities</a></li>
+                    <li><a href="#conclusion">Conclusion</a></li>
+                </ul>
+            </div>
+            <div class="copyright">
+                <p>© 2025 ForensicFinancials. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
 
     <script>
         // Mobile menu toggle
