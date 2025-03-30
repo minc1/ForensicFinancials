@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ForensicFinancials | JD.com (JD) Analysis</title>
+    <title>ForensicFinancials | Stock Analysis</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/2.2.1/chartjs-plugin-annotation.min.js" integrity="sha512-eCD/MhL+Uvj+B89Am2/hMv0Q6dWJjkMv/7G2xMSuvTjYkXOP8zsF5Ec0TrX0V8alM5u0M59fzxBNLCSQ60L3qQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/2.2.1/chartjs-plugin-annotation.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         :root {
             --primary: #c5a47e;
@@ -159,6 +160,84 @@
             transform: scale(1.1);
         }
 
+        /* Search Styles */
+        .search-container {
+            position: relative;
+            flex-grow: 1;
+            max-width: 300px;
+            margin: 0 20px;
+        }
+
+        .search-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        #tickerSearch {
+            width: 100%;
+            padding: 8px 12px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            background-color: var(--light);
+            color: var(--dark);
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        #tickerSearch:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(197, 164, 126, 0.3);
+        }
+
+        #searchButton {
+            position: absolute;
+            right: 10px;
+            background: none;
+            border: none;
+            color: var(--muted);
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            color: var(--muted);
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-modal:hover {
+            color: var(--primary);
+        }
+
+        /* Rest of your existing styles... */
         .hero {
             padding: 140px 0 60px;
             text-align: center;
@@ -737,14 +816,40 @@
                 height: 350px;
             }
         }
+
+        @media (max-width: 767px) {
+            .search-container {
+                order: -1;
+                width: 100%;
+                margin: 10px 0;
+                max-width: none;
+            }
+            
+            .nav-links.show + .search-container {
+                display: none;
+            }
+        
+            .modal-content {
+                margin: 30% auto;
+                width: 90%;
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- All HTML content remains exactly the same -->
     <header id="header">
         <div class="container">
             <nav>
                 <div class="logo">Forensic<span>Financials</span></div>
+                <div class="search-container">
+                    <div class="search-wrapper">
+                        <input type="text" id="tickerSearch" placeholder="Search ticker (e.g. JD)" 
+                               aria-label="Stock ticker search" autocomplete="off">
+                        <button id="searchButton" aria-label="Search">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
                 <ul class="nav-links">
                     <li><a href="#trends">Trend Analysis</a></li>
                     <li><a href="#financials">Financial Metrics</a></li>
@@ -760,8 +865,8 @@
 
     <section class="hero">
         <div class="container">
-            <h1>JD.com (JD)<br>Forensic Financial Analysis</h1>
-            <p>Comprehensive examination of JD's financial performance, growth trajectory, and risk factors for China's e-commerce leader transitioning to maturity.</p>
+            <h1>Stock Forensic Financial Analysis</h1>
+            <p>Comprehensive examination of financial performance, growth trajectory, and risk factors.</p>
             <a href="#trends" class="cta-button">Explore Analysis <i class="fas fa-arrow-down"></i></a>
         </div>
     </section>
@@ -770,7 +875,7 @@
         <div class="container">
             <div class="section-title">
                 <h2>Temporal Pattern Analysis</h2>
-                <p>Examining JD's transition from hyper-growth to mature e-commerce player (FY2020-FY2024)</p>
+                <p>Examining transition from hyper-growth to mature player</p>
             </div>
 
             <div class="chart-container">
@@ -783,54 +888,45 @@
             </div>
 
             <div class="cards">
-                <div class="card">
+                <div class="card" id="revenue">
                     <div class="card-header">
                         <h3><i class="fas fa-chart-line neutral"></i> Revenue Growth</h3>
                     </div>
                     <div class="card-body">
                         <ul>
-                            <li><strong>Growth Deceleration</strong> - From hyper-growth (+29.3% FY20, +27.6% FY21) to mature phase (+6.8% FY24)</li>
-                            <li><strong>Macro Headwinds</strong> - China slowdown, muted consumer sentiment post-COVID, and intense competition (PDD, Alibaba)</li>
-                            <li><strong>Seasonality</strong> - Revenue typically peaks in Q4 (holiday/Singles Day) and dips in Q1 (Chinese New Year)</li>
-                            <li><strong>Recent Recovery</strong> - Slight rebound to +6.8% in 2024 after +3.7% in 2023</li>
+                            <li>Loading financial data...</li>
                         </ul>
                     </div>
                     <div class="card-footer">
-                        Transition to mature growth phase with macro and competitive pressures
+                        Loading footer...
                     </div>
                 </div>
 
-                <div class="card">
+                <div class="card" id="profitability">
                     <div class="card-header">
-                        <h3><i class="fas fa-chart-pie positive"></i> Profitability</h3>
+                        <h3><i class="fas fa-chart-pie neutral"></i> Profitability</h3>
                     </div>
                     <div class="card-body">
                         <ul>
-                            <li><strong>Strong Recovery</strong> - Operating Income growth: +31.9% (FY23), +48.8% (FY24)</li>
-                            <li><strong>Volatile Net Income</strong> - From -107% (FY21) to +71.1% (FY24) due to non-cash items</li>
-                            <li><strong>2021 Trough</strong> - Driven by fair value changes/impairments in equity investments</li>
-                            <li><strong>Cost Optimization</strong> - Improved core profitability through efficiency measures</li>
+                            <li>Loading financial data...</li>
                         </ul>
                     </div>
                     <div class="card-footer">
-                        Successful profitability turnaround despite revenue slowdown
+                        Loading footer...
                     </div>
                 </div>
 
-                <div class="card">
+                <div class="card" id="cash_flow">
                     <div class="card-header">
-                        <h3><i class="fas fa-chart-bar negative"></i> Cash Flow</h3>
+                        <h3><i class="fas fa-chart-bar neutral"></i> Cash Flow</h3>
                     </div>
                     <div class="card-body">
                         <ul>
-                            <li><strong>2024 Red Flag</strong> - Net Income +71.1% but Operating Cash Flow -1.0%</li>
-                            <li><strong>Working Capital Issues</strong> - A/R (+35.6%) and Inventory (+31.2%) growth outpacing revenue</li>
-                            <li><strong>Historical Strength</strong> - CFO growth +36.7% (FY22) when Net Income only +3.9%</li>
-                            <li><strong>Shareholder Returns</strong> - Significant buybacks ($3B completed, new $5B program) and dividends</li>
+                            <li>Loading financial data...</li>
                         </ul>
                     </div>
                     <div class="card-footer">
-                        Strong historical cash generation but concerning 2024 divergence
+                        Loading footer...
                     </div>
                 </div>
             </div>
@@ -863,39 +959,31 @@
             </div>
 
             <div class="cards">
-                <div class="card">
+                <div class="card" id="forensic">
                     <div class="card-header">
-                        <h3><i class="fas fa-search negative"></i> Forensic Checks</h3>
+                        <h3><i class="fas fa-search neutral"></i> Forensic Checks</h3>
                     </div>
                     <div class="card-body">
                         <ul>
-                            <li><strong>A/R Divergence</strong> - Major mismatches vs Revenue (2022: +9.9% Rev, +53.6% A/R; 2024: +6.8% Rev, +35.6% A/R)</li>
-                            <li><strong>Inventory Spike</strong> - 2024 Inventory growth (+31.2%) outpaced COGS (+13.0%) and Revenue (+6.8%)</li>
-                            <li><strong>Cash Flow Anomaly</strong> - 2024 Net Income +71.1% vs Operating Cash Flow -1.0%</li>
-                            <li><strong>Debt Increases</strong> - Significant growth in 2020 (+68%), 2022 (+90.5%), and 2024 (+31.2%)</li>
-                            <li><strong>Retained Earnings</strong> - -1% growth in 2024 despite +71.1% Net Income, suggesting substantial shareholder returns</li>
+                            <li>Loading financial data...</li>
                         </ul>
                     </div>
-                     <div class="card-footer">
-                        Multiple anomalies require scrutiny of working capital management
+                    <div class="card-footer">
+                        Loading footer...
                     </div>
                 </div>
 
-                <div class="card">
+                <div class="card" id="solvency">
                     <div class="card-header">
                         <h3><i class="fas fa-balance-scale neutral"></i> Solvency & Liquidity</h3>
                     </div>
                     <div class="card-body">
                         <ul>
-                            <li><strong>Strong Cash Position</strong> - Holds significant cash reserves relative to debt</li>
-                            <li><strong>Periodic Leverage</strong> - Large debt increases in 2020, 2022, and 2024 for funding growth and buybacks</li>
-                            <li><strong>Interest Coverage</strong> - Improved in 2024 with Operating Income +48.8% and flat Interest Expense</li>
-                            <li><strong>Funding Mix</strong> - Relies on operating cash flow and periodic debt increases</li>
-                            <li><strong>Shareholder Returns</strong> - Substantial buybacks ($3B completed, new $5B program) and growing dividends</li>
+                            <li>Loading financial data...</li>
                         </ul>
                     </div>
-                     <div class="card-footer">
-                        Strong liquidity but increasing leverage from shareholder returns
+                    <div class="card-footer">
+                        Loading footer...
                     </div>
                 </div>
             </div>
@@ -906,7 +994,7 @@
         <div class="container">
             <div class="section-title">
                 <h2>Investment Considerations</h2>
-                <p>Balancing JD's profitability turnaround against growth challenges and cash flow concerns</p>
+                <p>Balancing profitability turnaround against growth challenges and cash flow concerns</p>
             </div>
 
             <div class="insight-list">
@@ -920,39 +1008,9 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td data-label="Factor"><strong>Market Position</strong></td>
-                            <td data-label="Opportunities">Leader in Chinese e-commerce with strong logistics and authentic goods reputation</td>
-                            <td data-label="Risks">Intense competition from PDD (low-price focus) and Alibaba</td>
-                        </tr>
-                        <tr>
-                            <td data-label="Factor"><strong>Revenue</strong></td>
-                            <td data-label="Opportunities">Potential stabilization after transition to mature growth phase</td>
-                            <td data-label="Risks">Macro headwinds in China, consumer sentiment, regulatory environment</td>
-                        </tr>
-                        <tr>
-                            <td data-label="Factor"><strong>Profitability</strong></td>
-                            <td data-label="Opportunities">Strong Operating Income growth (+48.8% FY24) from cost controls</td>
-                            <td data-label="Risks">Volatile Net Income due to non-operating items, high operating leverage</td>
-                        </tr>
-                        <tr>
-                            <td data-label="Factor"><strong>Cash Flow</strong></td>
-                            <td data-label="Opportunities">Historically strong cash generation from operations</td>
-                            <td data-label="Risks">2024 divergence (NI vs CFO), working capital spikes (A/R, Inventory)</td>
-                        </tr>
-                        <tr>
-                            <td data-label="Factor"><strong>Financial Health</strong></td>
-                            <td data-label="Opportunities">Substantial cash reserves provide flexibility</td>
-                            <td data-label="Risks">Periodic large debt increases, increasing leverage for buybacks</td>
-                        </tr>
-                        <tr>
-                            <td data-label="Factor"><strong>Shareholder Returns</strong></td>
-                            <td data-label="Opportunities">Substantial buybacks ($3B completed, new $5B program) and growing dividends</td>
-                            <td data-label="Risks">Returns exceeding net income, potentially straining balance sheet</td>
-                        </tr>
-                         <tr>
-                            <td data-label="Factor"><strong>New Initiatives</strong></td>
-                            <td data-label="Opportunities">JD Logistics as service, international expansion, potential government stimulus</td>
-                            <td data-label="Risks">Execution risk in new areas, capital intensity of logistics network</td>
+                            <td data-label="Factor"><strong>Loading...</strong></td>
+                            <td data-label="Opportunities">Loading data...</td>
+                            <td data-label="Risks">Loading data...</td>
                         </tr>
                     </tbody>
                 </table>
@@ -964,32 +1022,33 @@
         <div class="container">
             <div class="section-title">
                 <h2>Final Verdict & Key Takeaways</h2>
-                <p>Synthesizing JD.com's financial trajectory and investment profile</p>
+                <p>Synthesizing financial trajectory and investment profile</p>
             </div>
 
             <div class="verdict-container">
                 <div class="verdict-header">
-                    <h3>Navigating Maturity: Profit Gains Tempered by Cash Flow Concerns</h3>
-                    <span class="verdict-rating">Selective / Medium Risk</span>
+                    <h3>Loading verdict title...</h3>
+                    <span class="verdict-rating">Loading...</span>
                 </div>
 
-                <p>JD.com stands at a crossroads, successfully pivoting towards <strong>enhanced profitability</strong> (Operating Income +48.8% in FY24) after years of prioritizing rapid expansion. This shift, driven by cost discipline and operational efficiencies, is commendable. However, it coincides with a marked <strong>deceleration in revenue growth</strong> (+6.8% in FY24), reflecting the realities of a maturing market, intense competition, and broader economic pressures in China.</p>
-
-                <p>The most significant forensic finding is the <strong>troubling divergence between reported earnings and cash generation in FY2024</strong>. While Net Income soared (+71.1%), Operating Cash Flow unexpectedly declined (-1.0%). This gap appears largely attributable to substantial increases in working capital, specifically <strong>Accounts Receivable (+35.6%)</strong> and <strong>Inventory (+31.2%)</strong>, which grew significantly faster than sales. This raises critical questions about the quality of recent earnings and the efficiency of JD's cash conversion cycle.</p>
-
-                <p>Despite these red flags, JD's <strong>strong market position, logistics network, and cash reserves</strong> offer flexibility. While shareholder returns are significant, their sustainability requires scrutiny given cash flow trends. JD presents a complex case: weigh margin potential against slowing growth and working capital issues. A <strong>selective approach</strong> is advised, focusing on key monitoring points.</p>
+                <p>Loading financial analysis...</p>
 
                 <div class="monitoring-points">
                     <h4>Key Monitoring Points</h4>
                     <ul>
-                        <li><strong>Working Capital Efficiency:</strong> Track Days Sales Outstanding (DSO) and Inventory Turnover for signs of normalization or continued pressure.</li>
-                        <li><strong>Cash Flow Conversion:</strong> Monitor the relationship between Net Income and Operating Cash Flow in subsequent quarters for alignment.</li>
-                        <li><strong>Margin Sustainability:</strong> Assess whether gross and operating margin improvements are sustainable amidst competitive pricing pressures.</li>
+                        <li>Loading monitoring points...</li>
                     </ul>
                 </div>
             </div>
         </div>
     </section>
+
+    <div class="modal" id="searchModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <p id="modalMessage"></p>
+        </div>
+    </div>
 
     <button class="back-to-top" id="backToTop" aria-label="Back to top">
         <i class="fas fa-arrow-up"></i>
@@ -1013,352 +1072,530 @@
     </footer>
 
     <script>
-        const select = (el, all = false) => {
-            el = el.trim();
-            if (all) {
-                return [...document.querySelectorAll(el)];
-            } else {
-                return document.querySelector(el);
-            }
-        };
-
-        const on = (type, el, listener, all = false) => {
-            let selectEl = select(el, all);
-            if (selectEl) {
-                if (all) {
-                    selectEl.forEach(e => e.addEventListener(type, listener));
-                } else {
-                    selectEl.addEventListener(type, listener);
-                }
-            }
-        };
-
-        const onScroll = (el, listener) => {
-            el.addEventListener('scroll', listener);
-        };
-
-        const mobileMenuButton = select('.mobile-menu');
-        const navLinks = select('.nav-links');
-        const mobileMenuIcon = select('.mobile-menu i');
-
-        if (mobileMenuButton && navLinks && mobileMenuIcon) {
-            on('click', '.mobile-menu', function(e) {
-                navLinks.classList.toggle('show');
-                mobileMenuIcon.classList.toggle('fa-bars');
-                mobileMenuIcon.classList.toggle('fa-times');
-                mobileMenuButton.setAttribute('aria-expanded', navLinks.classList.contains('show'));
-            });
-
-            on('click', '.nav-links a', function(e) {
-                if (navLinks.classList.contains('show')) {
-                    navLinks.classList.remove('show');
-                    mobileMenuIcon.classList.remove('fa-times');
-                    mobileMenuIcon.classList.add('fa-bars');
-                    mobileMenuButton.setAttribute('aria-expanded', 'false');
-                }
-            }, true);
-        }
-
-        const header = select('#header');
-        if (header) {
-            const headerScrolled = () => {
-                if (window.scrollY > 50) {
-                    header.classList.add('scrolled');
-                } else {
-                    header.classList.remove('scrolled');
-                }
-            };
-            window.addEventListener('load', headerScrolled);
-            onScroll(document, headerScrolled);
-        }
-
-        const backToTopButton = select('.back-to-top');
-        if (backToTopButton) {
-            const toggleBackToTop = () => {
-                if (window.scrollY > 300) {
-                    backToTopButton.classList.add('visible');
-                } else {
-                    backToTopButton.classList.remove('visible');
-                }
-            };
-            window.addEventListener('load', toggleBackToTop);
-            onScroll(document, toggleBackToTop);
-
-            on('click', '.back-to-top', () => {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-        }
-
         document.addEventListener('DOMContentLoaded', function() {
-            const commonChartOptions = {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                        align: 'end',
-                        labels: {
-                            boxWidth: 6,
-                            boxHeight: 6,
-                            padding: 5,
-                            font: { size: 10 },
-                            usePointStyle: true,
-                            pointStyle: 'circle'
-                        }
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                if (context.dataset.label === 'Divergence') return null;
-                                let label = context.dataset.label || '';
-                                if (label) label += ': ';
-                                if (context.parsed.y !== null) {
-                                    label += context.parsed.y.toFixed(1) + '%';
-                                }
-                                return label;
+            // Initialize Supabase
+            const supabaseUrl = 'https://wunxabsokluzyyqrhwge.supabase.co';
+            const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind1bnhhYnNva2x1enl5cXJod2dlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMyODA5MTYsImV4cCI6MjA1ODg1NjkxNn0.OQimvjWJV1a43rZxraXGFK3lNB9zHK-JGB21HrlyxrA';
+            const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+            
+            // DOM elements
+            const searchInput = document.getElementById('tickerSearch');
+            const searchButton = document.getElementById('searchButton');
+            const modal = document.getElementById('searchModal');
+            const modalMessage = document.getElementById('modalMessage');
+            const closeModal = document.querySelector('.close-modal');
+            const backToTop = document.getElementById('backToTop');
+            const mobileMenuButton = document.querySelector('.mobile-menu');
+            const navLinks = document.querySelector('.nav-links');
+            const mobileMenuIcon = document.querySelector('.mobile-menu i');
+            const header = document.getElementById('header');
+            
+            // Chart instances
+            let revenueChart, arChart, cashFlowChart;
+            
+            // Initialize the page
+            initEventListeners();
+            checkUrlForTicker();
+            
+            function initEventListeners() {
+                // Search functionality
+                searchButton.addEventListener('click', handleSearch);
+                searchInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') handleSearch();
+                });
+                
+                // Modal
+                closeModal.addEventListener('click', () => {
+                    modal.style.display = 'none';
+                });
+                
+                // Mobile menu
+                if (mobileMenuButton && navLinks && mobileMenuIcon) {
+                    mobileMenuButton.addEventListener('click', function(e) {
+                        navLinks.classList.toggle('show');
+                        mobileMenuIcon.classList.toggle('fa-bars');
+                        mobileMenuIcon.classList.toggle('fa-times');
+                        mobileMenuButton.setAttribute('aria-expanded', navLinks.classList.contains('show'));
+                    });
+                    
+                    document.querySelectorAll('.nav-links a').forEach(link => {
+                        link.addEventListener('click', function(e) {
+                            if (navLinks.classList.contains('show')) {
+                                navLinks.classList.remove('show');
+                                mobileMenuIcon.classList.remove('fa-times');
+                                mobileMenuIcon.classList.add('fa-bars');
+                                mobileMenuButton.setAttribute('aria-expanded', 'false');
                             }
-                        },
-                        bodyFont: { size: window.innerWidth <= 768 ? 11 : 12 },
-                        backgroundColor: 'rgba(0,0,0,0.7)',
-                        titleFont: { size: 13 },
-                        padding: 10,
-                        cornerRadius: 4
-                    },
-                    annotation: {
-                        annotations: {}
-                    }
-                },
-                scales: {
-                    x: {
-                        grid: { display: false },
-                        ticks: { font: { size: window.innerWidth <= 768 ? 10 : 12 } }
-                    },
-                    y: {
-                        beginAtZero: false,
-                        title: {
-                            display: true,
-                            text: 'Growth Rate (%)',
-                            font: { size: window.innerWidth <= 768 ? 11 : 12 }
-                        },
-                        ticks: {
-                            callback: function(value) { return value + '%'; },
-                            font: { size: window.innerWidth <= 768 ? 10 : 11 }
-                        },
-                        grid: {
-                            drawBorder: false,
-                            color: 'rgba(0, 0, 0, 0.05)'
-                        }
-                    }
-                },
-                interaction: {
-                    mode: 'index',
-                    intersect: false,
-                },
-                layout: {
-                    padding: {
-                        top: window.innerWidth <= 768 ? 30 : 20,
-                        right: window.innerWidth <= 768 ? 10 : 20,
-                        bottom: window.innerWidth <= 768 ? 10 : 20,
-                        left: window.innerWidth <= 768 ? 10 : 20
-                    }
+                        });
+                    });
                 }
-            };
-
-            const labels = ['FY2020', 'FY2021', 'FY2022', 'FY2023', 'FY2024'];
-            const revenueGrowthData = [29.3, 27.6, 9.9, 3.7, 6.8];
-            const arGrowthData = [15.0, 18.2, 53.6, -16.1, 35.6];
-            const cfoGrowthData = [71.7, -0.6, 36.7, 2.9, -1.0];
-            const niGrowthData = [305.4, -107.2, 3.9, 1.3, 71.1];
-            const divergenceColor = '#f44336';
-            const primaryColor = '#c5a47e';
-            const secondaryColor = '#1c2541';
-
-            const createAnnotationLabel = (xVal, yVal, content, yAdj = -15) => ({
-                type: 'label',
-                xValue: xVal,
-                yValue: yVal,
-                content: content,
-                color: '#6c757d',
-                font: { size: window.innerWidth <= 768 ? 9 : 10, weight: 'bold' },
-                position: 'start',
-                yAdjust: window.innerWidth <= 768 ? yAdj + 5 : yAdj,
-                backgroundColor: 'rgba(255,255,255,0.8)',
-                padding: 4,
-                borderRadius: 4
-            });
-
-            const createDivergenceLegend = () => ({
-                label: 'Divergence',
-                borderColor: 'transparent',
-                backgroundColor: divergenceColor,
-                pointStyle: 'circle',
-                borderWidth: 0,
-                pointRadius: 0,
-                data: []
-            });
-
-            const pointStyleCallback = (indices, normalColor, highlightColor) => (context) => {
-                return indices.includes(context.dataIndex) ? highlightColor : normalColor;
-            };
-
-            const pointRadiusCallback = (indices, normalRadius = 4, highlightRadius = 5) => (context) => {
-                return indices.includes(context.dataIndex) ? highlightRadius : normalRadius;
-            };
-
-            const pointHoverRadiusCallback = (indices, normalRadius = 6, highlightRadius = 7) => (context) => {
-                return indices.includes(context.dataIndex) ? highlightRadius : normalRadius;
-            };
-
-            const revenueCtx = select('#revenueChart')?.getContext('2d');
-            if (revenueCtx) {
-                new Chart(revenueCtx, {
+                
+                // Header scroll effect
+                if (header) {
+                    const headerScrolled = () => {
+                        if (window.scrollY > 50) {
+                            header.classList.add('scrolled');
+                        } else {
+                            header.classList.remove('scrolled');
+                        }
+                    };
+                    window.addEventListener('load', headerScrolled);
+                    window.addEventListener('scroll', headerScrolled);
+                }
+                
+                // Back to top button
+                if (backToTop) {
+                    const toggleBackToTop = () => {
+                        if (window.scrollY > 300) {
+                            backToTop.classList.add('visible');
+                        } else {
+                            backToTop.classList.remove('visible');
+                        }
+                    };
+                    window.addEventListener('load', toggleBackToTop);
+                    window.addEventListener('scroll', toggleBackToTop);
+                    
+                    backToTop.addEventListener('click', () => {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    });
+                }
+            }
+            
+            function checkUrlForTicker() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const tickerParam = urlParams.get('ticker');
+                if (tickerParam) {
+                    searchInput.value = tickerParam;
+                    handleSearch();
+                }
+            }
+            
+            async function handleSearch() {
+                const ticker = searchInput.value.trim().toUpperCase();
+                if (!ticker) return;
+                
+                try {
+                    const { data, error } = await supabase
+                        .from('stored_analysis')
+                        .select('Analysis')
+                        .eq('Ticker', ticker)
+                        .single();
+                        
+                    if (error) throw error;
+                    
+                    if (data) {
+                        updatePageContent(data.Analysis);
+                    } else {
+                        showModal(`No data available for ${ticker}`);
+                    }
+                } catch (err) {
+                    console.error('Search error:', err);
+                    showModal('Error fetching data. Please try again.');
+                }
+            }
+            
+            function showModal(message) {
+                modalMessage.textContent = message;
+                modal.style.display = 'block';
+            }
+            
+            function updatePageContent(analysis) {
+                // Update hero section
+                document.querySelector('.hero h1').textContent = `${analysis.ticker} Forensic Financial Analysis`;
+                document.querySelector('.hero p').textContent = analysis.hero_description;
+                
+                // Update trends section
+                updateTrendsSection(analysis);
+                
+                // Update metrics section
+                updateMetricsSection(analysis);
+                
+                // Update opportunities section
+                updateOpportunitiesSection(analysis);
+                
+                // Update conclusion section
+                updateConclusionSection(analysis);
+                
+                // Update charts
+                updateCharts(analysis.chart_data);
+            }
+            
+            function updateTrendsSection(analysis) {
+                const { trends_cards, trends_description } = analysis;
+                
+                // Update description
+                document.querySelector('#trends .section-title p').textContent = trends_description;
+                
+                // Update revenue card
+                updateCard('revenue', trends_cards.revenue);
+                
+                // Update profitability card
+                updateCard('profitability', trends_cards.profitability);
+                
+                // Update cash flow card
+                updateCard('cash_flow', trends_cards.cash_flow);
+            }
+            
+            function updateMetricsSection(analysis) {
+                const { metrics_cards, metrics_description } = analysis;
+                
+                // Update description
+                document.querySelector('#financials .section-title p').textContent = metrics_description;
+                
+                // Update forensic card
+                updateCard('forensic', metrics_cards.forensic);
+                
+                // Update solvency card
+                updateCard('solvency', metrics_cards.solvency);
+            }
+            
+            function updateOpportunitiesSection(analysis) {
+                const { opportunities_risks_table, opportunities_description } = analysis;
+                
+                // Update description
+                document.querySelector('#opportunities .section-title p').textContent = opportunities_description;
+                
+                // Update table
+                const tableBody = document.querySelector('#opportunities table tbody');
+                tableBody.innerHTML = opportunities_risks_table.map(item => `
+                    <tr>
+                        <td data-label="Factor"><strong>${item.factor}</strong></td>
+                        <td data-label="Opportunities">${item.opportunities}</td>
+                        <td data-label="Risks">${item.risks}</td>
+                    </tr>
+                `).join('');
+            }
+            
+            function updateConclusionSection(analysis) {
+                const { verdict_title, verdict_rating, verdict_paragraphs, monitoring_points, conclusion_description } = analysis;
+                
+                // Update title and rating
+                document.querySelector('.verdict-header h3').textContent = verdict_title;
+                document.querySelector('.verdict-rating').textContent = verdict_rating;
+                
+                // Update paragraphs
+                const paragraphs = document.querySelectorAll('.verdict-container p');
+                paragraphs.forEach((p, i) => {
+                    if (i < verdict_paragraphs.length) {
+                        p.innerHTML = verdict_paragraphs[i];
+                    }
+                });
+                
+                // Update monitoring points
+                const pointsList = document.querySelector('.monitoring-points ul');
+                pointsList.innerHTML = monitoring_points.map(point => `
+                    <li><strong>${point.split(':')[0]}:</strong> ${point.split(':').slice(1).join(':')}</li>
+                `).join('');
+                
+                // Update description
+                document.querySelector('.conclusion .section-title p').textContent = conclusion_description;
+            }
+            
+            function updateCard(id, data) {
+                const card = document.querySelector(`.card[id="${id}"]`);
+                if (!card) return;
+                
+                // Update header
+                const iconClass = data.sentiment_icon_class;
+                card.querySelector('.card-header h3 i').className = `fas ${getIconClass(id)} ${iconClass}`;
+                
+                // Update body
+                const pointsList = card.querySelector('.card-body ul');
+                pointsList.innerHTML = data.points.map(point => `
+                    <li>${point.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}</li>
+                `).join('');
+                
+                // Update footer
+                card.querySelector('.card-footer').textContent = data.footer;
+            }
+            
+            function getIconClass(cardId) {
+                const icons = {
+                    'revenue': 'fa-chart-line',
+                    'profitability': 'fa-chart-pie',
+                    'cash_flow': 'fa-chart-bar',
+                    'forensic': 'fa-search',
+                    'solvency': 'fa-balance-scale'
+                };
+                return icons[cardId] || 'fa-chart-line';
+            }
+            
+            function updateCharts(chartData) {
+                // Destroy existing charts if they exist
+                if (revenueChart) revenueChart.destroy();
+                if (arChart) arChart.destroy();
+                if (cashFlowChart) cashFlowChart.destroy();
+                
+                // Create new charts with updated data
+                createRevenueChart(chartData);
+                createARChart(chartData);
+                createCashFlowChart(chartData);
+            }
+            
+            function createRevenueChart(chartData) {
+                const ctx = document.getElementById('revenueChart').getContext('2d');
+                revenueChart = new Chart(ctx, {
                     type: 'line',
                     data: {
-                        labels: labels,
+                        labels: chartData.labels,
                         datasets: [{
                             label: 'Annual Revenue Growth (%)',
-                            data: revenueGrowthData,
-                            borderColor: primaryColor,
+                            data: chartData.revenue_growth,
+                            borderColor: '#c5a47e',
                             backgroundColor: 'rgba(197, 164, 126, 0.1)',
                             borderWidth: 2,
                             tension: 0.3,
                             fill: true,
-                            pointBackgroundColor: primaryColor,
+                            pointBackgroundColor: '#c5a47e',
                             pointRadius: 4,
                             pointHoverRadius: 6
                         }]
                     },
-                    options: commonChartOptions
+                    options: getCommonChartOptions()
                 });
             }
-
-            const arCtx = select('#arChart')?.getContext('2d');
-            if (arCtx) {
-                const arDivergenceIndices = [2, 4];
-                new Chart(arCtx, {
+            
+            function createARChart(chartData) {
+                const ctx = document.getElementById('arChart').getContext('2d');
+                const arDivergenceIndices = chartData.ar_divergence_indices || [];
+                
+                arChart = new Chart(ctx, {
                     type: 'line',
                     data: {
-                        labels: labels,
+                        labels: chartData.labels,
                         datasets: [
                             {
                                 label: 'Revenue Growth (%)',
-                                data: revenueGrowthData,
-                                borderColor: primaryColor,
+                                data: chartData.revenue_growth,
+                                borderColor: '#c5a47e',
                                 backgroundColor: 'transparent',
                                 borderWidth: 2,
                                 tension: 0.3,
-                                pointBackgroundColor: primaryColor,
+                                pointBackgroundColor: '#c5a47e',
                                 pointRadius: 4,
                                 pointHoverRadius: 6
                             },
                             {
                                 label: 'A/R Growth (%)',
-                                data: arGrowthData,
-                                borderColor: secondaryColor,
+                                data: chartData.ar_growth,
+                                borderColor: '#1c2541',
                                 backgroundColor: 'transparent',
                                 borderWidth: 2,
                                 tension: 0.3,
-                                pointBackgroundColor: pointStyleCallback(arDivergenceIndices, secondaryColor, divergenceColor),
-                                pointRadius: pointRadiusCallback(arDivergenceIndices),
-                                pointHoverRadius: pointHoverRadiusCallback(arDivergenceIndices)
+                                pointBackgroundColor: (context) => {
+                                    return arDivergenceIndices.includes(context.dataIndex) ? '#f44336' : '#1c2541';
+                                },
+                                pointRadius: (context) => {
+                                    return arDivergenceIndices.includes(context.dataIndex) ? 5 : 4;
+                                },
+                                pointHoverRadius: (context) => {
+                                    return arDivergenceIndices.includes(context.dataIndex) ? 7 : 6;
+                                }
                             },
-                            createDivergenceLegend()
+                            {
+                                label: 'Divergence',
+                                borderColor: 'transparent',
+                                backgroundColor: '#f44336',
+                                pointStyle: 'circle',
+                                borderWidth: 0,
+                                pointRadius: 0,
+                                data: []
+                            }
                         ]
                     },
                     options: {
-                        ...commonChartOptions,
+                        ...getCommonChartOptions(),
                         plugins: {
-                            ...commonChartOptions.plugins,
+                            ...getCommonChartOptions().plugins,
                             annotation: {
-                                annotations: {
-                                    label1: createAnnotationLabel(2, 53.6, ['A/R Spike', '(FY22)']),
-                                    label2: createAnnotationLabel(4, 35.6, ['A/R Spike', '(FY24)'])
-                                }
+                                annotations: chartData.annotations?.ar_chart?.reduce((acc, anno, idx) => {
+                                    acc[`label${idx}`] = {
+                                        type: 'label',
+                                        xValue: anno.x_index,
+                                        yValue: anno.y_value,
+                                        content: anno.text.split('\n'),
+                                        color: '#6c757d',
+                                        font: { 
+                                            size: window.innerWidth <= 768 ? 9 : 10, 
+                                            weight: 'bold' 
+                                        },
+                                        position: 'start',
+                                        yAdjust: anno.y_adjust || -15,
+                                        backgroundColor: 'rgba(255,255,255,0.8)',
+                                        padding: 4,
+                                        borderRadius: 4
+                                    };
+                                    return acc;
+                                }, {}) || {}
                             }
                         }
                     }
                 });
             }
-
-            const cashFlowCtx = select('#cashFlowChart')?.getContext('2d');
-            if (cashFlowCtx) {
-                const cfDivergenceIndices = [4];
-                new Chart(cashFlowCtx, {
+            
+            function createCashFlowChart(chartData) {
+                const ctx = document.getElementById('cashFlowChart').getContext('2d');
+                const cfDivergenceIndices = chartData.cf_divergence_indices || [];
+                
+                cashFlowChart = new Chart(ctx, {
                     type: 'line',
                     data: {
-                        labels: labels,
+                        labels: chartData.labels,
                         datasets: [
                             {
                                 label: 'Op Cash Flow Growth (%)',
-                                data: cfoGrowthData,
-                                borderColor: primaryColor,
+                                data: chartData.cfo_growth,
+                                borderColor: '#c5a47e',
                                 backgroundColor: 'transparent',
                                 borderWidth: 2,
                                 tension: 0.3,
-                                pointBackgroundColor: primaryColor,
+                                pointBackgroundColor: '#c5a47e',
                                 pointRadius: 4,
                                 pointHoverRadius: 6
                             },
                             {
                                 label: 'Net Income Growth (%)',
-                                data: niGrowthData,
-                                borderColor: secondaryColor,
+                                data: chartData.ni_growth,
+                                borderColor: '#1c2541',
                                 backgroundColor: 'transparent',
                                 borderWidth: 2,
                                 tension: 0.3,
-                                pointBackgroundColor: pointStyleCallback(cfDivergenceIndices, secondaryColor, divergenceColor),
-                                pointRadius: pointRadiusCallback(cfDivergenceIndices),
-                                pointHoverRadius: pointHoverRadiusCallback(cfDivergenceIndices)
+                                pointBackgroundColor: (context) => {
+                                    return cfDivergenceIndices.includes(context.dataIndex) ? '#f44336' : '#1c2541';
+                                },
+                                pointRadius: (context) => {
+                                    return cfDivergenceIndices.includes(context.dataIndex) ? 5 : 4;
+                                },
+                                pointHoverRadius: (context) => {
+                                    return cfDivergenceIndices.includes(context.dataIndex) ? 7 : 6;
+                                }
                             },
-                            createDivergenceLegend()
+                            {
+                                label: 'Divergence',
+                                borderColor: 'transparent',
+                                backgroundColor: '#f44336',
+                                pointStyle: 'circle',
+                                borderWidth: 0,
+                                pointRadius: 0,
+                                data: []
+                            }
                         ]
                     },
                     options: {
-                        ...commonChartOptions,
+                        ...getCommonChartOptions(),
                         plugins: {
-                            ...commonChartOptions.plugins,
+                            ...getCommonChartOptions().plugins,
                             annotation: {
-                                annotations: {
-                                    label1: createAnnotationLabel(4, -1.0, ['CFO Decline', '(FY24)'], 20)
-                                }
+                                annotations: chartData.annotations?.cf_chart?.reduce((acc, anno, idx) => {
+                                    acc[`label${idx}`] = {
+                                        type: 'label',
+                                        xValue: anno.x_index,
+                                        yValue: anno.y_value,
+                                        content: anno.text.split('\n'),
+                                        color: '#6c757d',
+                                        font: { 
+                                            size: window.innerWidth <= 768 ? 9 : 10, 
+                                            weight: 'bold' 
+                                        },
+                                        position: 'start',
+                                        yAdjust: anno.y_adjust || -15,
+                                        backgroundColor: 'rgba(255,255,255,0.8)',
+                                        padding: 4,
+                                        borderRadius: 4
+                                    };
+                                    return acc;
+                                }, {}) || {}
                             }
                         }
                     }
                 });
             }
-
-            let resizeTimeout;
-            const handleResize = () => {
-                clearTimeout(resizeTimeout);
-                resizeTimeout = setTimeout(() => {
-                    const isMobile = window.innerWidth <= 768;
-                    const charts = Chart.instances;
-
-                    for (const id in charts) {
-                        const chart = charts[id];
-                        chart.options.plugins.tooltip.bodyFont.size = isMobile ? 11 : 12;
-                        chart.options.scales.x.ticks.font.size = isMobile ? 10 : 12;
-                        chart.options.scales.y.title.font.size = isMobile ? 11 : 12;
-                        chart.options.scales.y.ticks.font.size = isMobile ? 10 : 11;
-                        chart.options.layout.padding = {
+            
+            function getCommonChartOptions() {
+                const isMobile = window.innerWidth <= 768;
+                
+                return {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            align: 'end',
+                            labels: {
+                                boxWidth: 6,
+                                boxHeight: 6,
+                                padding: 5,
+                                font: { size: 10 },
+                                usePointStyle: true,
+                                pointStyle: 'circle'
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    if (context.dataset.label === 'Divergence') return null;
+                                    let label = context.dataset.label || '';
+                                    if (label) label += ': ';
+                                    if (context.parsed.y !== null) {
+                                        label += context.parsed.y.toFixed(1) + '%';
+                                    }
+                                    return label;
+                                }
+                            },
+                            bodyFont: { size: isMobile ? 11 : 12 },
+                            backgroundColor: 'rgba(0,0,0,0.7)',
+                            titleFont: { size: 13 },
+                            padding: 10,
+                            cornerRadius: 4
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: { display: false },
+                            ticks: { font: { size: isMobile ? 10 : 12 } }
+                        },
+                        y: {
+                            beginAtZero: false,
+                            title: {
+                                display: true,
+                                text: 'Growth Rate (%)',
+                                font: { size: isMobile ? 11 : 12 }
+                            },
+                            ticks: {
+                                callback: function(value) { return value + '%'; },
+                                font: { size: isMobile ? 10 : 11 }
+                            },
+                            grid: {
+                                drawBorder: false,
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        }
+                    },
+                    interaction: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    layout: {
+                        padding: {
                             top: isMobile ? 30 : 20,
                             right: isMobile ? 10 : 20,
                             bottom: isMobile ? 10 : 20,
                             left: isMobile ? 10 : 20
-                        };
-                        if (chart.options.plugins.annotation) {
-                            Object.values(chart.options.plugins.annotation.annotations).forEach(anno => {
-                                if (anno.type === 'label') {
-                                }
-                            });
                         }
-                        chart.resize();
-                        chart.update('none');
                     }
+                };
+            }
+            
+            // Handle window resize for charts
+            let resizeTimeout;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                    if (revenueChart) revenueChart.resize();
+                    if (arChart) arChart.resize();
+                    if (cashFlowChart) cashFlowChart.resize();
                 }, 250);
-            };
-
-            window.addEventListener('resize', handleResize);
+            });
         });
     </script>
 </body>
